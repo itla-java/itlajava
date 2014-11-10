@@ -9,11 +9,10 @@ package clases;
  *
  * @author HiraldoTran
  */
-public class ventaFactura {
+public class alquilerFactura {
     private int id;
     private String dpo_factura;
     private int id_cliente;
-    private int id_orden;
     private String fecha;
     private String hechaPor;
     private int id_usuario;
@@ -42,14 +41,6 @@ public class ventaFactura {
         this.id_cliente = id_cliente;
     }
 
-    public int getId_orden() {
-        return id_orden;
-    }
-
-    public void setId_orden(int id_orden) {
-        this.id_orden = id_orden;
-    }
-
     public String getFecha() {
         return fecha;
     }
@@ -66,8 +57,6 @@ public class ventaFactura {
         this.hechaPor = hechaPor;
     }
 
-    
-    
     public int getId_usuario() {
         return id_usuario;
     }
@@ -76,5 +65,5 @@ public class ventaFactura {
         this.id_usuario = id_usuario;
     }
     
-   
+    
 }

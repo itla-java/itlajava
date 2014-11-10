@@ -10,14 +10,23 @@ package clases;
  * @author HiraldoTran
  */
 public class cliente {
-   private int id; 
+    private int id; 
     private String nombre;
+    private String apellido;
     private String direccion;
     private String cedula;
     private String telefono1;
     private String telefono2;
     private String email;
 
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
     public int getId() {
         return id;
     }

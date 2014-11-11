@@ -43,7 +43,12 @@ public class WebService_Logins {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }
-
+@GET
+    @Path("/hola")
+    @Produces("text/plane")
+    public String holaM(){
+        return "<h1>hola mundo por fin</h1>";
+    }
     /**
      * PUT method for updating or creating an instance of WebService_Logins
      * @param content representation for the resource

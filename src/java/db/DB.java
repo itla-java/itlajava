@@ -23,7 +23,7 @@ public class DB {
 
   // "jdbc:postgresql://localhost/northwind"
     public DB(String host,String db,String user,String pass) throws Exception{
-        String url = "jdbc:postgresql://"+host+"/"+db;
+        String url = "jdbc:postgresql://"+host+":37751/"+db;
         
         try { 
             Class.forName("org.postgresql.Driver");

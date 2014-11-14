@@ -47,7 +47,7 @@ public class WebService_Logins {
     @Path("/hola")
     @Produces("text/plane")
     public String holaM(){
-        return "<h1>hola mundo por fin</h1>";
+        return "<h1>hola mundo por fin segunda prueba</h1>";
     }
     /**
      * PUT method for updating or creating an instance of WebService_Logins
@@ -66,8 +66,9 @@ public class WebService_Logins {
         
         
         DB dbase = new DB("localhost","itla2","itlajava","12345678@itla");
-        
-        String sql="Select fun_login("+user+","+pass+")";
+        if (dbase==null)
+            return "Error";
+        String sql="Select fun_login("+dbase.comilla(user)+","+dbase.comilla(pass)+")";
         ResultSet rs = dbase.execSelect(sql);  
         try {
             if (rs.next()==true){  

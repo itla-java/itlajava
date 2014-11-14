@@ -68,7 +68,7 @@ public class WebService_Logins {
         DB dbase = new DB("localhost","itla2","itlajava","12345678@itla");
         if (dbase==null)
             return "Error";
-        String sql="Select fun_login("+dbase.comilla(user)+","+dbase.comilla(pass)+")";
+        String sql="Select fun_login('"+user+"','"+pass+"')";
         ResultSet rs = dbase.execSelect(sql);  
         try {
             if (rs.next()==true){  

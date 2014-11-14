@@ -64,8 +64,8 @@ public class WebService_Logins {
     @Path("/getstatus/{user}/{pass}")
     public String getStatus(@PathParam ("user") String user ,@PathParam ("pass") String pass){
         
-        try{ 
-        DB dbase = new DB("127.0.0.1","itla2","itlajava","12345678@itla");
+        try{
+        DB dbase = new DB("546ff814ecb8d4afcc000036-itlajavados.rhcloud.com","itla2","itlajava","12345678@itla");
         }
         catch(Exception e){
            return e.getMessage();

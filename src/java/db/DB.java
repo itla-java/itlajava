@@ -22,8 +22,8 @@ public class DB {
     public static Connection conexion = null;
 
   // "jdbc:postgresql://localhost/northwind"
-    public DB(String host,String db,String user,String pass) throws Exception{
-        String url = "jdbc:postgresql://"+host+":37751/"+db;
+    public DB(String db,String user,String pass) throws Exception{
+        String url = "jdbc:postgresql://546ff814ecb8d4afcc000036-itlajavados.rhcloud.com:37751/"+db;
         
         try { 
             Class.forName("org.postgresql.Driver");

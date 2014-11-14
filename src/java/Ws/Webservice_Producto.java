@@ -62,7 +62,7 @@ public class Webservice_Producto {
         
         
         //instancie el objeto de DB
-       DB dbase = new DB("localhost","itla","itlajava","12345678@itla");
+       DB dbase = new DB("itla2","itlajava","12345678@itla");
        
        //realizo el sql
        sql="select * from public.t_productos";
@@ -104,7 +104,7 @@ public class Webservice_Producto {
     @Produces("application/json")
     public String getproduct_id_nombre(@PathParam("id") String id,@PathParam("token") String token) throws Exception{
       //instancie el objeto de DB
-       DB dbase = new DB("localhost","itla","itlajava","12345678@itla");
+       DB dbase = new DB("itla2","itlajava","12345678@itla");
        String tokenlook;
        tokenlook="select f_activo from public.t_logins";
        ResultSet rs1 = dbase.execSelect(tokenlook); 
@@ -165,7 +165,7 @@ public class Webservice_Producto {
     @Produces("application/json")
     public void insertar_producto(@PathParam("id")int id,@PathParam("nombre")String nombre,@PathParam("descripcion")String descripcion,@PathParam("costo")int costo,@PathParam("precioventa")int precioventa,@PathParam("precioalquiler")int precioalquiler,@PathParam("alquilerventa")int alquilerventa,@PathParam("cantidadalquier")int cantidadalquiler,@PathParam("cantidadalquier")int cantidadaventa,@PathParam("diasrecuperacion")int diasrecuperacion) throws Exception{
         
-        DB dbase = new DB("127.7.234.129:5432","itla","itlajava","12345678@itla");
+        DB dbase = new DB("itla2","itlajava","12345678@itla");
     
         String sql="INSERT INTO public.t_productos(f_id,f_nombre,f_descripcion,f_costo,f_precio_venta,";
         sql+="f_precio_alquiler,f_alquiler_venta,f_cantidad_alquiler,f_cantidad_venta,f_dias_recuperacion)";

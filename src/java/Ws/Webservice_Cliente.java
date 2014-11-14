@@ -72,7 +72,7 @@ public class Webservice_Cliente {
     public String getCliente() throws Exception
     {
           //instancie el objeto de DB
-       DB dbase = new DB("localhost","itla","itlajava","12345678@itla");
+       DB dbase = new DB("itla2","itlajava","12345678@itla");
         
         String sql="Select * from t_cliente ;";
         try{

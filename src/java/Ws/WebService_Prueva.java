@@ -77,7 +77,7 @@ public class WebService_Prueva {
     @GET
     @Produces("text/plain")
     @Path("/cliente")
-    public String Primer_Cliente()
+    public String Primer_Cliente() throws Exception
     {
         DB dbase = new DB("localhost","itla","adminm7xt8zn","JaQc2-sekn7A");//conexion a la bdd en openshift
         String sql="Select * from t_cliente where f_id=1;";

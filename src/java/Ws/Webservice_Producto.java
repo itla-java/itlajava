@@ -56,7 +56,7 @@ public class Webservice_Producto {
     @GET
     @Path("/getproductos")
     @Produces("application/json")
-    public String getproducto(){
+    public String getproducto() throws Exception{
         //Asigne los parametros de onccion a la base de datos
         
         
@@ -102,7 +102,7 @@ public class Webservice_Producto {
     @GET
     @Path("/getproducto/{id}/{token}")
     @Produces("application/json")
-    public String getproduct_id_nombre(@PathParam("id") String id,@PathParam("token") String token){
+    public String getproduct_id_nombre(@PathParam("id") String id,@PathParam("token") String token) throws Exception{
       //instancie el objeto de DB
        DB dbase = new DB("localhost","itla","itlajava","12345678@itla");
        String tokenlook;
@@ -163,9 +163,9 @@ public class Webservice_Producto {
     @PUT
     @Path("/insertarproducto/{id}/{nombre}/{descripcion}/{costo}//{precioventa}/{precioalquiler}/{alquilerventa}/{cantidadalquiler}/{cantidadventa}/{diasrecuperacion}")
     @Produces("application/json")
-    public void insertar_producto(@PathParam("id")int id,@PathParam("nombre")String nombre,@PathParam("descripcion")String descripcion,@PathParam("costo")int costo,@PathParam("precioventa")int precioventa,@PathParam("precioalquiler")int precioalquiler,@PathParam("alquilerventa")int alquilerventa,@PathParam("cantidadalquier")int cantidadalquiler,@PathParam("cantidadalquier")int cantidadaventa,@PathParam("diasrecuperacion")int diasrecuperacion){
+    public void insertar_producto(@PathParam("id")int id,@PathParam("nombre")String nombre,@PathParam("descripcion")String descripcion,@PathParam("costo")int costo,@PathParam("precioventa")int precioventa,@PathParam("precioalquiler")int precioalquiler,@PathParam("alquilerventa")int alquilerventa,@PathParam("cantidadalquier")int cantidadalquiler,@PathParam("cantidadalquier")int cantidadaventa,@PathParam("diasrecuperacion")int diasrecuperacion) throws Exception{
         
-        DB dbase = new DB("localhost","itla","itlajava","12345678@itla");
+        DB dbase = new DB("127.7.234.129:5432","itla","itlajava","12345678@itla");
     
         String sql="INSERT INTO public.t_productos(f_id,f_nombre,f_descripcion,f_costo,f_precio_venta,";
         sql+="f_precio_alquiler,f_alquiler_venta,f_cantidad_alquiler,f_cantidad_venta,f_dias_recuperacion)";

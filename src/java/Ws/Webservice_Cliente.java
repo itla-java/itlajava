@@ -69,7 +69,7 @@ public class Webservice_Cliente {
     @GET
     @Produces("application/json")
     @Path("/getcliente")
-    public String getCliente()
+    public String getCliente() throws Exception
     {
           //instancie el objeto de DB
        DB dbase = new DB("localhost","itla","itlajava","12345678@itla");

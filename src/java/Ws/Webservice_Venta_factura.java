@@ -46,7 +46,7 @@ public class Webservice_Venta_factura {
     @GET
     @Path("/getproductos")
     @Produces("application/json")
-    public String getfactura_id(@PathParam("id") int id){
+    public String getfactura_id(@PathParam("id") int id) throws Exception{
         //instancie el objeto de DB
        DB dbase = new DB("localhost","itla","itlajava","12345678@itla");
        ventaFactura vf = new ventaFactura();

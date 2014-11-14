@@ -64,9 +64,14 @@ public class WebService_Logins {
     @Path("/getstatus/{user}/{pass}")
     public String getStatus(@PathParam ("user") String user ,@PathParam ("pass") String pass){
         
-        
+        try{
         DB dbase = new DB("localhost","itla2","itlajava","12345678@itla");
-        if (dbase==null)
+        }
+        catch(Exception e){
+           return e.getMessage();
+        }
+        return "Conectado";
+        /*if (dbase==null)
             return "Error";
         String sql="Select fun_login('"+user+"','"+pass+"')";
         ResultSet rs = dbase.execSelect(sql);  
@@ -81,6 +86,6 @@ public class WebService_Logins {
         }
         
         return "Usuario no existe";
-    
+    */
 }
 }

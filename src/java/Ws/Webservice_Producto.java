@@ -60,14 +60,14 @@ public class Webservice_Producto {
         //Asigne los parametros de onccion a la base de datos
         
         
-        
+        try{
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
        
        //realizo el sql
        sql="select * from public.t_productos";
        
-       try{
+       
       
        ResultSet rs = dbase.execSelect(sql);   
        while (rs.next()){

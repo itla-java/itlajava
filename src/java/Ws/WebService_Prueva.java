@@ -79,10 +79,11 @@ public class WebService_Prueva {
     @Path("/cliente")
     public String Primer_Cliente() throws Exception
     {
+        try{
         DB dbase = new DB("itla2","itlajava","12345678@itla");//conexion a la bdd en openshift
         String sql="Select * from t_cliente where f_id=1;";
-        try
-        {
+        
+       
             ResultSet rs=dbase.execSelect(sql);
             rs.next();
             cliente cliente1= new cliente();

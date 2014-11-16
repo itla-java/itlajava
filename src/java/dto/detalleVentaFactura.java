@@ -5,6 +5,7 @@
  */
 package dto;
 
+import com.google.gson.Gson;
 import db.DB;
 import java.sql.PreparedStatement;
 import javax.ws.rs.PathParam;
@@ -95,6 +96,8 @@ public class detalleVentaFactura {
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         
+        Gson json = new Gson();
+       detalleVentaFactura info = json.fromJson(informacion, detalleVentaFactura.class);
         p.setInt(1, idVentaFactura);
         p.setString(2, tipoFacturaVentaFactura);
         p.setInt(3, idProducto);

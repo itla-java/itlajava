@@ -5,6 +5,7 @@
  */
 package dto;
 
+import com.google.gson.Gson;
 import db.DB;
 import java.sql.PreparedStatement;
 
@@ -68,6 +69,10 @@ public class reciboAlquilerFactura {
         
         String sql="INSERT INTO public.t_recibo_alquiler_factura(f_id_t_alquiler_factura,f_tipo_factura_t_alquiler_factura,f_id_t_cliente,f_monto)";
         sql+="VALUES(?,?,?,?)";
+        
+        Gson json = new Gson();
+       reciboAlquilerFactura info = json.fromJson(informacion, reciboAlquilerFactura.class);
+        
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         p.setInt(1, idAlquilerFactura);
         p.setString(2, tipoFacturaAlquilerFactura);

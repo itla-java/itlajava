@@ -5,6 +5,7 @@
  */
 package dto;
 
+import com.google.gson.Gson;
 import db.DB;
 import java.sql.PreparedStatement;
 
@@ -95,7 +96,9 @@ public class cliente {
         sql+="VALUES (?,?,?,?,?,?,?,?)";
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
-        
+        Gson json = new Gson();
+       cliente info = json.fromJson(informacion, cliente.class);
+       
         p.setString(1, nombre);
         p.setString(2, apellido);
         p.setString(3, direccion);

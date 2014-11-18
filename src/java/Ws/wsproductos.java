@@ -20,6 +20,7 @@ import javax.ws.rs.Produces;
 import  java.sql.ResultSet;
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  * REST Web Service
@@ -106,38 +107,47 @@ public class wsproductos {
     @GET
     @Path("/getproducto")
     @Produces("application/json")
-    public String getproduct_id(@PathParam("id") String id){
-        //Asigne los parametros de onccion a la base de datos
-        
-        
-        
-        //instancie el objeto de DB
+    public String getproduct_id_nombre(@PathParam("id") String id,@PathParam("token") String token){
+      //instancie el objeto de DB
        DB dbase = new DB(Host,Database,User,Pass);
-       
-       //realizo el sql
-       sql="select * from public.t_productos where f_id ="+id+" or f_nombre ilike "+"'"+"'"+id+"'"+"'";
-       
-         try{
+       String tokenlook;
+       tokenlook="select f_activo from public.t_logins";
+       ResultSet rs1 = dbase.execSelect(tokenlook); 
       
-       ResultSet rs = dbase.execSelect(sql);   
-       while (rs.next()){
-           productos producto = new productos();
-           
-           producto.setId(rs.getInt(1));
-           producto.setDescripcion(rs.getString(2));
-           producto.setCosto(rs.getInt(3));
-           producto.setPrecioVenta(rs.getInt(3));
-           producto.setPrecioAlquiler(rs.getInt(4));
-           producto.setAlquilerVenta(rs.getString(5));
-           producto.setCantidadALquiler(rs.getString(6));
-           producto.setCantidadVenta(rs.getString(7));
-           producto.setDiasRecuperacion(rs.getString(8));
-           
-           //asigno elrs a la lista
-           lista.add(producto);
+       try {
+            while (rs1.next()) {  
+            if ((rs1.getBoolean("f_activo")==false)){
+                
+                return "Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias ";             
+            } else 
+    {
+                
+            //realizo el sql de busqueda
+            sql="select * from public.t_productos where f_id ="+id+" or f_nombre ilike "+"'"+"'"+id+"'"+"'";
        
-       }
-    } catch (Exception e) {
+         try
+        {
+      
+            ResultSet rs = dbase.execSelect(sql);   
+            while (rs.next())
+             {
+                productos producto = new productos();
+
+                producto.setId(rs.getInt(1));
+                producto.setDescripcion(rs.getString(2));
+                producto.setCosto(rs.getInt(3));
+                producto.setPrecioVenta(rs.getInt(3));
+                producto.setPrecioAlquiler(rs.getInt(4));
+                producto.setAlquilerVenta(rs.getString(5));
+                producto.setCantidadALquiler(rs.getString(6));
+                producto.setCantidadVenta(rs.getString(7));
+                producto.setDiasRecuperacion(rs.getString(8));
+
+                //asigno elrs a la lista
+                lista.add(producto);
+
+            }
+        } catch (Exception e) {
         //si falla un error de base de datos
             return "-1: Error de la base de datos ";
         }
@@ -147,54 +157,16 @@ public class wsproductos {
         
         //retorno el json
         return json1;
+            
+    }//llave del esle
+        }//llave del while
+            
+       }catch(SQLException e){}
+        return null;
+ 
     }
     
-        @GET
-    @Path("/getproducto")
-    @Produces("application/json")
-    public String getproducto_costo(@PathParam("nombre") int costo){
-        //Asigne los parametros de onccion a la base de datos
-        
-        
-        
-        //instancie el objeto de DB
-       DB dbase = new DB(Host,Database,User,Pass);
-       
-       //realizo el sql
-       sql="select * from public.t_productos where f_costo ="+costo;
-       
-         try{
-      
-       ResultSet rs = dbase.execSelect(sql);   
-       while (rs.next()){
-           productos producto = new productos();
-           
-           producto.setId(rs.getInt(1));
-           producto.setDescripcion(rs.getString(2));
-           producto.setCosto(rs.getInt(3));
-           producto.setPrecioVenta(rs.getInt(3));
-           producto.setPrecioAlquiler(rs.getInt(4));
-           producto.setAlquilerVenta(rs.getString(5));
-           producto.setCantidadALquiler(rs.getString(6));
-           producto.setCantidadVenta(rs.getString(7));
-           producto.setDiasRecuperacion(rs.getString(8));
-           
-           //asigno elrs a la lista
-           lista.add(producto);
-       
-       }
-    } catch (Exception e) {
-        //si falla un error de base de datos
-            return "-1: Error de la base de datos ";
-        }
-        
-        //convierto la lista a Gson
-        String json1=json.toJson(lista);
-        
-        //retorno el json
-        return json1;
-    }
-    
+
     
     /**
      * PUT method for updating or creating an instance of wsproductos
@@ -205,4 +177,5 @@ public class wsproductos {
     @Consumes("application/json")
     public void putJson(String content) {
     }
+}
 }

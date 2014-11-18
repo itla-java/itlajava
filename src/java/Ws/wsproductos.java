@@ -20,7 +20,6 @@ import javax.ws.rs.Produces;
 import  java.sql.ResultSet;
 import com.google.gson.Gson;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 /**
  * REST Web Service
@@ -40,10 +39,6 @@ public class wsproductos {
     }
     
     //variables de la base de datos 
-        String Host = "localhost";
-        String Database ="itla";
-        String User = "adminm7xt8zn";
-        String Pass = "JaQc2-sekn7A";
         String sql;
         Gson json = new Gson();
         productos producto = new productos();
@@ -67,7 +62,7 @@ public class wsproductos {
         
         
         //instancie el objeto de DB
-       DB dbase = new DB(Host,Database,User,Pass);
+       DB dbase = new DB("localhost","itla","adminm7xt8zn","JaQc2-sekn7A");
        
        //realizo el sql
        sql="select * from public.t_productos";
@@ -109,7 +104,7 @@ public class wsproductos {
     @Produces("application/json")
     public String getproduct_id_nombre(@PathParam("id") String id,@PathParam("token") String token){
       //instancie el objeto de DB
-       DB dbase = new DB(Host,Database,User,Pass);
+       DB dbase = new DB("localhost","itla","adminm7xt8zn","JaQc2-sekn7A");
        String tokenlook;
        tokenlook="select f_activo from public.t_logins";
        ResultSet rs1 = dbase.execSelect(tokenlook); 

@@ -42,8 +42,8 @@ public class wsproductos {
     //variables de la base de datos 
         String Host = "localhost";
         String Database ="itla";
-        String User = "localhost";
-        String Pass = "localhost";
+        String User = "adminm7xt8zn";
+        String Pass = "JaQc2-sekn7A";
         String sql;
         Gson json = new Gson();
         productos producto = new productos();

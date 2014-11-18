@@ -6,6 +6,7 @@
 package Ws;
 
 import clases.cliente;
+import clases.productos;
 import db.DB;
 import java.sql.SQLException;
 import javax.ws.rs.core.Context;
@@ -44,8 +45,8 @@ public class wsproductos {
         String Pass = "localhost";
         String sql;
         Gson json = new Gson();
-        cliente cliente1 = new cliente();
-        ArrayList<cliente> lista = new ArrayList<cliente>();
+        productos producto = new productos();
+        ArrayList<productos> lista = new ArrayList<productos>();
     /**
      * Retrieves representation of an instance of Ws.wsproductos
      * @return an instance of java.lang.String
@@ -68,24 +69,26 @@ public class wsproductos {
        DB dbase = new DB(Host,Database,User,Pass);
        
        //realizo el sql
-       sql="select * from public.t.products";
+       sql="select * from public.t_productos";
        
          try{
       
        ResultSet rs = dbase.execSelect(sql);   
        while (rs.next()){
-           cliente cliente = new cliente();
+           productos producto = new productos();
            
-           cliente.setId(rs.getInt(1));
-           cliente.setNombre(rs.getString(2));
-           cliente.setApellido(rs.getString(3));
-           cliente.setDireccion(rs.getString(4));
-           cliente.setCedula(rs.getString(5));
-           cliente.setTelefono1(rs.getString(6));
-           cliente.setTelefono2(rs.getString(7));
-           cliente.setEmail(rs.getString(8));
+           producto.setId(rs.getInt(1));
+           producto.setDescripcion(rs.getString(2));
+           producto.setCosto(rs.getInt(3));
+           producto.setPrecioVenta(rs.getInt(3));
+           producto.setPrecioAlquiler(rs.getInt(4));
+           producto.setAlquilerVenta(rs.getString(5));
+           producto.setCantidadALquiler(rs.getString(6));
+           producto.setCantidadVenta(rs.getString(7));
+           producto.setDiasRecuperacion(rs.getString(8));
            
-           lista.add(cliente);
+           //asigno elrs a la lista
+           lista.add(producto);
        
        }
     } catch (Exception e) {

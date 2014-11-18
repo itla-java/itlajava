@@ -74,10 +74,10 @@ public class RegistarCliente extends javax.swing.JDialog {
         jLabel7.setText("E-Mail:");
 
         jButton1.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        jButton1.setText("Buscar");
+        jButton1.setText("Salvar");
 
         jButton2.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        jButton2.setText("Salvar");
+        jButton2.setText("Cancelar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

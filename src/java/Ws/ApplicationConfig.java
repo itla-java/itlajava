@@ -33,6 +33,7 @@ public class ApplicationConfig extends Application {
         resources.add(Ws.WebService_Prueva.class);
         resources.add(Ws.Webservice_Cliente.class);
         resources.add(Ws.Webservice_Producto.class);
+        resources.add(Ws.Webservice_Venta_factura.class);
         resources.add(clases.WssResource.class);
     }
     

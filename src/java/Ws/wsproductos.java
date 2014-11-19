@@ -54,7 +54,7 @@ public class wsproductos {
         throw new UnsupportedOperationException();
     }
     @GET
-    @Path("/getproducto")
+    @Path("/getproductos")
     @Produces("application/json")
     public String getproducto(){
         //Asigne los parametros de onccion a la base de datos

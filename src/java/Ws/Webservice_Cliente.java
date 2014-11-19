@@ -5,7 +5,7 @@
  */
 package Ws;
 
-import clases.productos;
+import dto.cliente;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;

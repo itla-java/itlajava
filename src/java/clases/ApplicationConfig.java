@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Ws;
+package clases;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
 /**
  *
- * @author Estudiante
+ * @author COMPAQ
  */
 @javax.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {

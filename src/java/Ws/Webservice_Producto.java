@@ -6,7 +6,7 @@
 package Ws;
 
 
-import clases.productos;
+import dto.productos;
 import db.DB;
 import java.sql.SQLException;
 import javax.ws.rs.core.Context;

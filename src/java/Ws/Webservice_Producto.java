@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * @author Estudiante
  */
 @Path("producto")
-public class wsproductos {
+public class Webservice_Producto {
 
     @Context
     private UriInfo context;
@@ -35,7 +35,7 @@ public class wsproductos {
     /**
      * Creates a new instance of wsproductos
      */
-    public wsproductos() {
+    public Webservice_Producto() {
     }
     
     //variables de la base de datos 
@@ -44,7 +44,7 @@ public class wsproductos {
         productos producto = new productos();
         ArrayList<productos> lista = new ArrayList<productos>();
     /**
-     * Retrieves representation of an instance of Ws.wsproductos
+     * Retrieves representation of an instance of Ws.Webservice_Producto
      * @return an instance of java.lang.String
      */
     @GET
@@ -67,7 +67,7 @@ public class wsproductos {
        //realizo el sql
        sql="select * from public.t_productos";
        
-         try{
+       try{
       
        ResultSet rs = dbase.execSelect(sql);   
        while (rs.next()){
@@ -100,7 +100,7 @@ public class wsproductos {
     }
 
     @GET
-    @Path("/getproducto")
+    @Path("/getproducto/{id}/{token}")
     @Produces("application/json")
     public String getproduct_id_nombre(@PathParam("id") String id,@PathParam("token") String token){
       //instancie el objeto de DB
@@ -164,7 +164,7 @@ public class wsproductos {
 
     
     /**
-     * PUT method for updating or creating an instance of wsproductos
+     * PUT method for updating or creating an instance of Webservice_Producto
      * @param content representation for the resource
      * @return an HTTP response with content of the updated or created resource.
      */

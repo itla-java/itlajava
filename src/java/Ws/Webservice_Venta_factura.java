@@ -48,7 +48,7 @@ public class Webservice_Venta_factura {
     @Produces("application/json")
     public String getfactura_id(@PathParam("id") int id){
         //instancie el objeto de DB
-       DB dbase = new DB("localhost","itla","adminm7xt8zn","JaQc2-sekn7A");
+       DB dbase = new DB("localhost","itla","itlajava","12345678@itla");
        ventaFactura vf = new ventaFactura();
        ArrayList<ventaFactura> lista = new ArrayList<>();
        Gson json = new Gson();

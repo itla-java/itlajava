@@ -60,7 +60,7 @@ public class WebService_Logins {
     public String getStatus(@PathParam ("user") String user ,@PathParam ("pass") String pass){
         
         
-        DB dbase = new DB("localhost","itla","adminm7xt8zn","JaQc2-sekn7A");
+        DB dbase = new DB("localhost","itla","itlajava","12345678@itla");
         
         String sql="Select fun_login("+user+","+pass+")";
         ResultSet rs = dbase.execSelect(sql);  

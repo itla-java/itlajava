@@ -160,7 +160,20 @@ public class Webservice_Producto {
         return null;
  
     }
+    @PUT
+    @Path("/insertarproducto/{id}/{nombre}/{descripcion}/{costo}//{precioventa}/{precioalquiler}/{alquilerventa}/{cantidadalquiler}/{cantidadventa}/{diasrecuperacion}")
+    @Produces("application/json")
+    public void insertar_producto(@PathParam("id")int id,@PathParam("nombre")String nombre,@PathParam("descripcion")String descripcion,@PathParam("costo")int costo,@PathParam("precioventa")int precioventa,@PathParam("precioalquiler")int precioalquiler,@PathParam("alquilerventa")int alquilerventa,@PathParam("cantidadalquier")int cantidadalquiler,@PathParam("cantidadalquier")int cantidadaventa,@PathParam("diasrecuperacion")int diasrecuperacion){
+        
+        DB dbase = new DB("localhost","itla","adminm7xt8zn","JaQc2-sekn7A");
     
+        String sql="INSERT INTO public.t_productos(f_id,f_nombre,f_descripcion,f_costo,f_precio_venta,";
+        sql+="f_precio_alquiler,f_alquiler_venta,f_cantidad_alquiler,f_cantidad_venta,f_dias_recuperacion)";
+        sql+= "VALUES ("+id+","+"'"+nombre+"'"+","+"'"+descripcion+"'"+","+costo+","+","+precioventa+","+","+precioalquiler+","+"'"+alquilerventa+"'"+","+"'"+cantidadalquiler+"'"+","+"'"+cantidadaventa+"'"+","+"'"+diasrecuperacion+"'"+")";
+        
+        dbase.executeQuery(sql);
+        
+    }
 
     
     /**

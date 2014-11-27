@@ -8,6 +8,7 @@ package Ws;
 import com.google.gson.Gson;
 import db.DB;
 import dto.productos;
+import dto.reciboVentaFactura;
 import dto.ventaFactura;
 import java.sql.ResultSet;
 import javax.ws.rs.core.Context;
@@ -18,7 +19,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import java.util.ArrayList;
+import javax.ws.rs.core.MediaType;
 
 /**
  * REST Web Service
@@ -43,6 +46,8 @@ public class Webservice_Venta_factura {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }
+    
+    /*Metodo que busca la factura por el id*/
     @GET
     @Path("/getproductos")
     @Produces("application/json")
@@ -89,6 +94,22 @@ public class Webservice_Venta_factura {
         return json1;
         
     }
+    /*fin del metodo que busca la factura por el id made by:José Aníbal Moronta Mejía*/
+    
+    
+    /*metodo que inserta factura en reciboVnetaFactura*/
+    @POST
+    @Path("/insertar_venta_factura")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void insertar_venta_factura(String informacion) throws Exception{
+        
+        reciboVentaFactura recibo = new reciboVentaFactura();
+        
+        recibo.insertar_recibo_venta_fact(informacion);
+        
+    }
+    /*fin del metodo que inserta factura en reciboVnetaFactura mede by:José Aníbal Moronta Mejía*/
+    
     /**
      * Retrieves representation of an instance of Ws.Webservice_Venta_factura
      * @return an instance of java.lang.String

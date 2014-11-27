@@ -5,6 +5,10 @@
  */
 package dto;
 
+import db.DB;
+import java.sql.PreparedStatement;
+import javax.ws.rs.PathParam;
+
 /**
  *
  * @author HiraldoTran
@@ -83,5 +87,25 @@ public class detalleVentaFactura {
         this.itbis = itbis;
     }
    
+    public void insertar_detalle_venta_factura(String informacion) throws Exception{
+        
+        DB dbase = new DB("itla2","itlajava","12345678@itla");
+        
+        String sql="INSERT INTO public.t_detalle_venta_factura(f_id_t_venta_factura,f_tipo_factura_t_venta_factura,f_id_t_productos,f_precio,f_cantidad,f_costo,f_itbis)";
+        
+        PreparedStatement p = DB.conexion.prepareStatement(sql);
+        
+        p.setInt(1, idVentaFactura);
+        p.setString(2, tipoFacturaVentaFactura);
+        p.setInt(3, idProducto);
+        p.setInt(4, precio);
+        p.setInt(5, cantidad);
+        p.setInt(6, costo);
+        p.setInt(7, itbis);
+        p.execute();
+        
+        
+    
+    }
    
 }

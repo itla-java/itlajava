@@ -73,9 +73,9 @@ public class Webservice_Cliente {
     
     /*Metodo que inserta un cliente*/
     @POST
-    @Path("/insertar_cliente")
+    @Path("/insertar_cliente/{informacion}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void insertar_cliente(@PathParam ("info") String informacion ) throws Exception {
+    public void insertar_cliente(@PathParam("informacion") String informacion ) throws Exception {
       
             cliente cliente = new cliente();
             

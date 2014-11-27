@@ -5,6 +5,9 @@
  */
 package dto;
 
+import db.DB;
+import java.sql.PreparedStatement;
+
 /**
  *
  * @author HiraldoTran
@@ -54,6 +57,24 @@ public class facturaRecibo {
 
     public void setIdReciboVentaFactura(int idReciboVentaFactura) {
         this.idReciboVentaFactura = idReciboVentaFactura;
+    }
+    
+    public void insertar_factura_recibo(String informacion) throws Exception{
+        
+        DB dbase = new DB("itla2","itlajava","12345678@itla");
+        
+        String sql = "INSERT INTO public.t_factura_recibo(f_tipo_factura_t_venta_factura,f_monto,f_fecha,f_id_t_recibo_venta_factura)";
+        sql+="VALUES (?,?,?,?,?,?,?,?)";
+        
+        
+        PreparedStatement p = DB.conexion.prepareStatement(sql);
+        
+        p.setString(1, tipoFacturaVentaFactura);
+        p.setInt(2, monto);
+        p.setString(3, fecha);
+        p.setInt(4, idReciboVentaFactura);
+        p.execute();
+    
     }
     
     

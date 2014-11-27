@@ -5,6 +5,9 @@
  */
 package dto;
 
+import db.DB;
+import java.sql.PreparedStatement;
+
 /**
  *
  * @author HiraldoTran
@@ -81,6 +84,27 @@ public class cliente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public void insertar_cliente(String informacion) throws Exception{
+    
+    
+        DB dbase = new DB("itla2","itlajava","12345678@itla");
+        
+        String sql = "INSERT INTO public.t_cliente(f_nombre,f_apellido,f_direccion,f_cedula,f_telefono1,f_telefono2,f_email)";
+        sql+="VALUES (?,?,?,?,?,?,?,?)";
+        
+        PreparedStatement p = DB.conexion.prepareStatement(sql);
+        
+        p.setString(1, nombre);
+        p.setString(2, apellido);
+        p.setString(3, direccion);
+        p.setString(4, cedula);
+        p.setString(5, telefono1);
+        p.setString(6, telefono2);
+        p.setString(7, email);
+        p.execute();
+
     }
     
     

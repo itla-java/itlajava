@@ -11,6 +11,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
@@ -21,6 +22,9 @@ import db.DB;
 import  java.sql.ResultSet;
 import dto.cliente;
 import java.util.ArrayList;
+import javafx.scene.media.Media;
+import javax.print.attribute.standard.MediaTray;
+import javax.ws.rs.core.MediaType;
 
 /**
  * REST Web Service
@@ -65,6 +69,19 @@ public class Webservice_Cliente {
     @Consumes("application/json")
     public void putJson(String content) {
     }
+    
+    
+    /*Metodo que inserta un cliente*/
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void insertar_cliente(@PathParam ("info") String informacion ) throws Exception {
+      
+            cliente cliente = new cliente();
+            
+            cliente.insertar_cliente(informacion);
+    }
+    /*fin del metodo made by:José Aníbal Moronta Mejía*/
+    
     
     @GET
     @Produces("application/json")

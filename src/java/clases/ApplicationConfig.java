@@ -29,6 +29,8 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(Ws.WebService_Alquiler_factura.class);
+        resources.add(Ws.WebService_Detalle_alquiler_factura.class);
         resources.add(Ws.WebService_Detalle_venta_factura.class);
         resources.add(Ws.WebService_Factura_Recibo.class);
         resources.add(Ws.WebService_Logins.class);

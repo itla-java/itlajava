@@ -120,7 +120,7 @@ public class detalleAlquilerFactura {
         DB dbase = new DB("ilta2","itlajava","12345678@itla");
         String sql;
         sql="INSERT INTO public.t_detalle_alquiler_factura(f_id_t_alquiler_factura,f_tipo_factura_t_alquiler_factura,f_id_t_productos,f_fecha_salida,f_fecha_entrada,f_fecha_real_entrada,f_cantidad,f_precio,f_costo,f_itbis)";
-        sql+="VALUES ()";
+        sql+="VALUES (?,?,?,?,?,?,?,?,?,?)";
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         p.setInt(1, idAlquilerFactura);

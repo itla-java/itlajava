@@ -5,6 +5,9 @@
  */
 package dto;
 
+import db.DB;
+import java.sql.PreparedStatement;
+
 /**
  *
  * @author HiraldoTran
@@ -12,7 +15,7 @@ package dto;
 public class recargos {
     private int id;
     private int idAlquilerFactura;
-    private int tipoFacturaAlquilerFactura;
+    private String tipoFacturaAlquilerFactura;
     private String descripcion;
     private int monto;
     private String hechoPor;
@@ -34,11 +37,11 @@ public class recargos {
         this.idAlquilerFactura = idAlquilerFactura;
     }
 
-    public int getTipoFacturaAlquilerFactura() {
+    public String getTipoFacturaAlquilerFactura() {
         return tipoFacturaAlquilerFactura;
     }
 
-    public void setTipoFacturaAlquilerFactura(int tipoFacturaAlquilerFactura) {
+    public void setTipoFacturaAlquilerFactura(String tipoFacturaAlquilerFactura) {
         this.tipoFacturaAlquilerFactura = tipoFacturaAlquilerFactura;
     }
 
@@ -72,6 +75,28 @@ public class recargos {
 
     public void setPagado(boolean pagado) {
         this.pagado = pagado;
+    }
+    
+    public void insertar_recargos(String informacion) throws Exception{
+    
+    
+        DB dbase = new DB("itla2", "itlajava", "12345678@itla");
+        
+        String sql;
+        
+        sql="INSERT INTO public.t_recargos(f_id_t_alquiler_factura,f_tipo_factura_t_alquiler_factura,f_descripcion,f_monto,f_hecho_por,f_pagado)";
+        sql+="VALUES (?,?,?,?,?,?)";
+        
+        PreparedStatement p  = DB.conexion.prepareStatement(sql);
+        p.setInt(1, idAlquilerFactura);
+        p.setString(2,tipoFacturaAlquilerFactura);
+        p.setString(3,descripcion);
+        p.setInt(4, monto);
+        p.setString(5, hechoPor);
+        p.setBoolean(6, pagado);
+        p.execute();
+        
+    
     }
     
     

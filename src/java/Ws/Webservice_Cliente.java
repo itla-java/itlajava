@@ -5,6 +5,7 @@
  */
 package Ws;
 
+import clases.CheckToken;
 import dto.cliente;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -19,6 +20,8 @@ import javax.ws.rs.Produces;
 import java.sql.SQLException;
 import com.google.gson.Gson;
 import db.DB;
+import dto.Producto;
+import dto.Respuesta;
 import  java.sql.ResultSet;
 import dto.cliente;
 import java.util.ArrayList;
@@ -127,5 +130,80 @@ public class Webservice_Cliente {
         //retorno el json
         return Gson;
     }
+    
+    
+    
+    
+    //metodo que busca el cliente epor nombre o apellido//
+    @GET
+    @Path("/getcliente_nombre_apellido/{token}/{id}")
+    @Produces("application/json")
+    public String getCliente_nombre_apellido(@PathParam("id") String id,@PathParam("token") String token) throws Exception
+    {
+        Respuesta respon = new Respuesta();
+        ArrayList<cliente> lista = new ArrayList<cliente>();
+        
+      //instancie el objeto de DB
+        DB dbase = new DB("itla2","itlajava","12345678@itla");
+          
+       //Verificamos si el token esta activo 
+       
+        CheckToken ver = new CheckToken();
+       
+       
+       if (!ver.checktocken(dbase, token)){
+       
+           { respon.setId(-1);
+         respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
+         String json1=json.toJson(respon);
+         return json1;              
+       }    
+       
+       
+       }
+       
+       
+                 
+       //realizo el sql de busqueda
+        String sql="select * from public.t_cliente where f_nombre ilike '%"+id+"%' or f_apellido ilike '%"+id+"%';";   
+  
+        try
+        {
+            ResultSet rs = dbase.execSelect(sql);   
+            while (rs.next())
+             {
+                cliente cliente = new cliente();
+                
+                cliente.setId(rs.getInt(1));//id
+                cliente.setNombre(rs.getString(2));//nombre
+                cliente.setApellido(rs.getString(3));//apellido
+                cliente.setDireccion(rs.getString(4));//direccion
+                cliente.setCedula(rs.getString(5));//cedula
+                cliente.setTelefono1(rs.getString(6));//telefono1
+                cliente.setTelefono2(rs.getString(7));//telefono2
+                cliente.setEmail(rs.getString(8));//email
+                
+                
+                //asigno elrs a la lista
+                lista.add(cliente);
+            }
+        } catch (Exception e) 
+        {
+            //si falla un error de base de datos
+             respon.setId(-1);
+             respon.setMensaje("Error de la base de datos "+e.getMessage());
+             String json1=json.toJson(respon);
+             return json1;          
+        }
+         //convierto la lista a Gson
+        String json1=json.toJson(lista);
+        respon.setId(1);
+        respon.setMensaje(json1);
+        json1=json.toJson(respon);         
+        //retorno el json
+        return json1;     
+    }
+    
+    //fin del metodo que busca el cliente epor nombre o apellido madeby:José Aníbal Moronta//
     
 }

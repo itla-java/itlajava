@@ -130,7 +130,7 @@ public class Webservice_Producto {
         
     }
 
-   private boolean checktocken(DB dbase,String token)
+    static private boolean checktocken(DB dbase,String token)
     {
 
        String sql="select count(*) from public.t_logins where f_token="+dbase.comilla(token) + " and f_activo = true";

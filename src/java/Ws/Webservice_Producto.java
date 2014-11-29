@@ -21,6 +21,7 @@ import  java.sql.ResultSet;
 import com.google.gson.Gson;
 import dto.Respuesta;
 import java.util.ArrayList;
+import javax.ws.rs.POST;
 import javax.ws.rs.core.MediaType;
 
 
@@ -119,7 +120,7 @@ public class Webservice_Producto {
     }
 
 
-    @PUT
+    @POST
     @Path("/insertarproducto/{informacion}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void insertar_producto(@PathParam("informacion")String json) throws Exception{

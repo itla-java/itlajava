@@ -122,7 +122,7 @@ public class Webservice_Producto {
 
     @POST
     @Path("/insertarproducto/{informacion}")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes("application/json")
     public void insertar_producto(@PathParam("informacion")String json) throws Exception{
         
         Producto product = new Producto();

@@ -40,7 +40,7 @@ public class Webservice_Venta_factura {
     public Webservice_Venta_factura() {
     }
     
-        @GET
+    @GET
     @Produces("application/json")
     public String getJson() {
         //TODO return proper representation object

@@ -61,9 +61,9 @@ public class Webservice_Producto {
 
 
     @GET
-    @Path("/getproducto/{token}/{id}")
+    @Path("/getproducto/{token}/{nombre}")
     @Produces("application/json")
-    public String getproduct_id_nombre(@PathParam("id") String id,@PathParam("token") String token) throws Exception
+    public String getproduct_id_nombre(@PathParam("nombre") String nombre,@PathParam("token") String token) throws Exception
     {
         Respuesta respon = new Respuesta();
         ArrayList<Producto> lista = new ArrayList<Producto>();
@@ -79,7 +79,7 @@ public class Webservice_Producto {
        }            
                  
        //realizo el sql de busqueda
-        String sql="select * from public.t_productos where f_nombre ilike '%"+id+"%';";   
+        String sql="select * from public.t_productos where f_nombre ilike '%"+nombre+"%';";   
   
         try
         {
@@ -89,14 +89,15 @@ public class Webservice_Producto {
                 Producto producto = new Producto();
   
                 producto.setF_id(rs.getInt(1)); //ID del producto
-                producto.setF_descripcion(rs.getString(2)); 
-                producto.setF_costo(rs.getInt(3));
-                producto.setF_precio_venta(rs.getInt(3));
-                producto.setF_precio_alquiler(rs.getInt(4));
-                producto.setF_alquiler_venta(rs.getString(5));
-                producto.setF_cantidad_alquiler(rs.getString(6));
-                producto.setF_cantidad_venta(rs.getString(7));
-                producto.setF_dias_recuperacion(rs.getString(8));
+                producto.setF_nombre(rs.getString(2));
+                producto.setF_descripcion(rs.getString(3)); 
+                producto.setF_costo(rs.getInt(4));
+                producto.setF_precio_venta(rs.getInt(5));
+                producto.setF_precio_alquiler(rs.getInt(6));
+                producto.setF_alquiler_venta(rs.getString(7));
+                producto.setF_cantidad_alquiler(rs.getString(8));
+                producto.setF_cantidad_venta(rs.getString(9));
+                producto.setF_dias_recuperacion(rs.getString(10));
                 //asigno elrs a la lista
                 lista.add(producto);
             }

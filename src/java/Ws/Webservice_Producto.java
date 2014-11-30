@@ -124,9 +124,14 @@ public class Webservice_Producto {
     @Path("/insertarproducto/{informacion}")
     @Consumes("application/json")
     public void insertar_producto(@PathParam("informacion")String json) throws Exception{
-        
+        try{
         Producto product = new Producto();
         product.insertar_t_productos(json);
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
         
         
         

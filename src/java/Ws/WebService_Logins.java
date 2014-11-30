@@ -71,16 +71,17 @@ public class WebService_Logins {
         String sql="Select fun_login('"+user+"','"+pass+"')";
         ResultSet rs = dbase.execSelect(sql);  
         
-            if (rs.next()==true){  
-                return "true";
+            if (!rs.next()){  
+                return "Usuario no existe";
             }
-            else
-                return "false";
-        } catch (Exception e) {
-            
+           
+        } catch (Exception e) 
+        {
+         return e.getMessage();    
+        
         }
         
-        return "Usuario no existe";
+        return "Usuario Existe";
    
 }
 }

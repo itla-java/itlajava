@@ -117,7 +117,7 @@ public class Producto {
         {
             PreparedStatement p = DB.conexion.prepareStatement(sql);
             Gson json = new Gson();
-            ventaFactura info = json.fromJson(informacion, ventaFactura.class);
+            Producto info = json.fromJson(informacion, Producto.class);
             p.setInt(1, f_id);
             p.setString(2, f_nombre);
             p.setString(3, f_descripcion);
@@ -136,5 +136,5 @@ public class Producto {
                 
                 }
     }
-    
+   
 }

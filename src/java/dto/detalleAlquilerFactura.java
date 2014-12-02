@@ -124,7 +124,7 @@ public class detalleAlquilerFactura {
         sql+="VALUES (?,?,?,?,?,?,?,?,?,?)";
         
         Gson json = new Gson();
-       detalleAlquilerFactura info = json.fromJson(informacion, detalleAlquilerFactura.class);
+        detalleAlquilerFactura info = json.fromJson(informacion, detalleAlquilerFactura.class);
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         p.setInt(1, idAlquilerFactura);
@@ -138,12 +138,7 @@ public class detalleAlquilerFactura {
         p.setInt(9,costo);
         p.setInt(10,itbis);
         p.execute();
-        
-        
-        
-        
-        
-    
+
     }
     
 }

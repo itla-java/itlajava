@@ -63,17 +63,11 @@ public class WebService_Logins {
     
     @GET
     @Produces("application/json")
-    @Path("/getstatus//{token}{user}/{pass}")
-    public String getStatus(@PathParam ("token") String token,@PathParam ("user") String user ,@PathParam ("pass") String pass) throws Exception{
+    @Path("/getstatus/{user}/{pass}")
+    public String getStatus(@PathParam ("user") String user ,@PathParam ("pass") String pass) throws Exception{
+     
         
-        
-          Respuesta respo  = new Respuesta();
-        CheckToken ctoken = new CheckToken();
-        if (ctoken.checktocken2(token)==true){
-            respo.setId(-3);
-            respo.setMensaje("El token no esta activo");
-            return respo.ToJson(respo);
-        }
+        Respuesta respo = new Respuesta();
         try{
         DB dbase = new DB("itla2","itlajava","12345678@itla");
         String sql="Select fun_login('"+user+"','"+pass+"')";

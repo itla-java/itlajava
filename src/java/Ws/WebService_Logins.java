@@ -5,7 +5,9 @@
  */
 package Ws;
 
+import clases.CheckToken;
 import db.DB;
+import dto.Respuesta;
 import java.sql.ResultSet;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -61,8 +63,17 @@ public class WebService_Logins {
     
     @GET
     @Produces("application/json")
-    @Path("/getstatus/{user}/{pass}")
-    public String getStatus(@PathParam ("user") String user ,@PathParam ("pass") String pass){
+    @Path("/getstatus//{token}{user}/{pass}")
+    public String getStatus(@PathParam ("token") String token,@PathParam ("user") String user ,@PathParam ("pass") String pass) throws Exception{
+        
+        
+          Respuesta respo  = new Respuesta();
+        CheckToken ctoken = new CheckToken();
+        if (ctoken.checktocken2(token)==true){
+            respo.setId(-3);
+            respo.setMensaje("El token no esta activo");
+            return respo.ToJson(respo);
+        }
         
         try{
         DB dbase = new DB("itla2","itlajava","12345678@itla");
@@ -72,7 +83,9 @@ public class WebService_Logins {
         ResultSet rs = dbase.execSelect(sql);  
         
             if (!rs.next()){  
-                return "Usuario no existe";
+                respo.setId(-2);
+                respo.setMensaje("Usuario no existe");
+                return respo.ToJson(respo);
             }
            
         } catch (Exception e) 
@@ -81,7 +94,10 @@ public class WebService_Logins {
         
         }
         
-        return "Usuario Existe";
+                respo.setId(1);
+                respo.setMensaje("Usuario existe");
+                return respo.ToJson(respo);
+                
    
 }
 }

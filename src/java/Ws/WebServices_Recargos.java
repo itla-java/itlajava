@@ -5,6 +5,8 @@
  */
 package Ws;
 
+import clases.CheckToken;
+import dto.Respuesta;
 import dto.recargos;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -47,11 +49,19 @@ public class WebServices_Recargos {
     @POST
     @Path("/insertar_recargo/{informacion}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void insertar_recargo(@PathParam("informacion") String informacion) throws Exception{
-    
-            recargos recargos = new recargos();
+    public void insertar_recargo(@PathParam("token")String token,@PathParam("informacion") String informacion) throws Exception{
             
-            recargos.insertar_recargos(informacion);
+          Respuesta respo  = new Respuesta();
+        CheckToken ctoken = new CheckToken();
+        if (ctoken.checktocken2(token)==true){
+            respo.setId(3);
+            respo.setMensaje("El token no esta activo");
+            respo.ToJson(respo);
+        }
+    
+        recargos recargos = new recargos();
+            
+        recargos.insertar_recargos(informacion);
     
     
     }

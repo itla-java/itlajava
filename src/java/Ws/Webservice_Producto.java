@@ -6,6 +6,7 @@
 package Ws;
 
 
+import clases.CheckToken;
 import dto.Producto;
 import db.DB;
 import java.sql.SQLException;
@@ -121,20 +122,26 @@ public class Webservice_Producto {
 
 
     @GET
-    @Path("/insertarproducto/{informacion}")
+    @Path("/insertarproducto/{token}/{informacion}")
     @Consumes("application/json")
-    public void insertar_producto(@PathParam("informacion")String json) throws Exception{
-        try{
+    public void insertar_producto(@PathParam("token")String token,@PathParam("informacion")String json) throws Exception{
+        
+         
+        Respuesta respo  = new Respuesta();
+        CheckToken ctoken = new CheckToken();
+        if (ctoken.checktocken2(token)==true){
+            respo.setId(3);
+            respo.setMensaje("El token no esta activo");
+            respo.ToJson(respo);
+        }
+        
         Producto product = new Producto();
         product.insertar_t_productos(json);
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();
-        }
-        
-        
-        
+        respo.setId(1);
+        respo.setMensaje("Hecho");
+        respo.ToJson(respo);
+                
+      
     }
 
     static private boolean checktocken(DB dbase,String token)

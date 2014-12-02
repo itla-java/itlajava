@@ -30,5 +30,20 @@ public class CheckToken {
        }catch(SQLException e) {}
        return false;
     }
+    public  boolean checktocken2(String token) throws Exception
+    {
+       
+       DB dbase = new DB("itla2","itlajava","12345678@itla");
+       String sql="select count(*) from public.t_logins where f_token="+dbase.comilla(token) + " and f_activo = true";
+       try
+       {
+       ResultSet rs= dbase.execSelect(sql); 
+       while (rs.next())
+       {
+           return true;
+       }
+       }catch(SQLException e) {}
+       return false;
+    }
     
 }

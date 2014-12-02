@@ -5,9 +5,11 @@
  */
 package Ws;
 
+import clases.CheckToken;
 import com.google.gson.Gson;
 import db.DB;
 import dto.Producto;
+import dto.Respuesta;
 import dto.reciboVentaFactura;
 import dto.ventaFactura;
 import java.sql.ResultSet;
@@ -49,9 +51,20 @@ public class Webservice_Venta_factura {
     
     /*Metodo que busca la factura por el id*/
     @GET
-    @Path("/getproductos")
+    @Path("/getproductos/{token}/{id}")
     @Produces("application/json")
-    public String getfactura_id(@PathParam("id") int id) throws Exception{
+    public String getfactura_id(@PathParam("token") String token,@PathParam("id") int id) throws Exception{
+        
+
+
+          Respuesta respo  = new Respuesta();
+        CheckToken ctoken = new CheckToken();
+        if (ctoken.checktocken2(token)==true){
+            respo.setId(3);
+            respo.setMensaje("El token no esta activo");
+            respo.ToJson(respo);
+        }
+        
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
        ventaFactura vf = new ventaFactura();
@@ -99,14 +112,23 @@ public class Webservice_Venta_factura {
     
     /*metodo que inserta factura en reciboVnetaFactura*/
     @POST
-    @Path("/insertar_venta_factura")
+    @Path("/insertar_venta_factura/{token}/{informacion}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void insertar_venta_factura(String informacion) throws Exception{
+    public void insertar_venta_factura(@PathParam("token")String token,@PathParam("informacion")String informacion) throws Exception{
+        
+          Respuesta respo  = new Respuesta();
+        CheckToken ctoken = new CheckToken();
+        if (ctoken.checktocken2(token)==true){
+            respo.setId(3);
+            respo.setMensaje("El token no esta activo");
+            respo.ToJson(respo);
+        }
         
         reciboVentaFactura recibo = new reciboVentaFactura();
         
         recibo.insertar_recibo_venta_fact(informacion);
-        
+        respo.setId(1);
+        respo.setMensaje("Hecho");
     }
     /*fin del metodo que inserta factura en reciboVnetaFactura mede by:José Aníbal Moronta Mejía*/
     

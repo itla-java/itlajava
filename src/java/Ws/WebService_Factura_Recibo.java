@@ -5,6 +5,8 @@
  */
 package Ws;
 
+import clases.CheckToken;
+import dto.Respuesta;
 import dto.facturaRecibo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -47,13 +49,22 @@ public class WebService_Factura_Recibo {
     
     /*metodo que inserta en factura_recibo*/
     @POST
-    @Path("/insertar_factura_recibo/{informacion}")
+    @Path("/insertar_factura_recibo/{token}/{informacion}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void insertar_factura_recibo(@PathParam("informacion")String informacion) throws Exception{
-    
+    public void insertar_factura_recibo(@PathParam("token")String token,@PathParam("informacion")String informacion) throws Exception{
+         Respuesta respo  = new Respuesta();
+        CheckToken ctoken = new CheckToken();
+        if (ctoken.checktocken2(token)==true){
+            respo.setId(3);
+            respo.setMensaje("El token no esta activo");
+            respo.ToJson(respo);
+        }
     
         facturaRecibo frecibo = new facturaRecibo();
         frecibo.insertar_factura_recibo(informacion);
+        respo.setId(1);
+        respo.setMensaje("Hecho");
+        respo.ToJson(respo);
         
     }
     /*fin del metodo que inserta en factura_recibo mde by:José Aníbal Moronta mejía*/

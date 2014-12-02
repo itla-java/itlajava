@@ -89,9 +89,19 @@ public class Webservice_Cliente {
     
     @GET
     @Produces("application/json")
-    @Path("/getcliente")
-    public String getCliente() throws Exception
+    @Path("/getcliente/{token}")
+    public String getCliente(@PathParam("token") String token) throws Exception
     {
+            Respuesta respo  = new Respuesta();
+        CheckToken ctoken = new CheckToken();
+        if (ctoken.checktocken2(token)==true){
+            respo.setId(3);
+            respo.setMensaje("El token no esta activo");
+            respo.ToJson(respo);
+            
+
+        }
+
           //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
         

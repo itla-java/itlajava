@@ -5,6 +5,8 @@
  */
 package Ws;
 
+import clases.CheckToken;
+import dto.Respuesta;
 import dto.detalleVentaFactura;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -37,13 +39,23 @@ public class WebService_Detalle_venta_factura {
     
     /*metodo que inserta en detalle_venta_facura*/
     @POST
-    @Path("/insertar_detalle_centa_factura/informacion")
+    @Path("/insertar_detalle_centa_factura/{token}/{informacion}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void insertar_detalle_venta_factura(@PathParam("informcaion") String informacion) throws Exception{
-
+    public void insertar_detalle_venta_factura(@PathParam("token") String token,@PathParam("informacion") String informacion) throws Exception{
+         Respuesta respo  = new Respuesta();
+        CheckToken ctoken = new CheckToken();
+        if (ctoken.checktocken2(token)==true){
+            respo.setId(3);
+            respo.setMensaje("El token no esta activo");
+            respo.ToJson(respo);
+        }
+        
         detalleVentaFactura detallevfactura = new detalleVentaFactura();
         
         detallevfactura.insertar_detalle_venta_factura(informacion);
+        respo.setId(1);
+        respo.setMensaje("Hecho");
+        respo.ToJson(respo);
 
     } 
     /*fin del metodo que inserta en detalle_venta_facura made by:José Aníbal Moronta Mejía*/

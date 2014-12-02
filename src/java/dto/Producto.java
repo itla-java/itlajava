@@ -110,7 +110,7 @@ public class Producto {
     
     public void insertar_t_productos(String informacion) throws Exception{
         
-        DB dbase = new DB("itla2","itlajava","12345678@itla");
+        DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
         String sql="INSERT INTO public.t_productos(f_id,f_nombre,f_descripcion,f_costo,f_precio_venta,f_precio_alquiler,f_alquiler_venta,f_cantidad_alquiler,f_cantidad_venta,f_dias_recuperacion)";       
         sql+="VALUES(?,?,?,?,?,?,?,?,?,?)";    
         try

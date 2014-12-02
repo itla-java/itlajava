@@ -74,11 +74,8 @@ public class WebService_Logins {
             respo.setMensaje("El token no esta activo");
             return respo.ToJson(respo);
         }
-        
         try{
         DB dbase = new DB("itla2","itlajava","12345678@itla");
-        
-        
         String sql="Select fun_login('"+user+"','"+pass+"')";
         ResultSet rs = dbase.execSelect(sql);  
         
@@ -91,13 +88,10 @@ public class WebService_Logins {
         } catch (Exception e) 
         {
          return e.getMessage();    
-        
         }
-        
                 respo.setId(1);
                 respo.setMensaje("Usuario existe");
                 return respo.ToJson(respo);
-                
-   
+
 }
 }

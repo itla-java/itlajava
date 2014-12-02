@@ -14,51 +14,52 @@ import java.sql.PreparedStatement;
  * @author HiraldoTran
  */
 public class reciboVentaFactura {
-    private int id;
-    private int idCliente;
-    private String concepto;
-    private String Fecha;
-    private int monto;
+    private int f_id;
+    private int f_id_t_cliente;
+    private String f_concepto;
+    private String f_fecha;
+    private int f_monto;
+
+    public int getF_id() {
+        return f_id;
+    }
+
+    public void setF_id(int f_id) {
+        this.f_id = f_id;
+    }
+
+    public int getF_id_t_cliente() {
+        return f_id_t_cliente;
+    }
+
+    public void setF_id_t_cliente(int f_id_t_cliente) {
+        this.f_id_t_cliente = f_id_t_cliente;
+    }
+
+    public String getF_concepto() {
+        return f_concepto;
+    }
+
+    public void setF_concepto(String f_concepto) {
+        this.f_concepto = f_concepto;
+    }
+
+    public String getF_fecha() {
+        return f_fecha;
+    }
+
+    public void setF_fecha(String f_fecha) {
+        this.f_fecha = f_fecha;
+    }
+
+    public int getF_monto() {
+        return f_monto;
+    }
+
+    public void setF_monto(int f_monto) {
+        this.f_monto = f_monto;
+    }
     
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public String getConcepto() {
-        return concepto;
-    }
-
-    public void setConcepto(String concepto) {
-        this.concepto = concepto;
-    }
-
-    public String getFecha() {
-        return Fecha;
-    }
-
-    public void setFecha(String Fecha) {
-        this.Fecha = Fecha;
-    }
-    
-       public int getMonto() {
-        return monto;
-    }
-
-     public void setMonto(int Monto) {
-        this.monto = Monto;
-     }
     
     public void insertar_recibo_venta_fact(String informacion) throws Exception{
     
@@ -71,10 +72,10 @@ public class reciboVentaFactura {
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         
-        p.setInt(1, idCliente);
-        p.setString(2, concepto);
-        p.setString(3, Fecha);
-        p.setInt(4, monto);
+        p.setInt(1, f_id_t_cliente);
+        p.setString(2, f_concepto);
+        p.setString(3, f_fecha);
+        p.setInt(4, f_monto);
         p.execute();
         
     

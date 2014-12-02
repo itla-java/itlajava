@@ -80,13 +80,13 @@ public class Webservice_Venta_factura {
        while (rs.next()){
            ventaFactura ventaf = new ventaFactura();
            
-           ventaf.setId(rs.getInt(1));
-           ventaf.setDpo_factura(rs.getString(2));
-           ventaf.setId_cliente(rs.getInt(3));
-          ventaf.setId_orden(rs.getInt(3));
-          ventaf.setFecha(rs.getString(4));
-           ventaf.setHechaPor(rs.getString(5));
-           ventaf.setId_usuario(rs.getInt(6));
+           ventaf.setF_id(rs.getInt(1));
+           ventaf.setF_tipo_factura(rs.getString(2));
+           ventaf.setF_id_t_cliente(rs.getInt(3));
+          ventaf.setF_id_orden(rs.getInt(3));
+          ventaf.setF_fecha(rs.getString(4));
+           ventaf.setF_hecha_por(rs.getString(5));
+           ventaf.setF_id_t_usuario(rs.getInt(6));
        
            
            //asigno elrs a la lista

@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 public class Respuesta {
     
     private int id;
-    private String mensaje, token;
+    private String mensaje,token;
 
     public int getId() {
         return id;

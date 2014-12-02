@@ -15,51 +15,52 @@ import java.sql.PreparedStatement;
  */
 
 public class reciboAlquilerFactura {
-    private int id;
-    private int idAlquilerFactura;
-    private String tipoFacturaAlquilerFactura;
-    private int idCliente;
-    private int monto;
+    private int f_id;
+    private int f_id_t_alquiler_factura;
+    private String f_tipo_factura_t_alquiler_factura;
+    private int f_id_t_cliente;
+    private int f_monto;
 
-    public int getId() {
-        return id;
+    public int getF_id() {
+        return f_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setF_id(int f_id) {
+        this.f_id = f_id;
     }
 
-    public int getIdAlquilerFactura() {
-        return idAlquilerFactura;
+    public int getF_id_t_alquiler_factura() {
+        return f_id_t_alquiler_factura;
     }
 
-    public void setIdAlquilerFactura(int idAlquilerFactura) {
-        this.idAlquilerFactura = idAlquilerFactura;
+    public void setF_id_t_alquiler_factura(int f_id_t_alquiler_factura) {
+        this.f_id_t_alquiler_factura = f_id_t_alquiler_factura;
     }
 
-    public String getTipoFacturaAlquilerFactura() {
-        return tipoFacturaAlquilerFactura;
+    public String getF_tipo_factura_t_alquiler_factura() {
+        return f_tipo_factura_t_alquiler_factura;
     }
 
-    public void setTipoFacturaAlquilerFactura(String tipoFacturaAlquilerFactura) {
-        this.tipoFacturaAlquilerFactura = tipoFacturaAlquilerFactura;
+    public void setF_tipo_factura_t_alquiler_factura(String f_tipo_factura_t_alquiler_factura) {
+        this.f_tipo_factura_t_alquiler_factura = f_tipo_factura_t_alquiler_factura;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public int getF_id_t_cliente() {
+        return f_id_t_cliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setF_id_t_cliente(int f_id_t_cliente) {
+        this.f_id_t_cliente = f_id_t_cliente;
     }
 
-    public int getMonto() {
-        return monto;
+    public int getF_monto() {
+        return f_monto;
     }
 
-    public void setMonto(int monto) {
-        this.monto = monto;
+    public void setF_monto(int f_monto) {
+        this.f_monto = f_monto;
     }
+
     
     
     public void insertar_recibo_alquiler_factura(String informacion) throws Exception{
@@ -74,10 +75,10 @@ public class reciboAlquilerFactura {
        reciboAlquilerFactura info = json.fromJson(informacion, reciboAlquilerFactura.class);
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
-        p.setInt(1, idAlquilerFactura);
-        p.setString(2, tipoFacturaAlquilerFactura);
-        p.setInt(3, idCliente);
-        p.setInt(4, monto);
+        p.setInt(1, f_id_t_alquiler_factura);
+        p.setString(2, f_tipo_factura_t_alquiler_factura);
+        p.setInt(3, f_id_t_cliente);
+        p.setInt(4, f_monto);
         
         p.execute();
         

@@ -121,7 +121,7 @@ public class Webservice_Producto {
     }
 
 
-    @GET
+    @POST
     @Path("/insertarproducto/{token}/{informacion}")
     @Consumes("application/json")
     public void insertar_producto(@PathParam("token")String token,@PathParam("informacion")String json) throws Exception{

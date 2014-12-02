@@ -15,78 +15,80 @@ import javax.ws.rs.PathParam;
  * @author HiraldoTran
  */
 public class detalleVentaFactura {
-   private int id;
-   private int idVentaFactura;
-   private String tipoFacturaVentaFactura;
-   private int idProducto;
-   private int precio;
-   private int cantidad;
-   private int costo;
-   private int itbis;
+   private int f_id;
+   private int f_id_t_venta_factura;
+   private String f_tipo_Factura_t_venta_factura;
+   private int f_id_t_Producto;
+   private int f_precio;
+   private int f_cantidad;
+   private int f_costo;
+   private int f_itbis;
 
-    public int getId() {
-        return id;
+    public int getF_id() {
+        return f_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setF_id(int f_id) {
+        this.f_id = f_id;
     }
 
-    public int getIdVentaFactura() {
-        return idVentaFactura;
+    public int getF_Id_t_venta_factura() {
+        return f_id_t_venta_factura;
     }
 
-    public void setIdVentaFactura(int idVentaFactura) {
-        this.idVentaFactura = idVentaFactura;
+    public void setId_t_venta_factura(int id_t_venta_factura) {
+        this.f_id_t_venta_factura = id_t_venta_factura;
     }
 
-    public String getTipoFacturaVentaFactura() {
-        return tipoFacturaVentaFactura;
+    public String getF_tipo_Factura_t_venta_factura() {
+        return f_tipo_Factura_t_venta_factura;
     }
 
-    public void setTipoFacturaVentaFactura(String tipoFacturaVentaFactura) {
-        this.tipoFacturaVentaFactura = tipoFacturaVentaFactura;
+    public void setF_tipo_Factura_t_venta_factura(String f_tipo_Factura_t_venta_factura) {
+        this.f_tipo_Factura_t_venta_factura = f_tipo_Factura_t_venta_factura;
     }
 
-    public int getIdProducto() {
-        return idProducto;
+    public int getF_id_t_Producto() {
+        return f_id_t_Producto;
     }
 
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
+    public void setF_id_t_Producto(int f_id_t_Producto) {
+        this.f_id_t_Producto = f_id_t_Producto;
     }
 
-    public int getPrecio() {
-        return precio;
+    public int getF_precio() {
+        return f_precio;
     }
 
-    public void setPrecio(int precio) {
-        this.precio = precio;
+    public void setF_precio(int f_precio) {
+        this.f_precio = f_precio;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public int getF_cantidad() {
+        return f_cantidad;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setF_cantidad(int f_cantidad) {
+        this.f_cantidad = f_cantidad;
     }
 
-    public int getCosto() {
-        return costo;
+    public int getF_costo() {
+        return f_costo;
     }
 
-    public void setCosto(int costo) {
-        this.costo = costo;
+    public void setF_costo(int f_costo) {
+        this.f_costo = f_costo;
     }
 
-    public int getItbis() {
-        return itbis;
+    public int getF_itbis() {
+        return f_itbis;
     }
 
-    public void setItbis(int itbis) {
-        this.itbis = itbis;
+    public void setF_itbis(int f_itbis) {
+        this.f_itbis = f_itbis;
     }
+
+    
    
     public void insertar_detalle_venta_factura(String informacion) throws Exception{
         
@@ -96,13 +98,13 @@ public class detalleVentaFactura {
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         Gson json = new Gson();
         detalleVentaFactura info = json.fromJson(informacion, detalleVentaFactura.class);
-        p.setInt(1, idVentaFactura);
-        p.setString(2, tipoFacturaVentaFactura);
-        p.setInt(3, idProducto);
-        p.setInt(4, precio);
-        p.setInt(5, cantidad);
-        p.setInt(6, costo);
-        p.setInt(7, itbis);
+        p.setInt(1, f_id_t_venta_factura);
+        p.setString(2, f_tipo_Factura_t_venta_factura);
+        p.setInt(3, f_id_t_Producto);
+        p.setInt(4, f_precio);
+        p.setInt(5, f_cantidad);
+        p.setInt(6, f_costo);
+        p.setInt(7, f_itbis);
         p.execute();
         
         

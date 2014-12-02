@@ -10,69 +10,70 @@ package dto;
  * @author HiraldoTran
  */
 public class usuario {
-    private int id;
-    private String nombre;
-    private String apellido;
-    private String usuario;
-    private String clave;
-    private boolean proceso;
-    private boolean activo;
+    private int f_id;
+    private String f_nombre;
+    private String f_apellido;
+    private String f_usuario;
+    private String f_clave;
+    private boolean f_proceso;
+    private boolean f_activo;
 
-    public int getId() {
-        return id;
+    public int getF_id() {
+        return f_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setF_id(int f_id) {
+        this.f_id = f_id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getF_nombre() {
+        return f_nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setF_nombre(String f_nombre) {
+        this.f_nombre = f_nombre;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getF_apellido() {
+        return f_apellido;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setF_apellido(String f_apellido) {
+        this.f_apellido = f_apellido;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getF_usuario() {
+        return f_usuario;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setF_usuario(String f_usuario) {
+        this.f_usuario = f_usuario;
     }
 
-    public String getClave() {
-        return clave;
+    public String getF_clave() {
+        return f_clave;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setF_clave(String f_clave) {
+        this.f_clave = f_clave;
     }
 
-    public boolean isProceso() {
-        return proceso;
+    public boolean isF_proceso() {
+        return f_proceso;
     }
 
-    public void setProceso(boolean proceso) {
-        this.proceso = proceso;
+    public void setF_proceso(boolean f_proceso) {
+        this.f_proceso = f_proceso;
     }
 
-    public boolean isActivo() {
-        return activo;
+    public boolean isF_activo() {
+        return f_activo;
     }
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
+    public void setF_activo(boolean f_activo) {
+        this.f_activo = f_activo;
     }
+    
     
     
 }

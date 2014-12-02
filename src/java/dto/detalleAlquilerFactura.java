@@ -14,105 +14,107 @@ import java.sql.PreparedStatement;
  * @author HiraldoTran
  */
 public class detalleAlquilerFactura {
-    private int id;
-    private int idAlquilerFactura;
-    private String tipoFactura_alquilerFactura;
-    private int idProducto;
-    private String fechaSalida;
-    private String fechaEntrada;
-    private String fechaEntradaReal;
-    private int cantidad;
-    private int precio;
-    private int costo;
-    private int itbis;
+    private int f_id;
+    private int f_id_t_alquiler_factura;
+    private String f_tipo_Factura_t_alquiler_factura;
+    private int f_id_t_Producto;
+    private String f_fecha_salida;
+    private String f_fecha_entrada;
+    private String f_fecha_entrada_real;
+    private int f_cantidad;
+    private int f_precio;
+    private int f_costo;
+    private int f_itbis;
 
-    public int getId() {
-        return id;
+    public int getF_id() {
+        return f_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setF_id(int f_id) {
+        this.f_id = f_id;
     }
 
-    public int getIdAlquilerFactura() {
-        return idAlquilerFactura;
+    public int getF_id_t_alquiler_factura() {
+        return f_id_t_alquiler_factura;
     }
 
-    public void setIdAlquilerFactura(int idAlquilerFactura) {
-        this.idAlquilerFactura = idAlquilerFactura;
+    public void setF_id_t_alquiler_factura(int f_id_t_alquiler_factura) {
+        this.f_id_t_alquiler_factura = f_id_t_alquiler_factura;
     }
 
-    public String getTipoFactura_alquilerFactura() {
-        return tipoFactura_alquilerFactura;
+    public String getF_tipo_Factura_t_alquiler_factura() {
+        return f_tipo_Factura_t_alquiler_factura;
     }
 
-    public void setTipoFactura_alquilerFactura(String tipoFactura_alquilerFactura) {
-        this.tipoFactura_alquilerFactura = tipoFactura_alquilerFactura;
+    public void setF_tipo_Factura_t_alquiler_factura(String f_tipo_Factura_t_alquiler_factura) {
+        this.f_tipo_Factura_t_alquiler_factura = f_tipo_Factura_t_alquiler_factura;
     }
 
-    public int getIdProducto() {
-        return idProducto;
+    public int getF_id_t_Producto() {
+        return f_id_t_Producto;
     }
 
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
+    public void setF_id_t_Producto(int f_id_t_Producto) {
+        this.f_id_t_Producto = f_id_t_Producto;
     }
 
-    public String getFechaSalida() {
-        return fechaSalida;
+    public String getF_fecha_salida() {
+        return f_fecha_salida;
     }
 
-    public void setFechaSalida(String fechaSalida) {
-        this.fechaSalida = fechaSalida;
+    public void setF_fecha_salida(String f_fecha_salida) {
+        this.f_fecha_salida = f_fecha_salida;
     }
 
-    public String getFechaEntrada() {
-        return fechaEntrada;
+    public String getF_fecha_entrada() {
+        return f_fecha_entrada;
     }
 
-    public void setFechaEntrada(String fechaEntrada) {
-        this.fechaEntrada = fechaEntrada;
+    public void setF_fecha_entrada(String f_fecha_entrada) {
+        this.f_fecha_entrada = f_fecha_entrada;
     }
 
-    public int  getCantidad() {
-        return cantidad;
+    public String getF_fecha_entrada_real() {
+        return f_fecha_entrada_real;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setF_fecha_entrada_real(String f_fecha_entrada_real) {
+        this.f_fecha_entrada_real = f_fecha_entrada_real;
     }
 
-    public int getPrecio() {
-        return precio;
+    public int getF_cantidad() {
+        return f_cantidad;
     }
 
-    public void setPrecio(int precio) {
-        this.precio = precio;
+    public void setF_cantidad(int f_cantidad) {
+        this.f_cantidad = f_cantidad;
     }
 
-    public int getCosto() {
-        return costo;
+    public int getF_precio() {
+        return f_precio;
     }
 
-    public void setCosto(int costo) {
-        this.costo = costo;
+    public void setF_precio(int f_precio) {
+        this.f_precio = f_precio;
     }
 
-    public int getItbis() {
-        return itbis;
+    public int getF_costo() {
+        return f_costo;
     }
 
-    public void setItbis(int itbis) {
-        this.itbis = itbis;
+    public void setF_costo(int f_costo) {
+        this.f_costo = f_costo;
     }
 
-    public String getFechaEntradaReal() {
-        return fechaEntradaReal;
+    public int getF_itbis() {
+        return f_itbis;
     }
 
-    public void setFechaEntradaReal(String fechaEntradaReal) {
-        this.fechaEntradaReal = fechaEntradaReal;
+    public void setF_itbis(int f_itbis) {
+        this.f_itbis = f_itbis;
     }
+
+   
     
     
     public void insertar_detalle_alquiler_factura(String informacion) throws Exception{
@@ -127,16 +129,16 @@ public class detalleAlquilerFactura {
         detalleAlquilerFactura info = json.fromJson(informacion, detalleAlquilerFactura.class);
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
-        p.setInt(1, idAlquilerFactura);
-        p.setString(2, tipoFactura_alquilerFactura);
-        p.setInt(3, idProducto);
-        p.setString(4,fechaSalida);
-        p.setString(5,fechaEntrada);
-        p.setString(6,fechaEntradaReal);
-        p.setInt(7,cantidad);
-        p.setInt(8,precio);
-        p.setInt(9,costo);
-        p.setInt(10,itbis);
+        p.setInt(1, f_id_t_alquiler_factura);
+        p.setString(2, f_tipo_Factura_t_alquiler_factura);
+        p.setInt(3, f_id_t_Producto);
+        p.setString(4,f_fecha_salida);
+        p.setString(5,f_fecha_entrada);
+        p.setString(6,f_fecha_entrada_real);
+        p.setInt(7,f_cantidad);
+        p.setInt(8,f_precio);
+        p.setInt(9,f_costo);
+        p.setInt(10,f_itbis);
         p.execute();
 
     }

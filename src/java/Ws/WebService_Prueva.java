@@ -88,9 +88,9 @@ public class WebService_Prueva {
             rs.next();
             cliente cliente1= new cliente();
             
-            cliente1.setNombre(rs.getString(2));
-            cliente1.setApellido(rs.getString(3));
-            return ""+cliente1.getNombre()+","+cliente1.getApellido()+";";
+            cliente1.setF_apellido(rs.getString(2));
+            cliente1.setF_apellido(rs.getString(3));
+            return ""+cliente1.getF_nombre()+","+cliente1.getF_apellido()+";";
         }
         catch(SQLException e)
         {

@@ -112,14 +112,14 @@ public class Webservice_Cliente {
         {
             cliente cliente1= new cliente();
             
-            cliente1.setId(rs.getInt(1));
-            cliente1.setNombre(rs.getString(2));
-            cliente1.setApellido(rs.getString(3));
-            cliente1.setDireccion(rs.getString(4));
-            cliente1.setCedula(rs.getString(5));
-            cliente1.setTelefono1(rs.getString(6));
-            cliente1.setTelefono2(rs.getString(7));
-            cliente1.setEmail(rs.getString(8));
+            cliente1.setF_id(rs.getInt(1));
+            cliente1.setF_nombre(rs.getString(2));
+            cliente1.setF_apellido(rs.getString(3));
+            cliente1.setF_direccion(rs.getString(4));
+            cliente1.setF_cedula(rs.getString(5));
+            cliente1.setF_telefono1(rs.getString(6));
+            cliente1.setF_telefono2(rs.getString(7));
+            cliente1.setF_email(rs.getString(8));
             
             //asigno el rs a la lista
             list.add(cliente1);
@@ -184,14 +184,14 @@ public class Webservice_Cliente {
              {
                 cliente cliente = new cliente();
                 
-                cliente.setId(rs.getInt(1));//id
-                cliente.setNombre(rs.getString(2));//nombre
-                cliente.setApellido(rs.getString(3));//apellido
-                cliente.setDireccion(rs.getString(4));//direccion
-                cliente.setCedula(rs.getString(5));//cedula
-                cliente.setTelefono1(rs.getString(6));//telefono1
-                cliente.setTelefono2(rs.getString(7));//telefono2
-                cliente.setEmail(rs.getString(8));//email
+                cliente.setF_id(rs.getInt(1));//id
+                cliente.setF_nombre(rs.getString(2));//nombre
+                cliente.setF_apellido(rs.getString(3));//apellido
+                cliente.setF_direccion(rs.getString(4));//direccion
+                cliente.setF_cedula(rs.getString(5));//cedula
+                cliente.setF_telefono1(rs.getString(6));//telefono1
+                cliente.setF_telefono2(rs.getString(7));//telefono2
+                cliente.setF_email(rs.getString(8));//email
                 
                 
                 //asigno elrs a la lista

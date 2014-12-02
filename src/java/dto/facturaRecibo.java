@@ -14,51 +14,52 @@ import java.sql.PreparedStatement;
  * @author HiraldoTran
  */
 public class facturaRecibo {
-    private int idVentaFactura;
-    private String tipoFacturaVentaFactura;
-    private int monto;
-    private String fecha;
-    private int idReciboVentaFactura;
+    private int f_id_t_venta_factura;
+    private String f_tipo_factura_t_venta_factura;
+    private int f_monto;
+    private String f_fecha;
+    private int f_id_t_Recibo_venta_factura;
 
-    public int getIdVentaFactura() {
-        return idVentaFactura;
+    public int getF_id_t_venta_factura() {
+        return f_id_t_venta_factura;
     }
 
-    public void setIdVentaFactura(int idVentaFactura) {
-        this.idVentaFactura = idVentaFactura;
+    public void setF_id_t_venta_factura(int f_id_t_venta_factura) {
+        this.f_id_t_venta_factura = f_id_t_venta_factura;
     }
 
-    public String getTipoFacturaVentaFactura() {
-        return tipoFacturaVentaFactura;
+    public String getF_tipo_factura_t_venta_factura() {
+        return f_tipo_factura_t_venta_factura;
     }
 
-    public void setTipoFacturaVentaFactura(String tipoFacturaVentaFactura) {
-        this.tipoFacturaVentaFactura = tipoFacturaVentaFactura;
+    public void setF_tipo_factura_t_venta_factura(String f_tipo_factura_t_venta_factura) {
+        this.f_tipo_factura_t_venta_factura = f_tipo_factura_t_venta_factura;
     }
 
-    public int getMonto() {
-        return monto;
+    public int getF_monto() {
+        return f_monto;
     }
 
-    public void setMonto(int monto) {
-        this.monto = monto;
+    public void setF_monto(int f_monto) {
+        this.f_monto = f_monto;
     }
 
-    public String getFecha() {
-        return fecha;
+    public String getF_fecha() {
+        return f_fecha;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setF_fecha(String f_fecha) {
+        this.f_fecha = f_fecha;
     }
 
-    public int getIdReciboVentaFactura() {
-        return idReciboVentaFactura;
+    public int getF_id_t_Recibo_venta_factura() {
+        return f_id_t_Recibo_venta_factura;
     }
 
-    public void setIdReciboVentaFactura(int idReciboVentaFactura) {
-        this.idReciboVentaFactura = idReciboVentaFactura;
+    public void setF_id_t_Recibo_venta_factura(int f_id_t_Recibo_venta_factura) {
+        this.f_id_t_Recibo_venta_factura = f_id_t_Recibo_venta_factura;
     }
+
     
     public void insertar_factura_recibo(String informacion) throws Exception{
         
@@ -72,10 +73,10 @@ public class facturaRecibo {
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         
-        p.setString(1, tipoFacturaVentaFactura);
-        p.setInt(2, monto);
-        p.setString(3, fecha);
-        p.setInt(4, idReciboVentaFactura);
+        p.setString(1, f_tipo_factura_t_venta_factura);
+        p.setInt(2, f_monto);
+        p.setString(3, f_fecha);
+        p.setInt(4, f_id_t_Recibo_venta_factura);
         p.execute();
     
     }

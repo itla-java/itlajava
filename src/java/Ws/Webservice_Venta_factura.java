@@ -51,7 +51,7 @@ public class Webservice_Venta_factura {
     
     /*Metodo que busca la factura por el id*/
     @GET
-    @Path("/getproductos/{token}/{id}")
+    @Path("/getfactura_id/{token}/{id}")
     @Produces("application/json")
     public String getfactura_id(@PathParam("token") String token,@PathParam("id") int id) throws Exception{
         

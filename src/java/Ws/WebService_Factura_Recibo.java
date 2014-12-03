@@ -6,8 +6,13 @@
 package Ws;
 
 import clases.CheckToken;
+import com.google.gson.Gson;
+import db.DB;
 import dto.Respuesta;
+import dto.detalleVentaFactura;
 import dto.facturaRecibo;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -69,6 +74,69 @@ public class WebService_Factura_Recibo {
     }
     /*fin del metodo que inserta en factura_recibo mde by:José Aníbal Moronta mejía*/
 
+    
+     /*inicio del metodo que busca factura recibo por el id*/
+    @GET
+    @Path("/getfacturarecibo_id/{token}/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getfacturarecibo_id(@PathParam("token") String token,@PathParam("id")int id) throws Exception{
+        
+        Respuesta respon = new Respuesta();
+        ArrayList<facturaRecibo> lista = new ArrayList<facturaRecibo>();
+        CheckToken check = new CheckToken();
+        Gson json = new Gson();
+        String sql;
+        //instancie el objeto de DB
+       DB dbase = new DB("itla2","itlajava","12345678@itla");
+          
+       if (check.checktocken2(token)) 
+       { 
+         respon.setId(-1);
+         respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
+         String json1=json.toJson(respon);
+         return json1;              
+       }            
+                 
+       //realizo el sql de busqueda
+        sql="SELECT f_id_t_venta_factura,f_tipo_factura_t_venta_factura,f_monto,f_fecha,f_id_t_recibo_venta_factura ";
+        sql+="FROM public.t_factura_recibo where f_id_t_venta_factura ="+id ;
+        try
+        {
+            ResultSet rs = dbase.execSelect(sql);   
+            while (rs.next())
+             {
+                facturaRecibo fr = new facturaRecibo();
+                    
+                fr.setF_id_t_venta_factura(rs.getInt(1));
+                fr.setF_tipo_factura_t_venta_factura(rs.getString(2));
+                fr.setF_monto(rs.getInt(3));
+                fr.setF_fecha(rs.getString(4));
+                fr.setF_id_t_Recibo_venta_factura(rs.getInt(5));
+                
+
+                //asigno elrs a la lista
+                lista.add(fr);
+            }
+        } catch (Exception e) 
+        {
+            //si falla un error de base de datos
+             respon.setId(-1);
+             respon.setMensaje("Error de la base de datos "+e.getMessage());
+             String json1=json.toJson(respon);
+             return json1;          
+        }
+         //convierto la lista a Gson
+        String json1=json.toJson(lista);
+        respon.setId(1);
+        respon.setMensaje(json1);
+        json1=json.toJson(respon);         
+        //retorno el json
+        return json1;     
+
+    }
+    
+     /*fin  del metodo que busca facturarecibo por el id made by :José Aníbal Moronta*/
+   
     /**
      * PUT method for updating or creating an instance of WebService_Factura_Recibo
      * @param content representation for the resource

@@ -6,8 +6,13 @@
 package Ws;
 
 import clases.CheckToken;
+import com.google.gson.Gson;
+import db.DB;
 import dto.Respuesta;
+import dto.facturaRecibo;
 import dto.recargos;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -46,6 +51,71 @@ public class WebServices_Recargos {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }
+    
+    
+     /*inicio del metodo que busca recargos por el id*/
+    @GET
+    @Path("/getrecargoso_id/{token}/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getrecargos_id(@PathParam("token") String token,@PathParam("id")int id) throws Exception{
+        
+        Respuesta respon = new Respuesta();
+        ArrayList<recargos> lista = new ArrayList<recargos>();
+        CheckToken check = new CheckToken();
+        Gson json = new Gson();
+        String sql;
+        //instancie el objeto de DB
+       DB dbase = new DB("itla2","itlajava","12345678@itla");
+          
+       if (check.checktocken2(token)) 
+       { 
+         respon.setId(-1);
+         respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
+         String json1=json.toJson(respon);
+         return json1;              
+       }            
+                 
+       //realizo el sql de busqueda
+        sql="SELECT f_id,f_id_t_alquiler_factura,f_tipo_factura_t_alquiler_factura,f_descripcion,f_monto,  ";
+        sql+="f_hecho_por,f_pagado FROM public.t_recargos where f_id ="+id ;
+        try
+        {
+            ResultSet rs = dbase.execSelect(sql);   
+            while (rs.next())
+             {
+                recargos r = new recargos();
+                    
+                r.setF_id(rs.getInt(1));
+                r.setF_id_t_alquiler_factura(rs.getInt(2));
+                r.setF_tipo_factura_t_alquiler_factura(rs.getString(3));
+                r.setF_descripcion(rs.getString(4));
+                r.setF_monto(rs.getInt(5));
+                r.setF_hecho_por(rs.getString(6));
+                r.setF_pagado(rs.getBoolean(7));
+
+                //asigno elrs a la lista
+                lista.add(r);
+            }
+        } catch (Exception e) 
+        {
+            //si falla un error de base de datos
+             respon.setId(-1);
+             respon.setMensaje("Error de la base de datos "+e.getMessage());
+             String json1=json.toJson(respon);
+             return json1;          
+        }
+         //convierto la lista a Gson
+        String json1=json.toJson(lista);
+        respon.setId(1);
+        respon.setMensaje(json1);
+        json1=json.toJson(respon);         
+        //retorno el json
+        return json1;     
+
+    }
+    
+     /*fin  del metodo que busca recargos por el id made by :José Aníbal Moronta*/
+   
     @POST
     @Path("/insertar_recargo/{informacion}")
     @Consumes(MediaType.APPLICATION_JSON)

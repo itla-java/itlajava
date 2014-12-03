@@ -14,10 +14,10 @@ import java.sql.PreparedStatement;
  */
 public class alquilerFactura {
     private int f_id;
-    private String f_dpo_factura;
+    private String f_tipo_factura;
     private int f_id_cliente;
     private String f_fecha;
-    private String f_hechaPor;
+    private String f_hecha_por;
     private int f_id_usuario;
     private int f_monto,f_balance;
     private boolean f_pagada;
@@ -30,13 +30,15 @@ public class alquilerFactura {
         this.f_id = f_id;
     }
 
-    public String getF_dpo_factura() {
-        return f_dpo_factura;
+    public String getF_tipo_factura() {
+        return f_tipo_factura;
     }
 
-    public void setF_dpo_factura(String f_dpo_factura) {
-        this.f_dpo_factura = f_dpo_factura;
+    public void setF_tipo_factura(String f_tipo_factura) {
+        this.f_tipo_factura = f_tipo_factura;
     }
+
+
 
     public int getF_id_cliente() {
         return f_id_cliente;
@@ -54,13 +56,15 @@ public class alquilerFactura {
         this.f_fecha = f_fecha;
     }
 
-    public String getF_hechaPor() {
-        return f_hechaPor;
+    public String getF_hecha_por() {
+        return f_hecha_por;
     }
 
-    public void setF_hechaPor(String f_hechaPor) {
-        this.f_hechaPor = f_hechaPor;
+    public void setF_hecha_por(String f_hecha_por) {
+        this.f_hecha_por = f_hecha_por;
     }
+
+   
 
     public int getF_id_usuario() {
         return f_id_usuario;
@@ -103,17 +107,18 @@ public class alquilerFactura {
         sql+="VALUES(?,?,?,?,?,?,?,?)";
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
-        p.setString(1,f_dpo_factura);
+        p.setString(1,f_tipo_factura);
         p.setInt(2, f_id_cliente);
         p.setInt(3, f_id_usuario);
         p.setString(4, f_fecha);
-        p.setString(5, f_hechaPor);
+        p.setString(5, f_hecha_por);
         p.setInt(6,f_monto);
         p.setInt(6,f_balance);
         p.setBoolean(7,f_pagada);
         p.execute();
         
         }
+    
     
     
 }

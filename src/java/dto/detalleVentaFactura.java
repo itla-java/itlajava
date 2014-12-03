@@ -18,7 +18,7 @@ public class detalleVentaFactura {
    private int f_id;
    private int f_id_t_venta_factura;
    private String f_tipo_Factura_t_venta_factura;
-   private int f_id_t_Producto;
+   private int f_id_t_Productos;
    private int f_precio;
    private int f_cantidad;
    private int f_costo;
@@ -48,12 +48,12 @@ public class detalleVentaFactura {
         this.f_tipo_Factura_t_venta_factura = f_tipo_Factura_t_venta_factura;
     }
 
-    public int getF_id_t_Producto() {
-        return f_id_t_Producto;
+    public int getF_id_t_Productos() {
+        return f_id_t_Productos;
     }
 
-    public void setF_id_t_Producto(int f_id_t_Producto) {
-        this.f_id_t_Producto = f_id_t_Producto;
+    public void setF_id_t_Productos(int f_id_t_Productos) {
+        this.f_id_t_Productos = f_id_t_Productos;
     }
 
     public int getF_precio() {
@@ -100,7 +100,7 @@ public class detalleVentaFactura {
         detalleVentaFactura info = json.fromJson(informacion, detalleVentaFactura.class);
         p.setInt(1, f_id_t_venta_factura);
         p.setString(2, f_tipo_Factura_t_venta_factura);
-        p.setInt(3, f_id_t_Producto);
+        p.setInt(3, f_id_t_Productos);
         p.setInt(4, f_precio);
         p.setInt(5, f_cantidad);
         p.setInt(6, f_costo);

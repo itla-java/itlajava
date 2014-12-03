@@ -143,6 +143,29 @@ public class Webservice_Producto {
                 
       
     }
+    
+    @GET
+    @Path("/insertarproduct/{token}/{informacion}")
+    @Consumes("application/json")
+    public void insertar_product(@PathParam("token")String token,@PathParam("informacion")String json) throws Exception{
+        
+         
+        Respuesta respo  = new Respuesta();
+        CheckToken ctoken = new CheckToken();
+        if (ctoken.checktocken2(token)==true){
+            respo.setId(3);
+            respo.setMensaje("El token no esta activo");
+            respo.ToJson(respo);
+        }
+        
+        Producto product = new Producto();
+        product.insertar_t_productos(json);
+        respo.setId(1);
+        respo.setMensaje("Hecho");
+        respo.ToJson(respo);
+                
+      
+    }
 
     static private boolean checktocken(DB dbase,String token)
     {

@@ -113,17 +113,14 @@ public class Webservice_Cliente {
         
        while(rs.next()){
            
-              if(!rs.next()){
+           if(!rs.next()){
                      
-                     
-                     
-                     respo.setId(0);
-                     respo.setMensaje("No hay registros actualmente en la base de datos");
-                     return respo.ToJson(respo);
+                 respo.setId(0);
+                 respo.setMensaje("No hay registros actualmente en la base de datos");
+                 return respo.ToJson(respo);
                  
                  }
                  else {
-        
             cliente cliente1= new cliente();
             
             cliente1.setF_id(rs.getInt(1));
@@ -134,7 +131,9 @@ public class Webservice_Cliente {
             cliente1.setF_telefono1(rs.getString(6));
             cliente1.setF_telefono2(rs.getString(7));
             cliente1.setF_email(rs.getString(8));
-            Gson=json.toJson(cliente1); //convierto el objeto cliente a un String Gson
+
+            
+           return  Gson=json.toJson(cliente1);
               }
        }
         }
@@ -147,8 +146,8 @@ public class Webservice_Cliente {
             return Gson;
         }
         
-        //retorno el json , Maded By José anibal Moronta
-        return Gson;
+    //fin del metodo cliente que busca por id Maded By JLH
+    return respo.ToJson(respo);
     }
     
     

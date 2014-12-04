@@ -6,7 +6,7 @@
 package Ws;
 
 
-import dto.productos;
+import dto.Producto;
 import db.DB;
 import java.sql.SQLException;
 import javax.ws.rs.core.Context;
@@ -19,7 +19,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import  java.sql.ResultSet;
 import com.google.gson.Gson;
+import dto.Respuesta;
 import java.util.ArrayList;
+import javax.ws.rs.core.MediaType;
+
+
 
 /**
  * REST Web Service
@@ -38,11 +42,12 @@ public class Webservice_Producto {
     public Webservice_Producto() {
     }
     
-    //variables de la base de datos 
-        String sql;
+   
+    
+    //variables de la base de datos token
+       
         Gson json = new Gson();
-        productos producto = new productos();
-        ArrayList<productos> lista = new ArrayList<productos>();
+        
     /**
      * Retrieves representation of an instance of Ws.Webservice_Producto
      * @return an instance of java.lang.String
@@ -53,128 +58,92 @@ public class Webservice_Producto {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }
-    @GET
-    @Path("/getproductos")
-    @Produces("application/json")
-    public String getproducto() throws Exception{
-        //Asigne los parametros de onccion a la base de datos
-        
-        
-        try{
-        //instancie el objeto de DB
-       DB dbase = new DB("itla2","itlajava","12345678@itla");
-       
-       //realizo el sql
-       sql="select * from public.t_productos";
-       
-       
-      
-       ResultSet rs = dbase.execSelect(sql);   
-       while (rs.next()){
-           productos producto = new productos();
-           
-           producto.setId(rs.getInt(1));
-           producto.setDescripcion(rs.getString(2));
-           producto.setCosto(rs.getInt(3));
-           producto.setPrecioVenta(rs.getInt(3));
-           producto.setPrecioAlquiler(rs.getInt(4));
-           producto.setAlquilerVenta(rs.getString(5));
-           producto.setCantidadALquiler(rs.getString(6));
-           producto.setCantidadVenta(rs.getString(7));
-           producto.setDiasRecuperacion(rs.getString(8));
-           
-           //asigno elrs a la lista
-           lista.add(producto);
-       
-       }
-    } catch (Exception e) {
-        //si falla un error de base de datos
-            return "-1: Error de la base de datos ";
-        }
-        
-        //convierto la lista a Gson
-        String json1=json.toJson(lista);
-        
-        //retorno el json
-        return json1;
-    }
+
 
     @GET
-    @Path("/getproducto/{id}/{token}")
+    @Path("/getproducto/{token}/{id}")
     @Produces("application/json")
-    public String getproduct_id_nombre(@PathParam("id") String id,@PathParam("token") String token) throws Exception{
+    public String getproduct_id_nombre(@PathParam("id") String id,@PathParam("token") String token) throws Exception
+    {
+        Respuesta respon = new Respuesta();
+        ArrayList<Producto> lista = new ArrayList<Producto>();
+        
       //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
-       String tokenlook;
-       tokenlook="select f_activo from public.t_logins";
-       ResultSet rs1 = dbase.execSelect(tokenlook); 
-      
-       try {
-            while (rs1.next()) {  
-            if ((rs1.getBoolean("f_activo")==false)){
-                
-                return "Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias ";             
-            } else 
-    {
-                
-            //realizo el sql de busqueda
-            sql="select * from public.t_productos where f_id ="+id+" or f_nombre ilike "+"'"+"'"+id+"'"+"'";
-       
-         try
+          
+       if (!checktocken(dbase,token)) 
+       { respon.setId(-1);
+         respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
+         String json1=json.toJson(respon);
+         return json1;              
+       }            
+                 
+       //realizo el sql de busqueda
+        String sql="select * from public.t_productos where f_nombre ilike '%"+id+"%';";   
+  
+        try
         {
-      
             ResultSet rs = dbase.execSelect(sql);   
             while (rs.next())
              {
-                productos producto = new productos();
-
-                producto.setId(rs.getInt(1));
-                producto.setDescripcion(rs.getString(2));
-                producto.setCosto(rs.getInt(3));
-                producto.setPrecioVenta(rs.getInt(3));
-                producto.setPrecioAlquiler(rs.getInt(4));
-                producto.setAlquilerVenta(rs.getString(5));
-                producto.setCantidadALquiler(rs.getString(6));
-                producto.setCantidadVenta(rs.getString(7));
-                producto.setDiasRecuperacion(rs.getString(8));
-
+                Producto producto = new Producto();
+  
+                producto.setF_id(rs.getInt(1)); //ID del producto
+                producto.setF_descripcion(rs.getString(2)); 
+                producto.setF_costo(rs.getInt(3));
+                producto.setF_precio_venta(rs.getInt(3));
+                producto.setF_precio_alquiler(rs.getInt(4));
+                producto.setF_alquiler_venta(rs.getString(5));
+                producto.setF_cantidad_alquiler(rs.getString(6));
+                producto.setF_cantidad_venta(rs.getString(7));
+                producto.setF_dias_recuperacion(rs.getString(8));
                 //asigno elrs a la lista
                 lista.add(producto);
-
             }
-        } catch (Exception e) {
-        //si falla un error de base de datos
-            return "-1: Error de la base de datos ";
+        } catch (Exception e) 
+        {
+            //si falla un error de base de datos
+             respon.setId(-1);
+             respon.setMensaje("Error de la base de datos "+e.getMessage());
+             String json1=json.toJson(respon);
+             return json1;          
         }
-        
-        //convierto la lista a Gson
+         //convierto la lista a Gson
         String json1=json.toJson(lista);
-        
+        respon.setId(1);
+        respon.setMensaje(json1);
+        json1=json.toJson(respon);         
         //retorno el json
-        return json1;
-            
-    }//llave del esle
-        }//llave del while
-            
-       }catch(SQLException e){}
-        return null;
- 
+        return json1;     
     }
+
+
     @PUT
-    @Path("/insertarproducto/{id}/{nombre}/{descripcion}/{costo}//{precioventa}/{precioalquiler}/{alquilerventa}/{cantidadalquiler}/{cantidadventa}/{diasrecuperacion}")
-    @Produces("application/json")
-    public void insertar_producto(@PathParam("id")int id,@PathParam("nombre")String nombre,@PathParam("descripcion")String descripcion,@PathParam("costo")int costo,@PathParam("precioventa")int precioventa,@PathParam("precioalquiler")int precioalquiler,@PathParam("alquilerventa")int alquilerventa,@PathParam("cantidadalquier")int cantidadalquiler,@PathParam("cantidadalquier")int cantidadaventa,@PathParam("diasrecuperacion")int diasrecuperacion) throws Exception{
+    @Path("/insertarproducto/{informacion}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void insertar_producto(@PathParam("informacion")String json) throws Exception{
         
-        DB dbase = new DB("itla2","itlajava","12345678@itla");
-    
-        String sql="INSERT INTO public.t_productos(f_id,f_nombre,f_descripcion,f_costo,f_precio_venta,";
-        sql+="f_precio_alquiler,f_alquiler_venta,f_cantidad_alquiler,f_cantidad_venta,f_dias_recuperacion)";
-        sql+= "VALUES ("+id+","+"'"+nombre+"'"+","+"'"+descripcion+"'"+","+costo+","+","+precioventa+","+","+precioalquiler+","+"'"+alquilerventa+"'"+","+"'"+cantidadalquiler+"'"+","+"'"+cantidadaventa+"'"+","+"'"+diasrecuperacion+"'"+")";
+        Producto product = new Producto();
+        product.insertar_t_productos(json);
         
-        dbase.executeQuery(sql);
+        
         
     }
 
+   private boolean checktocken(DB dbase,String token)
+    {
+
+       String sql="select count(*) from public.t_logins where f_token="+dbase.comilla(token) + " and f_activo = true";
+       try
+       {
+       ResultSet rs= dbase.execSelect(sql); 
+       while (rs.next())
+       {
+           return true;
+       }
+       }catch(SQLException e) {}
+       return false;
+    }
     
     /**
      * PUT method for updating or creating an instance of Webservice_Producto

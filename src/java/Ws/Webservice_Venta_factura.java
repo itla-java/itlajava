@@ -7,7 +7,7 @@ package Ws;
 
 import com.google.gson.Gson;
 import db.DB;
-import dto.productos;
+import dto.Producto;
 import dto.reciboVentaFactura;
 import dto.ventaFactura;
 import java.sql.ResultSet;

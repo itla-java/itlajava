@@ -47,10 +47,10 @@ public class WebService_Detalle_alquiler_factura {
     @POST
     @Path("/insertar_detalle_alquiler_factura/informacion")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void insertar_detalle_alquiler_factura(@PathParam("informacion")String informacion) throws Exception{
+    public void insertar_detalle_alquiler_factura(@PathParam("informacion")String json) throws Exception{
     
         detalleAlquilerFactura dafactura = new detalleAlquilerFactura();
-        dafactura.insertar_detalle_alquiler_factura(informacion);
+        dafactura.insertar_detalle_alquiler_factura(json);
         
     
     

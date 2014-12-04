@@ -89,27 +89,29 @@ public class Webservice_Cliente {
     
     @GET
     @Produces("application/json")
-    @Path("/getcliente/{token}")
-    public String getCliente(@PathParam("token") String token) throws Exception
+    @Path("/getcliente/{token}/{id_cliente}")
+    public String getCliente(@PathParam("token") String token,@PathParam("id_cliente") String id) throws Exception
     {
-            Respuesta respo  = new Respuesta();
+        Respuesta respo  = new Respuesta();
+        String Gson;
+        DB dbase = new DB("itla2","itlajava","12345678@itla");
         CheckToken ctoken = new CheckToken();
-        if (ctoken.checktocken2(token)==true){
+        if (!ctoken.checktocken(dbase, token)==true)
+        {
             respo.setId(3);
             respo.setMensaje("El token no esta activo");
-            respo.ToJson(respo);
-            
-
+            Gson=respo.ToJson(respo);
+            return Gson;
         }
 
           //instancie el objeto de DB
-       DB dbase = new DB("itla2","itlajava","12345678@itla");
+       
         
-        String sql="Select * from t_cliente ;";
+        String sql="Select * from t_cliente where f_id="+id+";";
         try{
         ResultSet rs=dbase.execSelect(sql);
-        while(rs.next())
-        {
+        rs.next();
+        
             cliente cliente1= new cliente();
             
             cliente1.setF_id(rs.getInt(1));
@@ -120,24 +122,18 @@ public class Webservice_Cliente {
             cliente1.setF_telefono1(rs.getString(6));
             cliente1.setF_telefono2(rs.getString(7));
             cliente1.setF_email(rs.getString(8));
-            
-            //asigno el rs a la lista
-            list.add(cliente1);
-            
-            
-            
+            Gson=json.toJson(cliente1); //convierto el objeto cliente a un String Gson
         }
-        }
-        catch(Exception e)
+        catch(SQLException e)
         {
+            respo.setId(-1);
+            respo.setMensaje("error de la base de datos "+e.getMessage()+" ");
+            Gson=json.toJson(respo);
             //si falla un error de base de datos
-            return "-1: Error de la base de datos ";
+            return Gson;
         }
         
-         //convierto la lista a Gson
-        String Gson=json.toJson(list);
-        
-        //retorno el json
+        //retorno el json , Mod By JLH
         return Gson;
     }
     
@@ -146,9 +142,9 @@ public class Webservice_Cliente {
     
     //metodo que busca el cliente epor nombre o apellido//
     @GET
-    @Path("/getcliente_nombre_apellido/{token}/{id}")
+    @Path("/getcliente_nombre_apellido/{token}/{nombre}")
     @Produces("application/json")
-    public String getCliente_nombre_apellido(@PathParam("id") String id,@PathParam("token") String token) throws Exception
+    public String getCliente_nombre_apellido(@PathParam("nombre") String id,@PathParam("token") String token) throws Exception
     {
         Respuesta respon = new Respuesta();
         ArrayList<cliente> lista = new ArrayList<cliente>();
@@ -161,19 +157,14 @@ public class Webservice_Cliente {
         CheckToken ver = new CheckToken();
        
        
-       if (!ver.checktocken(dbase, token)){
-       
-           { respon.setId(-1);
+       if (!ver.checktocken(dbase, token))
+        {
+         respon.setId(-1);
          respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
          String json1=json.toJson(respon);
          return json1;              
-       }    
+        }    
        
-       
-       }
-       
-       
-                 
        //realizo el sql de busqueda
         String sql="select * from public.t_cliente where f_nombre ilike '%"+id+"%' or f_apellido ilike '%"+id+"%';";   
   
@@ -200,7 +191,7 @@ public class Webservice_Cliente {
         } catch (Exception e) 
         {
             //si falla un error de base de datos
-             respon.setId(-1);
+             respon.setId(-2);
              respon.setMensaje("Error de la base de datos "+e.getMessage());
              String json1=json.toJson(respon);
              return json1;          

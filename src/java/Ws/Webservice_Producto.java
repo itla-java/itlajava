@@ -197,6 +197,16 @@ public class Webservice_Producto {
             ResultSet rs = dbase.execSelect(sql);   
             while (rs.next())
              {
+                    if(!rs.next()){
+                     
+                     Respuesta respo = new Respuesta();
+                     
+                     respo.setId(0);
+                     respo.setMensaje("No hay registros actualmente en la base de datos");
+                     return respo.ToJson(respo);
+                 
+                 }
+                 else {
                 Producto producto = new Producto();
   
                 producto.setF_id(rs.getInt(1)); //ID del producto
@@ -209,6 +219,7 @@ public class Webservice_Producto {
              
                 //asigno elrs a la lista
                 lista.add(producto);
+                    }
             }
         } catch (Exception e) 
         {

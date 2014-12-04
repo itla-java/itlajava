@@ -108,9 +108,21 @@ public class Webservice_Cliente {
        
         
         String sql="Select * from t_cliente where f_id="+id+";";
-        try{
         ResultSet rs=dbase.execSelect(sql);
-        rs.next();
+        try{
+        
+       while(rs.next()){
+           
+              if(!rs.next()){
+                     
+                     
+                     
+                     respo.setId(0);
+                     respo.setMensaje("No hay registros actualmente en la base de datos");
+                     return respo.ToJson(respo);
+                 
+                 }
+                 else {
         
             cliente cliente1= new cliente();
             
@@ -123,6 +135,8 @@ public class Webservice_Cliente {
             cliente1.setF_telefono2(rs.getString(7));
             cliente1.setF_email(rs.getString(8));
             Gson=json.toJson(cliente1); //convierto el objeto cliente a un String Gson
+              }
+       }
         }
         catch(SQLException e)
         {
@@ -133,7 +147,7 @@ public class Webservice_Cliente {
             return Gson;
         }
         
-        //retorno el json , Mod By JLH
+        //retorno el json , Maded By José anibal Moronta
         return Gson;
     }
     
@@ -173,6 +187,16 @@ public class Webservice_Cliente {
             ResultSet rs = dbase.execSelect(sql);   
             while (rs.next())
              {
+                   if(!rs.next()){
+                     
+                     Respuesta respo = new Respuesta();
+                     
+                     respo.setId(0);
+                     respo.setMensaje("No hay registros actualmente en la base de datos");
+                     return respo.ToJson(respo);
+                 
+                 }
+                 else { 
                 cliente cliente = new cliente();
                 
                 cliente.setF_id(rs.getInt(1));//id
@@ -187,6 +211,7 @@ public class Webservice_Cliente {
                 
                 //asigno elrs a la lista
                 lista.add(cliente);
+                   }
             }
         } catch (Exception e) 
         {

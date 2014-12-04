@@ -83,6 +83,17 @@ public class WebServices_Recargos {
             ResultSet rs = dbase.execSelect(sql);   
             while (rs.next())
              {
+                 
+                  if(!rs.next()){
+                     
+                     Respuesta respo = new Respuesta();
+                     
+                     respo.setId(0);
+                     respo.setMensaje("No hay registros actualmente en la base de datos");
+                     return respo.ToJson(respo);
+                 
+                 }
+                 else {
                 recargos r = new recargos();
                     
                 r.setF_id(rs.getInt(1));
@@ -95,6 +106,7 @@ public class WebServices_Recargos {
 
                 //asigno elrs a la lista
                 lista.add(r);
+                  }
             }
         } catch (Exception e) 
         {

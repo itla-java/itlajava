@@ -106,7 +106,17 @@ public class WebService_Detalle_alquiler_factura {
         {
             ResultSet rs = dbase.execSelect(sql);   
             while (rs.next())
-             {
+             {  
+                  if(!rs.next()){
+                     
+                     Respuesta respo = new Respuesta();
+                     
+                     respo.setId(0);
+                     respo.setMensaje("No hay registros actualmente en la base de datos");
+                     return respo.ToJson(respo);
+                 
+                 }
+                 else {
                 detalleAlquilerFactura daf = new detalleAlquilerFactura();
                     
                 daf.setF_id(rs.getInt(1));
@@ -123,7 +133,8 @@ public class WebService_Detalle_alquiler_factura {
  
                 //asigno elrs a la lista
                 lista.add(daf);
-            }
+                  }
+                }
         } catch (Exception e) 
         {
             //si falla un error de base de datos

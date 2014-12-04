@@ -105,6 +105,16 @@ public class WebService_Factura_Recibo {
             ResultSet rs = dbase.execSelect(sql);   
             while (rs.next())
              {
+                 if(!rs.next()){
+                     
+                     Respuesta respo = new Respuesta();
+                     
+                     respo.setId(0);
+                     respo.setMensaje("No hay registros actualmente en la base de datos");
+                     return respo.ToJson(respo);
+                 
+                 }
+                 else {    
                 facturaRecibo fr = new facturaRecibo();
                     
                 fr.setF_id_t_venta_factura(rs.getInt(1));
@@ -116,6 +126,7 @@ public class WebService_Factura_Recibo {
 
                 //asigno elrs a la lista
                 lista.add(fr);
+                 }
             }
         } catch (Exception e) 
         {

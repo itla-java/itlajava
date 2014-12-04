@@ -106,7 +106,17 @@ public class WebService_Detalle_venta_factura {
         {
             ResultSet rs = dbase.execSelect(sql);   
             while (rs.next())
-             {
+             {  
+                 if(!rs.next()){
+                     
+                     Respuesta respo = new Respuesta();
+                     
+                     respo.setId(0);
+                     respo.setMensaje("No hay registros actualmente en la base de datos");
+                     return respo.ToJson(respo);
+                 
+                 }
+                 else { 
                 detalleVentaFactura dvf = new detalleVentaFactura();
                     
                 dvf.setF_id(rs.getInt(1));
@@ -120,6 +130,7 @@ public class WebService_Detalle_venta_factura {
 
                 //asigno elrs a la lista
                 lista.add(dvf);
+                 }
             }
         } catch (Exception e) 
         {

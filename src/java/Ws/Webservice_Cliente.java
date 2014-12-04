@@ -22,7 +22,7 @@ import db.DB;
 import  java.sql.ResultSet;
 import dto.cliente;
 import java.util.ArrayList;
-import javafx.scene.media.Media;
+
 import javax.print.attribute.standard.MediaTray;
 import javax.ws.rs.core.MediaType;
 

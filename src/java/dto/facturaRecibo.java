@@ -69,7 +69,7 @@ public class facturaRecibo {
         sql+="VALUES (?,?,?,?,?,?,?,?)";
         
         Gson json = new Gson();
-       facturaRecibo info = json.fromJson(informacion, facturaRecibo.class);
+        facturaRecibo info = json.fromJson(informacion, facturaRecibo.class);
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         

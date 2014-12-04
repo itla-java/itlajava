@@ -97,7 +97,7 @@ public class detalleVentaFactura {
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         
         Gson json = new Gson();
-       detalleVentaFactura info = json.fromJson(informacion, detalleVentaFactura.class);
+        detalleVentaFactura info = json.fromJson(informacion, detalleVentaFactura.class);
         p.setInt(1, idVentaFactura);
         p.setString(2, tipoFacturaVentaFactura);
         p.setInt(3, idProducto);

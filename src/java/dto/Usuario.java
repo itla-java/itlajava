@@ -11,7 +11,7 @@ import db.DB;
  *
  * @author COMPAQ
  */
-public class Usuario2 {
+public class Usuario {
     private int f_id;
     private String f_nombre;
     private String f_apellido;

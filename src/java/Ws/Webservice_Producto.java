@@ -22,6 +22,7 @@ import  java.sql.ResultSet;
 import com.google.gson.Gson;
 import dto.Respuesta;
 import java.util.ArrayList;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.MediaType;
 
@@ -122,26 +123,28 @@ public class Webservice_Producto {
 
 
     @POST
-    @Path("/insertarproducto/{token}/{informacion}")
+    @Path("/insertarproducto")
     @Consumes("application/json")
-    public void insertar_producto(@PathParam("token")String token,@PathParam("informacion")String json) throws Exception{
-        
+    public String insertar_producto(
+        @FormParam("token") String token ,
+        @FormParam("Gson") String gson) throws Exception{
+        String json;
          
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
-        if (ctoken.checktocken2(token)==true){
+        if (ctoken.checktocken2(token)==false){
             respo.setId(3);
             respo.setMensaje("El token no esta activo");
-            respo.ToJson(respo);
+            json =respo.ToJson(respo);
+            return json;
         }
         
         Producto product = new Producto();
-        product.insertar_t_productos(json);
+        product.insertar_t_productos(gson);
         respo.setId(1);
         respo.setMensaje("Hecho");
-        respo.ToJson(respo);
-                
-      
+        json=respo.ToJson(respo);
+        return json;
     }
     
     @GET

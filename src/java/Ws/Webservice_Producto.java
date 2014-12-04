@@ -169,6 +169,63 @@ public class Webservice_Producto {
                 
       
     }
+    
+    
+    @POST
+    @Path("/getproducto")
+    @Produces("application/json")
+    public String getproduct_id_nombre_pag(@FormParam("nombre") String nombre,@FormParam("token") String token) throws Exception
+    {
+        Respuesta respon = new Respuesta();
+        ArrayList<Producto> lista = new ArrayList<Producto>();
+        
+      //instancie el objeto de DB
+       DB dbase = new DB("itla2","itlajava","12345678@itla");
+          
+       if (!checktocken(dbase,token)) 
+       { respon.setId(-1);
+         respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
+         String json1=json.toJson(respon);
+         return json1;              
+       }            
+                 
+       //realizo el sql de busqueda
+        String sql="SELECT f_id,f_nombre,f_descripcion,f_precio_venta,f_precio_alquiler,f_cantidad_alquiler,f_cantidad_venta from public.t_productos where f_nombre ilike '%"+nombre+"%';";   
+  
+        try
+        {
+            ResultSet rs = dbase.execSelect(sql);   
+            while (rs.next())
+             {
+                Producto producto = new Producto();
+  
+                producto.setF_id(rs.getInt(1)); //ID del producto
+                producto.setF_nombre(rs.getString(2));
+                producto.setF_descripcion(rs.getString(3));
+                producto.setF_precio_venta(rs.getInt(4));
+                producto.setF_precio_alquiler(rs.getInt(5));
+                producto.setF_cantidad_alquiler(rs.getString(6));
+                producto.setF_cantidad_venta(rs.getString(7));
+             
+                //asigno elrs a la lista
+                lista.add(producto);
+            }
+        } catch (Exception e) 
+        {
+            //si falla un error de base de datos
+             respon.setId(-1);
+             respon.setMensaje("Error de la base de datos "+e.getMessage());
+             String json1=json.toJson(respon);
+             return json1;          
+        }
+         //convierto la lista a Gson
+        String json1=json.toJson(lista);
+        respon.setId(1);
+        respon.setMensaje(json1);
+        json1=json.toJson(respon);         
+        //retorno el json
+        return json1;     
+    }
 
     static private boolean checktocken(DB dbase,String token)
     {

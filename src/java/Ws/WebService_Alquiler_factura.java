@@ -47,12 +47,7 @@ public class WebService_Alquiler_factura {
      * Retrieves representation of an instance of Ws.WebService_Alquiler_factura
      * @return an instance of java.lang.String
      */
-    @GET
-    @Produces("application/json")
-    public String getJson() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
-    }
+   
     
     /*Metodo que inserta en alquiler_factura*/
     @POST
@@ -65,7 +60,7 @@ public class WebService_Alquiler_factura {
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
         if (ctoken.checktocken2(token)==true){
-            respo.setId(3);
+            respo.setId(2);
             respo.setMensaje("El token no esta activo");
             return respo.ToJson(respo);
 
@@ -90,19 +85,18 @@ public class WebService_Alquiler_factura {
     public String getAlquilerFactura_Id(@PathParam("token") String token,@PathParam("id")int id) throws Exception{
         
         Respuesta respon = new Respuesta();
-        ArrayList<alquilerFactura> lista = new ArrayList<alquilerFactura>();
         CheckToken check = new CheckToken();
-        Gson json = new Gson();
+       
       
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
        if (check.checktocken2(token)==true) 
        { 
-         respon.setId(-1);
-         respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
-         String json1=json.toJson(respon);
-         return json1;              
+         respon.setId(2);
+         respon.setMensaje("Lo Sentimos Token Desactivado, Comuniquese Con el Administrador, Gracias");
+         return respon.ToJson(respon);
+                     
        }            
                  
        //realizo el sql de busqueda
@@ -140,7 +134,8 @@ public class WebService_Alquiler_factura {
                 
                 
                 //asigno elrs a la lista
-                lista.add(af);
+                respon.setId(1);
+                respon.setMensaje(respon.ToJson(af));
                  
             }
         } 
@@ -149,16 +144,14 @@ public class WebService_Alquiler_factura {
             //si falla un error de base de datos
              respon.setId(-1);
              respon.setMensaje("Error de la base de datos "+e.getMessage());
-             String json1=json.toJson(respon);
-             return json1;          
+             return respon.ToJson(respon);    
         }
-         //convierto la lista a Gson
-        String json1=json.toJson(lista);
-        respon.setId(1);
-        respon.setMensaje(json1);
-        json1=json.toJson(respon);         
-        //retorno el json
-        return json1;     
+         
+        return respon.ToJson(respon);
+        
+              
+        
+           
 
     }
     
@@ -171,12 +164,8 @@ public class WebService_Alquiler_factura {
     public String getAlquilerFactura_Id(@PathParam("id")int id) throws Exception{
         
         Respuesta respon = new Respuesta();
-        ArrayList<alquilerFactura> lista = new ArrayList<alquilerFactura>();
-        CheckToken check = new CheckToken();
-        Gson json = new Gson();
-      
-        //instancie el objeto de DB
-       DB dbase = new DB("itla2","itlajava","12345678@itla");
+   
+       DB dbase = new DB("itla2","itlajava","12345678@itla"); //instancie el objeto de DB
           
               
                  
@@ -215,25 +204,23 @@ public class WebService_Alquiler_factura {
                 af.setF_pagada(rs.getBoolean(9));    
                 
                 
-                //asigno el rs a la lista
-                lista.add(af);
+                //Asigno los datos a el Objeto Respuesta
+                respon.setId(1);
+                respon.setMensaje(respon.ToJson(af));
             }
         }
-        catch (Exception e) 
+        catch (SQLException e) 
         {
             //si falla un error de base de datos
              respon.setId(-1);
              respon.setMensaje("Error de la base de datos "+e.getMessage());
-             String json1=json.toJson(respon);
-             return json1;          
+             return respon.ToJson(respon);
+                      
         }
          //convierto la lista a Gson
-        String json1=json.toJson(lista);
-        respon.setId(1);
-        respon.setMensaje(json1);
-        json1=json.toJson(respon);         
+              
         //retorno el json
-        return json1;     
+        return respon.ToJson(respon);     
 
     }
     
@@ -244,8 +231,5 @@ public class WebService_Alquiler_factura {
      * @param content representation for the resource
      * @return an HTTP response with content of the updated or created resource.
      */
-    @PUT
-    @Consumes("application/json")
-    public void putJson(String content) {
-    }
+    
 }

@@ -63,7 +63,7 @@ public class WebService_Detalle_alquiler_factura {
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
         if (ctoken.checktocken2(token)==false){
-            respo.setId(3);
+            respo.setId(2);
             respo.setMensaje("El token no esta activo");
             return respo.ToJson(respo);
         }

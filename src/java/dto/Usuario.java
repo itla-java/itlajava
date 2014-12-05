@@ -84,7 +84,7 @@ public class Usuario {
         dbase.executeQuery(sql);
         Respuesta respo = new Respuesta();
         respo.setId(1);
-        respo.setMensaje("Hecho");
+        respo.setMensaje("Hecho ");
         return respo.ToJson(respo);
 
     }

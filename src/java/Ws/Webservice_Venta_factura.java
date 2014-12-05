@@ -23,6 +23,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.POST;
 import java.util.ArrayList;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -126,21 +127,24 @@ public class Webservice_Venta_factura {
     @POST
     @Path("/insertar_venta_factura/{token}/{informacion}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void insertar_venta_factura(@PathParam("token")String token,@PathParam("informacion")String informacion) throws Exception{
+    public String insertar_venta_factura(
+            @FormParam("token")String token,
+            @FormParam("informacion")String informacion) throws Exception{
         
-          Respuesta respo  = new Respuesta();
+        Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
-        if (ctoken.checktocken2(token)==true){
+        if (ctoken.checktocken2(token)==false){
             respo.setId(3);
             respo.setMensaje("El token no esta activo");
-            respo.ToJson(respo);
+            return respo.ToJson(respo);
         }
         
         reciboVentaFactura recibo = new reciboVentaFactura();
-        
         recibo.insertar_recibo_venta_fact(informacion);
+        
         respo.setId(1);
         respo.setMensaje("Hecho");
+        return respo.ToJson(respo);
     }
     /*fin del metodo que inserta factura en reciboVnetaFactura mede by:José Aníbal Moronta Mejía*/
     

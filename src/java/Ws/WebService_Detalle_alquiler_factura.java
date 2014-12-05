@@ -17,6 +17,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -52,27 +53,26 @@ public class WebService_Detalle_alquiler_factura {
         throw new UnsupportedOperationException();
     }
     @POST
-    @Path("/insertar_detalle_alquiler_factura/{token}/{informacion}")
+    @Path("/insertar_detalle_alquiler_factura")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void insertar_detalle_alquiler_factura(@PathParam("token")String token,@PathParam("informacion")String json) throws Exception{
+    public String insertar_detalle_alquiler_factura(
+            @FormParam("token")String token,
+            @FormParam("informacion")String json) throws Exception{
         
         
-          Respuesta respo  = new Respuesta();
+        Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
-        if (ctoken.checktocken2(token)==true){
+        if (ctoken.checktocken2(token)==false){
             respo.setId(3);
             respo.setMensaje("El token no esta activo");
-            respo.ToJson(respo);
+            return respo.ToJson(respo);
         }
         
         detalleAlquilerFactura dafactura = new detalleAlquilerFactura();
         dafactura.insertar_detalle_alquiler_factura(json);
-         respo.setId(1);
-         respo.setMensaje("hecho");
-         respo.ToJson(respo);
-        
-        
-    
+        respo.setId(1);
+        respo.setMensaje("hecho");
+        return respo.ToJson(respo);
     }
     
     /*inicio del metodo que busca detalle alquilerFactua por el id*/

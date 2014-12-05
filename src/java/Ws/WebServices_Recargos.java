@@ -17,6 +17,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -129,22 +130,26 @@ public class WebServices_Recargos {
      /*fin  del metodo que busca recargos por el id made by :José Aníbal Moronta*/
    
     @POST
-    @Path("/insertar_recargo/{informacion}")
+    @Path("/insertar_recargo")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void insertar_recargo(@PathParam("token")String token,@PathParam("informacion") String informacion) throws Exception{
+    public String insertar_recargo(
+            @FormParam("token")String token,
+            @FormParam("informacion") String informacion) throws Exception{
             
-          Respuesta respo  = new Respuesta();
+        Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
-        if (ctoken.checktocken2(token)==true){
+        if (ctoken.checktocken2(token)==false){
             respo.setId(3);
             respo.setMensaje("El token no esta activo");
-            respo.ToJson(respo);
+            return respo.ToJson(respo);
         }
     
         recargos recargos = new recargos();
-            
         recargos.insertar_recargos(informacion);
-    
+        
+        respo.setId(1);
+        respo.setMensaje("Hecho");
+        return respo.ToJson(respo);
     
     }
 

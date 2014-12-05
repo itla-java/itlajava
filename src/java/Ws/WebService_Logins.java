@@ -46,7 +46,7 @@ public class WebService_Logins {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }
-@GET
+    @GET
     @Path("/hola")
     @Produces("text/plane")
     public String holaM(){

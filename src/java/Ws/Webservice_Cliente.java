@@ -27,6 +27,7 @@ import dto.cliente;
 import java.util.ArrayList;
 
 import javax.print.attribute.standard.MediaTray;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -76,13 +77,28 @@ public class Webservice_Cliente {
     
     /*Metodo que inserta un cliente*/
     @POST
-    @Path("/insertar_cliente/{informacion}")
+    @Path("/insertar_cliente")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void insertar_cliente(@PathParam("informacion") String informacion ) throws Exception {
+    public String insertar_cliente(
+            @FormParam("token")String token,
+            @FormParam("informacion") String informacion) throws Exception {
       
-            cliente cliente = new cliente();
-            
-            cliente.insertar_cliente(informacion);
+        Respuesta respo  = new Respuesta();
+        CheckToken ctoken = new CheckToken();
+        if(ctoken.checktocken2(token)==false)
+        {
+            respo.setId(3);
+            respo.setMensaje("El token no esta activo");
+            return respo.ToJson(respo);
+        }
+        cliente cliente = new cliente();
+        cliente.insertar_cliente(informacion);
+        
+        respo.setId(1);
+        respo.setMensaje("Hecho");
+        return respo.ToJson(respo);
+        
+        
     }
     /*fin del metodo made by:José Aníbal Moronta Mejía*/
     

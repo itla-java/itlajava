@@ -20,13 +20,15 @@ import clases.CheckToken;
 import com.google.gson.Gson;
 import db.DB;
 import dto.Respuesta;
+import javax.ws.rs.POST;
+import javax.ws.rs.core.Response;
 
 /**
  * REST Web Service
  *
  * @author Estudiante
  */
-@Path("usuario")
+@Path("/usuario")
 public class Webservice_Usuario {
 
     @Context
@@ -91,6 +93,20 @@ public class Webservice_Usuario {
     @Consumes("application/json")
     public void putJson(String content) {
     }
+    
+    @POST
+    @Path("/prueba")
+    @Produces("text/plain")
+    public Response prueba(
+            @FormParam("p1") String p1,
+            @FormParam("p2") String p2){
+       
+        
+        return Response.status(200) 
+                .entity("el resultado es "+p1+ " - " +p2)
+                .build();
+    }
+    
 
     private boolean checktocken(DB dbase, String token) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

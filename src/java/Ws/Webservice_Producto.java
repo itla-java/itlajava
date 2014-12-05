@@ -128,23 +128,23 @@ public class Webservice_Producto {
     public String insertar_producto(
         @FormParam("token") String token ,
         @FormParam("Gson") String gson) throws Exception{
-        String json;
+        
          
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
+        
         if (ctoken.checktocken2(token)==false){
             respo.setId(3);
             respo.setMensaje("El token no esta activo");
-            json =respo.ToJson(respo);
-            return json;
+            return  respo.ToJson(respo); 
         }
         
         Producto product = new Producto();
         product.insertar_t_productos(gson);
         respo.setId(1);
         respo.setMensaje("Hecho");
-        json=respo.ToJson(respo);
-        return json;
+        return  respo.ToJson(respo);
+        
     }
     
     @GET
@@ -170,7 +170,7 @@ public class Webservice_Producto {
       
     }
     
-    
+    //*************************************Revisar******************************************************************
     @POST
     @Path("/getproducto")
     @Produces("application/json")

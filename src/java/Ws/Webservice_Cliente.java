@@ -38,10 +38,10 @@ import javax.ws.rs.core.MediaType;
 @Path("cliente")
 public class Webservice_Cliente {
 
-    String host="localhost";
+    /*String host="localhost";
     String db="itla";
     String user="adminm7xt8zn";
-    String pass="JaQc2-sekn7A";
+    String pass="JaQc2-sekn7A";*/
     ArrayList<cliente> list= new ArrayList<cliente>();
     Gson json = new Gson();
     @Context
@@ -109,61 +109,117 @@ public class Webservice_Cliente {
     public String getCliente(@PathParam("token") String token,@PathParam("id_cliente") String id) throws Exception
     {
         Respuesta respo  = new Respuesta();
-        String Gson;
+        
+
         DB dbase = new DB("itla2","itlajava","12345678@itla");
         CheckToken ctoken = new CheckToken();
-        if (!ctoken.checktocken(dbase, token)==true)
+        
+        if (!ctoken.checktocken2(token)==true)
         {
-            respo.setId(3);
+            respo.setId(2);
             respo.setMensaje("El token no esta activo");
-            Gson=respo.ToJson(respo);
-            return Gson;
+            return respo.ToJson(respo);  
         }
 
-          //instancie el objeto de DB
+          
        
         
         String sql="Select * from t_cliente where f_id="+id+";";
         ResultSet rs=dbase.execSelect(sql);
-        try{
         
-       while(rs.next()){
-           
-           if(!rs.next()){
+        try
+        {
+            if(!rs.next()==true)
+            {
                      
-                 respo.setId(0);
-                 respo.setMensaje("No hay registros actualmente en la base de datos");
-                 return respo.ToJson(respo);
-                 
-                 }
-                 else {
-            cliente cliente1= new cliente();
-            
-            cliente1.setF_id(rs.getInt(1));
-            cliente1.setF_nombre(rs.getString(2));
-            cliente1.setF_apellido(rs.getString(3));
-            cliente1.setF_direccion(rs.getString(4));
-            cliente1.setF_cedula(rs.getString(5));
-            cliente1.setF_telefono1(rs.getString(6));
-            cliente1.setF_telefono2(rs.getString(7));
-            cliente1.setF_email(rs.getString(8));
-
-            
-           return  Gson=json.toJson(cliente1);
-              }
-       }
+                respo.setId(0);
+                respo.setMensaje("No hay registros actualmente en la base de datos");
+                return respo.ToJson(respo);
+            }
+            while(rs.next())
+            {
+                cliente cliente1= new cliente();
+           
+                cliente1.setF_id(rs.getInt(1));
+                cliente1.setF_nombre(rs.getString(2));
+                cliente1.setF_apellido(rs.getString(3));
+                cliente1.setF_direccion(rs.getString(4));
+                cliente1.setF_cedula(rs.getString(5));
+                cliente1.setF_telefono1(rs.getString(6));
+                cliente1.setF_telefono2(rs.getString(7));
+                cliente1.setF_email(rs.getString(8));
+                respo.setId(1);
+                respo.setMensaje(json.toJson(cliente1));
+            }
+       
         }
         catch(SQLException e)
         {
+            // error de base de datos
             respo.setId(-1);
             respo.setMensaje("error de la base de datos "+e.getMessage()+" ");
-            Gson=json.toJson(respo);
-            //si falla un error de base de datos
-            return Gson;
+            return json.toJson(respo); 
         }
         
-    //fin del metodo cliente que busca por id Maded By JLH
-    return respo.ToJson(respo);
+    
+            
+            return json.toJson(respo);//returna el cliente que se iso en el while.
+            //fin del metodo cliente que busca por id Maded By Juan L Hiciano
+    }
+    
+    
+    @GET
+    @Produces("application/json")
+    @Path("/getcliente/{id}")
+    public String getCliente(@PathParam("id") String id) throws Exception //Metodo para el servlet 
+    {
+        Respuesta respo  = new Respuesta();
+        
+
+        DB dbase = new DB("itla2","itlajava","12345678@itla"); //instancie el objeto de DB
+
+       
+        String sql="Select * from t_cliente where f_id="+id+";";// query
+        ResultSet rs=dbase.execSelect(sql);
+        
+        try
+        {
+            if(!rs.next()==true)
+            {
+                     
+                respo.setId(0);
+                respo.setMensaje("No hay registros actualmente en la base de datos");
+                return respo.ToJson(respo);
+            }
+            while(rs.next())
+            {
+                cliente cliente1= new cliente();
+           
+                cliente1.setF_id(rs.getInt(1));
+                cliente1.setF_nombre(rs.getString(2));
+                cliente1.setF_apellido(rs.getString(3));
+                cliente1.setF_direccion(rs.getString(4));
+                cliente1.setF_cedula(rs.getString(5));
+                cliente1.setF_telefono1(rs.getString(6));
+                cliente1.setF_telefono2(rs.getString(7));
+                cliente1.setF_email(rs.getString(8));
+                respo.setId(1);
+                respo.setMensaje(json.toJson(cliente1));
+            }
+       
+        }
+        catch(SQLException e)
+        {
+            // error de base de datos
+            respo.setId(-1);
+            respo.setMensaje("error de la base de datos "+e.getMessage()+" ");
+            return json.toJson(respo); 
+        }
+        
+    
+            
+            return json.toJson(respo);//returna el cliente que se iso en el while.
+            //fin del metodo cliente que busca por id Maded By Juan L Hiciano
     }
     
     
@@ -199,19 +255,21 @@ public class Webservice_Cliente {
   
         try
         {
-            ResultSet rs = dbase.execSelect(sql);   
-            while (rs.next())
-             {
-                   if(!rs.next()){
+            ResultSet rs = dbase.execSelect(sql);  
+            if(!rs.next())
+            {
                      
-                     Respuesta respo = new Respuesta();
+                Respuesta respo = new Respuesta();
                      
-                     respo.setId(0);
-                     respo.setMensaje("No hay registros actualmente en la base de datos");
-                     return respo.ToJson(respo);
+                respo.setId(0);
+                respo.setMensaje("No hay registros actualmente en la base de datos");
+                return respo.ToJson(respo);
                  
-                 }
-                 else { 
+            }
+            while (rs.next())
+            {
+                   
+                 
                 cliente cliente = new cliente();
                 
                 cliente.setF_id(rs.getInt(1));//id
@@ -226,7 +284,7 @@ public class Webservice_Cliente {
                 
                 //asigno elrs a la lista
                 lista.add(cliente);
-                   }
+                   
             }
         } catch (Exception e) 
         {

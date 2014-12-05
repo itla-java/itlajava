@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -20,6 +20,8 @@ import clases.CheckToken;
 import com.google.gson.Gson;
 import db.DB;
 import dto.Respuesta;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
@@ -77,12 +79,76 @@ public class Webservice_Usuario {
         return Gson;
     }
     
+    
+    
+    @GET
+    @Path("/getusuario/{token}/{id}")
+    @Produces("application/json")
+    public String getUsuario(@PathParam("token") String token,@PathParam("id") int id) throws Exception
+    {
+        Respuesta respon = new Respuesta();
+        CheckToken check = new CheckToken();
+        String sql;
+        DB dbase = new DB("itla2","itlajava","12345678@itla");//instancia del objeto  DB
+        if(!check.checktocken2(token)==true)
+        {
+            respon.setId(2);
+            respon.setMensaje("El token ha sido desactivado");
+            return respon.ToJson(respon);
+        }
+        
+        sql="select * from t_usuario where f_id="+id+" ";
+        ResultSet rs = dbase.execSelect(sql);
+        
+        try
+        {
+            if(!rs.next()==true)
+            {
+                respon.setId(0);
+                respon.setMensaje("no hay Usuarios registrados actualmente");
+                return respon.ToJson(respon);
+            }
+            while(rs.next()==true)
+            {
+                Usuario usu = new Usuario();
+                
+                usu.setF_id(rs.getInt(1));
+                usu.setF_nombre(rs.getString(2));
+                usu.setF_apellido(rs.getString(3));
+                usu.setF_usuario(rs.getString(4));
+                usu.setF_clave(rs.getString(5));
+                usu.setF_proceso(rs.getBoolean(6));
+                usu.setF_activo(rs.getBoolean(7));
+                
+                respon.setId(1);
+                respon.setMensaje(respon.ToJson(usu));
+                
+            }
+        
+        }
+        catch(SQLException e)
+        {
+            respon.setId(-1);
+            respon.setMensaje("error de la base de datos "+e.getMessage()+" ");
+            return respon.ToJson(respon); 
+        }
+        
+         return respon.ToJson(respon);//returna el cliente que se iso en el while.
+            //fin del metodo cliente que busca por id Maded By Juan L Hiciano
+        
+        
+        
+    }
+    
+    
     @GET
     @Produces("application/json")
     public String getJson() {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }
+    
+    
 
     /**
      * PUT method for updating or creating an instance of Webservice_Usuario
@@ -94,18 +160,7 @@ public class Webservice_Usuario {
     public void putJson(String content) {
     }
     
-    @POST
-    @Path("/prueba")
-    @Produces("text/plain")
-    public Response prueba(
-            @FormParam("p1") String p1,
-            @FormParam("p2") String p2){
-       
-        
-        return Response.status(200) 
-                .entity("el resultado es "+p1+ " - " +p2)
-                .build();
-    }
+    
     
 
     private boolean checktocken(DB dbase, String token) {

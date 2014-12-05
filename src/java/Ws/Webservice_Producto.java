@@ -26,6 +26,8 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.MediaType;
 
+import clases.CheckToken;
+
 
 
 /**
@@ -64,21 +66,23 @@ public class Webservice_Producto {
 
 
     @GET
-    @Path("/getproducto/{token}/{nombre}")
+    @Path("/getproductoNombre/{token}/{nombre}")
     @Produces("application/json")
-    public String getproduct_id_nombre(@PathParam("nombre") String nombre,@PathParam("token") String token) throws Exception
+    public String getproduct_nombre(@PathParam("nombre") String nombre,@PathParam("token") String token) throws Exception
     {
         Respuesta respon = new Respuesta();
+        CheckToken check = new CheckToken();
         ArrayList<Producto> lista = new ArrayList<Producto>();
         
       //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (!checktocken(dbase,token)) 
-       { respon.setId(-1);
-         respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
-         String json1=json.toJson(respon);
-         return json1;              
+       if (!check.checktocken2(token)==true) 
+       { 
+            respon.setId(-1);
+            respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
+            return respon.ToJson(respon);
+                        
        }            
                  
        //realizo el sql de busqueda
@@ -87,7 +91,13 @@ public class Webservice_Producto {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            while (rs.next())
+            if(!rs.next()==true)
+            {
+                respon.setId(0);
+                respon.setMensaje("No hay registros actualmente en la base de datos");
+                return respon.ToJson(respon);
+            }
+            while (rs.next()==true)
              {
                 Producto producto = new Producto();
   
@@ -104,24 +114,218 @@ public class Webservice_Producto {
                 //asigno elrs a la lista
                 lista.add(producto);
             }
-        } catch (Exception e) 
+        } 
+        catch (SQLException e) 
         {
             //si falla un error de base de datos
              respon.setId(-1);
              respon.setMensaje("Error de la base de datos "+e.getMessage());
-             String json1=json.toJson(respon);
-             return json1;          
+             return respon.ToJson(respon);
+                     
         }
          //convierto la lista a Gson
         String json1=json.toJson(lista);
         respon.setId(1);
         respon.setMensaje(json1);
-        json1=json.toJson(respon);         
+        return respon.ToJson(respon);         
         //retorno el json
-        return json1;     
+          
+    }
+    
+    
+    
+    @GET
+    @Path("/getproductoId/{token}/{id}")
+    @Produces("application/json")
+    public String getproduct_nombre(@PathParam("id") int id,@PathParam("token") String token) throws Exception
+    {
+        Respuesta respon = new Respuesta();
+        CheckToken check = new CheckToken();
+        ArrayList<Producto> lista = new ArrayList<Producto>();
+        
+      //instancie el objeto de DB
+       DB dbase = new DB("itla2","itlajava","12345678@itla");
+          
+       if (!check.checktocken2(token)==true) 
+       { 
+            respon.setId(-1);
+            respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
+            return respon.ToJson(respon);
+                        
+       }            
+                 
+       //realizo el sql de busqueda
+        String sql="select * from public.t_productos where f_nombre ilike "+id+";";   
+  
+        try
+        {
+            ResultSet rs = dbase.execSelect(sql);   
+            if(!rs.next()==true)
+            {
+                respon.setId(0);
+                respon.setMensaje("No hay registros actualmente en la base de datos");
+                return respon.ToJson(respon);
+            }
+            while (rs.next()==true)
+             {
+                Producto producto = new Producto();
+  
+                producto.setF_id(rs.getInt(1)); //ID del producto
+                producto.setF_nombre(rs.getString(2));
+                producto.setF_descripcion(rs.getString(3)); 
+                producto.setF_costo(rs.getInt(4));
+                producto.setF_precio_venta(rs.getInt(5));
+                producto.setF_precio_alquiler(rs.getInt(6));
+                producto.setF_alquiler_venta(rs.getString(7));
+                producto.setF_cantidad_alquiler(rs.getString(8));
+                producto.setF_cantidad_venta(rs.getString(9));
+                producto.setF_dias_recuperacion(rs.getString(10));
+                //asigno elrs a la lista
+                lista.add(producto);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            //si falla un error de base de datos
+             respon.setId(-1);
+             respon.setMensaje("Error de la base de datos "+e.getMessage());
+             return respon.ToJson(respon);
+                     
+        }
+         //convierto la lista a Gson
+        String json1=json.toJson(lista);
+        respon.setId(1);
+        respon.setMensaje(json1);
+        return respon.ToJson(respon);         
+        //retorno el json
+          
     }
 
 
+
+    //metodo para el Servlet**********************************************************************
+    @GET
+    @Path("/getproductoNombre/{nombre}")
+    @Produces("application/json")
+    public String getproduct_nombre(@PathParam("nombre") String nombre) throws Exception
+    {
+        Respuesta respon = new Respuesta();
+        ArrayList<Producto> lista = new ArrayList<Producto>();
+        
+      //instancie el objeto de DB
+       DB dbase = new DB("itla2","itlajava","12345678@itla");
+          
+                  
+                 
+       //realizo el sql de busqueda
+        String sql="select * from public.t_productos where f_nombre ilike '%"+nombre+"%';";   
+  
+        try
+        {
+            ResultSet rs = dbase.execSelect(sql);   
+            if(!rs.next()==true)
+            {
+                respon.setId(0);
+                respon.setMensaje("No hay registros actualmente en la base de datos");
+                return respon.ToJson(respon);
+            }
+            while (rs.next()==true)
+            {
+                Producto producto = new Producto();
+  
+                producto.setF_id(rs.getInt(1)); //ID del producto
+                producto.setF_nombre(rs.getString(2));
+                producto.setF_descripcion(rs.getString(3)); 
+                producto.setF_costo(rs.getInt(4));
+                producto.setF_precio_venta(rs.getInt(5));
+                producto.setF_precio_alquiler(rs.getInt(6));
+                producto.setF_alquiler_venta(rs.getString(7));
+                producto.setF_cantidad_alquiler(rs.getString(8));
+                producto.setF_cantidad_venta(rs.getString(9));
+                producto.setF_dias_recuperacion(rs.getString(10));
+                //asigno elrs a la lista
+                lista.add(producto);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            //si falla un error de base de datos
+             respon.setId(-1);
+             respon.setMensaje("Error de la base de datos "+e.getMessage());
+             return respon.ToJson(respon);
+                     
+        }
+         //convierto la lista a Gson
+        String json1=json.toJson(lista);
+        respon.setId(1);
+        respon.setMensaje(json1);
+        return respon.ToJson(respon);         
+        //retorno el json
+    }
+    
+    
+    //metodo para el Servlet**********************************************************************
+    @GET
+    @Path("/getproductoId/{id}")
+    @Produces("application/json")
+    public String getproduct_nombre(@PathParam("id") int id) throws Exception
+    {
+        Respuesta respon = new Respuesta();
+        ArrayList<Producto> lista = new ArrayList<Producto>();
+        
+      //instancie el objeto de DB
+       DB dbase = new DB("itla2","itlajava","12345678@itla");
+          
+                  
+                 
+       //realizo el sql de busqueda
+        String sql="select * from public.t_productos where f_id ilike "+id+" ;";   
+  
+        try
+        {
+            ResultSet rs = dbase.execSelect(sql);   
+            if(!rs.next()==true)
+            {
+                respon.setId(0);
+                respon.setMensaje("No hay registros actualmente en la base de datos");
+                return respon.ToJson(respon);
+            }
+            while (rs.next()==true)
+            {
+                Producto producto = new Producto();
+  
+                producto.setF_id(rs.getInt(1)); //ID del producto
+                producto.setF_nombre(rs.getString(2));
+                producto.setF_descripcion(rs.getString(3)); 
+                producto.setF_costo(rs.getInt(4));
+                producto.setF_precio_venta(rs.getInt(5));
+                producto.setF_precio_alquiler(rs.getInt(6));
+                producto.setF_alquiler_venta(rs.getString(7));
+                producto.setF_cantidad_alquiler(rs.getString(8));
+                producto.setF_cantidad_venta(rs.getString(9));
+                producto.setF_dias_recuperacion(rs.getString(10));
+                //asigno elrs a la lista
+                lista.add(producto);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            //si falla un error de base de datos
+             respon.setId(-1);
+             respon.setMensaje("Error de la base de datos "+e.getMessage());
+             return respon.ToJson(respon);
+                     
+        }
+         //convierto la lista a Gson
+        String json1=json.toJson(lista);
+        respon.setId(1);
+        respon.setMensaje(json1);
+        return respon.ToJson(respon);         
+        //retorno el json
+    }
+    
+    
+    
     @POST
     @Path("/insertarproducto")
     @Consumes("application/json")
@@ -134,7 +338,7 @@ public class Webservice_Producto {
         CheckToken ctoken = new CheckToken();
         
         if (ctoken.checktocken2(token)==false){
-            respo.setId(3);
+            respo.setId(2);
             respo.setMensaje("El token no esta activo");
             return  respo.ToJson(respo); 
         }
@@ -147,46 +351,30 @@ public class Webservice_Producto {
         
     }
     
-    @GET
-    @Path("/insertarproduct/{token}/{informacion}")
-    @Consumes("application/json")
-    public void insertar_product(@PathParam("token")String token,@PathParam("informacion")String json) throws Exception{
-        
-         
-        Respuesta respo  = new Respuesta();
-        CheckToken ctoken = new CheckToken();
-        if (ctoken.checktocken2(token)==true){
-            respo.setId(3);
-            respo.setMensaje("El token no esta activo");
-            respo.ToJson(respo);
-        }
-        
-        Producto product = new Producto();
-        product.insertar_t_productos(json);
-        respo.setId(1);
-        respo.setMensaje("Hecho");
-        respo.ToJson(respo);
-                
-      
-    }
     
-    //*************************************Revisar******************************************************************
+    
+    
+    //*************************************Para EL servlet******************************************************************
     @POST
     @Path("/getproducto")
     @Produces("application/json")
-    public String getproduct_id_nombre_pag(@FormParam("nombre") String nombre,@FormParam("token") String token) throws Exception
+    public String getproduct_id_nombre_pag(
+            @FormParam("nombre") String nombre,
+            @FormParam("token") String token) throws Exception
     {
         Respuesta respon = new Respuesta();
+        CheckToken check = new CheckToken();
         ArrayList<Producto> lista = new ArrayList<Producto>();
         
       //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (!checktocken(dbase,token)) 
-       { respon.setId(-1);
-         respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
-         String json1=json.toJson(respon);
-         return json1;              
+       if (!check.checktocken2(token)==true) 
+       {
+        respon.setId(-1);
+        respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
+        return  respon.ToJson(respon);
+                    
        }            
                  
        //realizo el sql de busqueda
@@ -195,9 +383,7 @@ public class Webservice_Producto {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            while (rs.next())
-             {
-                    if(!rs.next()){
+            if(!rs.next()==true){
                      
                      Respuesta respo = new Respuesta();
                      
@@ -206,7 +392,10 @@ public class Webservice_Producto {
                      return respo.ToJson(respo);
                  
                  }
-                 else {
+            while (rs.next())
+            {
+                    
+                 
                 Producto producto = new Producto();
   
                 producto.setF_id(rs.getInt(1)); //ID del producto
@@ -217,11 +406,12 @@ public class Webservice_Producto {
                 producto.setF_cantidad_alquiler(rs.getString(6));
                 producto.setF_cantidad_venta(rs.getString(7));
              
-                //asigno elrs a la lista
+                //asigno el rs a la lista
                 lista.add(producto);
-                    }
             }
-        } catch (Exception e) 
+        
+        } 
+        catch (SQLException e) 
         {
             //si falla un error de base de datos
              respon.setId(-1);
@@ -229,29 +419,18 @@ public class Webservice_Producto {
              String json1=json.toJson(respon);
              return json1;          
         }
-         //convierto la lista a Gson
-        String json1=json.toJson(lista);
+        
+        
+         
+        String json1=json.toJson(lista);//convierto la lista a Gson
         respon.setId(1);
         respon.setMensaje(json1);
-        json1=json.toJson(respon);         
-        //retorno el json
-        return json1;     
+        return respon.ToJson(respon);      //retorno el json   
+        
+            
     }
 
-    static private boolean checktocken(DB dbase,String token)
-    {
-
-       String sql="select count(*) from public.t_logins where f_token="+dbase.comilla(token) + " and f_activo = true";
-       try
-       {
-       ResultSet rs= dbase.execSelect(sql); 
-       while (rs.next())
-       {
-           return true;
-       }
-       }catch(SQLException e) {}
-       return false;
-    }
+   
     
     /**
      * PUT method for updating or creating an instance of Webservice_Producto

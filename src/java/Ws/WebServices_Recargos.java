@@ -56,7 +56,7 @@ public class WebServices_Recargos {
     
      /*inicio del metodo que busca recargos por el id*/
     @GET
-    @Path("/getrecargoso_id/{token}/{id}")
+    @Path("/getrecargo_id/{token}/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getrecargos_id(@PathParam("token") String token,@PathParam("id")int id) throws Exception{
         
@@ -68,7 +68,7 @@ public class WebServices_Recargos {
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (check.checktocken2(token)) 
+       if (check.checktocken2(token)==true) 
        { 
          respon.setId(-1);
          respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
@@ -82,19 +82,21 @@ public class WebServices_Recargos {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
+            if(!rs.next()==true)
+            {
+                     
+                Respuesta respo = new Respuesta();
+                     
+                respo.setId(0);
+                respo.setMensaje("No hay registros actualmente en la base de datos");
+                return respo.ToJson(respo);
+                 
+            }
             while (rs.next())
              {
                  
-                  if(!rs.next()){
-                     
-                     Respuesta respo = new Respuesta();
-                     
-                     respo.setId(0);
-                     respo.setMensaje("No hay registros actualmente en la base de datos");
-                     return respo.ToJson(respo);
+                  
                  
-                 }
-                 else {
                 recargos r = new recargos();
                     
                 r.setF_id(rs.getInt(1));
@@ -107,9 +109,10 @@ public class WebServices_Recargos {
 
                 //asigno elrs a la lista
                 lista.add(r);
-                  }
+                  
             }
-        } catch (Exception e) 
+        }
+        catch (Exception e) 
         {
             //si falla un error de base de datos
              respon.setId(-1);
@@ -129,6 +132,78 @@ public class WebServices_Recargos {
     
      /*fin  del metodo que busca recargos por el id made by :José Aníbal Moronta*/
    
+    
+    
+    @GET
+    @Path("/getrecargo_id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getrecargos_id(@PathParam("id")int id) throws Exception{
+        
+        Respuesta respon = new Respuesta();
+        ArrayList<recargos> lista = new ArrayList<recargos>();
+        
+        Gson json = new Gson();
+        String sql;
+        //instancie el objeto de DB
+       DB dbase = new DB("itla2","itlajava","12345678@itla");
+          
+                  
+                 
+       //realizo el sql de busqueda
+        sql="SELECT f_id,f_id_t_alquiler_factura,f_tipo_factura_t_alquiler_factura,f_descripcion,f_monto,  ";
+        sql+="f_hecho_por,f_pagado FROM public.t_recargos where f_id ="+id ;
+        try
+        {
+            ResultSet rs = dbase.execSelect(sql);   
+            if(!rs.next()==true)
+            {
+                     
+                Respuesta respo = new Respuesta();
+                     
+                respo.setId(0);
+                respo.setMensaje("No hay registros actualmente en la base de datos");
+                return respo.ToJson(respo);
+                 
+            }
+            while (rs.next())
+             {
+                 
+                  
+                 
+                recargos r = new recargos();
+                    
+                r.setF_id(rs.getInt(1));
+                r.setF_id_t_alquiler_factura(rs.getInt(2));
+                r.setF_tipo_factura_t_alquiler_factura(rs.getString(3));
+                r.setF_descripcion(rs.getString(4));
+                r.setF_monto(rs.getInt(5));
+                r.setF_hecho_por(rs.getString(6));
+                r.setF_pagado(rs.getBoolean(7));
+
+                //asigno elrs a la lista
+                lista.add(r);
+                  
+            }
+        }
+        catch (Exception e) 
+        {
+            //si falla un error de base de datos
+             respon.setId(-1);
+             respon.setMensaje("Error de la base de datos "+e.getMessage());
+             String json1=json.toJson(respon);
+             return json1;          
+        }
+         //convierto la lista a Gson
+        String json1=json.toJson(lista);
+        respon.setId(1);
+        respon.setMensaje(json1);
+        json1=json.toJson(respon);         
+        //retorno el json
+        return json1;     
+
+    }
+    
+    
     @POST
     @Path("/insertar_recargo")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -152,14 +227,19 @@ public class WebServices_Recargos {
         return respo.ToJson(respo);
     
     }
+    
+    
+    
+    
+    
 
-    /**
-     * PUT method for updating or creating an instance of WebServices_Recargos
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
+    
     @PUT
-    @Consumes("application/xml")
-    public void putXml(String content) {
+    @Consumes("text/plain")
+    public void putText(String content) {
     }
-}
+   
+    
+    }
+
+    

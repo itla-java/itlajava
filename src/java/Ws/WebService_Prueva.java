@@ -15,15 +15,23 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
+import javax.ws.rs.core.Response;
+
 
 /**
  * REST Web Service
  *
  * @author enriq_000
  */
+
+
+
 @Path("prueva")
 public class WebService_Prueva {
 
@@ -35,7 +43,22 @@ public class WebService_Prueva {
      */
     public WebService_Prueva() {
     }
-
+    
+    
+    
+    @POST
+    @Path("/prueba")
+    @Produces("text/plain")
+    public Response prueba(
+            @FormParam("p1") String p1,
+            @FormParam("p2") String p2){
+       
+        
+        return Response.status(200) 
+                .entity("el resultado es "+p1+ " - " +p2)
+                .build();
+    }
+    
     /**
      * Retrieves representation of an instance of Ws.WebService_Prueva
      * @return an instance of java.lang.String

@@ -82,7 +82,7 @@ public class WebServices_Recargos {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true)
+            if(!rs.next())
             {
                      
                 Respuesta respo = new Respuesta();
@@ -91,7 +91,7 @@ public class WebServices_Recargos {
                 respo.setMensaje("No hay registros actualmente en la base de datos");
                 return respo.ToJson(respo);
                  
-            }
+            }else
             while (rs.next())
              {
                  
@@ -155,7 +155,7 @@ public class WebServices_Recargos {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true)
+            if(!rs.next())
             {
                      
                 Respuesta respo = new Respuesta();
@@ -164,7 +164,7 @@ public class WebServices_Recargos {
                 respo.setMensaje("No hay registros actualmente en la base de datos");
                 return respo.ToJson(respo);
                  
-            }
+            }else
             while (rs.next())
              {
                  

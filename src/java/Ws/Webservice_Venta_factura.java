@@ -80,7 +80,7 @@ public class Webservice_Venta_factura {
        {
       
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true)
+            if(!rs.next())
             {
              
                 respo.setId(0);
@@ -88,7 +88,7 @@ public class Webservice_Venta_factura {
                 return respo.ToJson(respo);
                  
             }
-            while (rs.next()==true)
+            while (rs.next())
             {
            
                 
@@ -153,7 +153,7 @@ public class Webservice_Venta_factura {
        {
       
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true)
+            if(!rs.next())
             {
              
                 respo.setId(0);
@@ -161,7 +161,7 @@ public class Webservice_Venta_factura {
                 return respo.ToJson(respo);
                  
             }
-            while (rs.next()==true)
+            while (rs.next())
             {
            
                 
@@ -199,6 +199,7 @@ public class Webservice_Venta_factura {
         return respo.ToJson(respo);
         
     }
+    /*metodo que busca la factur apor le id made by:José Aníbal moronta*/
     
     
     

@@ -129,13 +129,13 @@ public class Webservice_Cliente {
         
         try
         {
-            if(!rs.next()==true)
+            if(!rs.next())
             {
                      
                 respo.setId(0);
                 respo.setMensaje("No hay registros actualmente en la base de datos");
                 return respo.ToJson(respo);
-            }
+            }else
             while(rs.next())
             {
                 cliente cliente1= new cliente();
@@ -164,7 +164,7 @@ public class Webservice_Cliente {
     
             
             return json.toJson(respo);//returna el cliente que se iso en el while.
-            //fin del metodo cliente que busca por id Maded By Juan L Hiciano
+            //fin del metodo cliente que busca por id Maded By José Aníbal moronta
     }
     
     

@@ -105,7 +105,7 @@ public class WebService_Detalle_alquiler_factura {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true)
+            if(!rs.next())
             {
                      
                 Respuesta respo = new Respuesta();
@@ -114,8 +114,8 @@ public class WebService_Detalle_alquiler_factura {
                 respo.setMensaje("No hay registros actualmente en la base de datos");
                 return respo.ToJson(respo);
                  
-            }
-            while (rs.next()==true)
+            }else
+            while (rs.next())
              {  
                   
                  

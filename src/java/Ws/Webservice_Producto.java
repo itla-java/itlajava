@@ -91,13 +91,13 @@ public class Webservice_Producto {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true)
+            if(!rs.next())
             {
                 respon.setId(0);
                 respon.setMensaje("No hay registros actualmente en la base de datos");
                 return respon.ToJson(respon);
             }
-            while (rs.next()==true)
+            while (rs.next())
              {
                 Producto producto = new Producto();
   
@@ -203,7 +203,7 @@ public class Webservice_Producto {
 
 
 
-    //metodo para el Servlet**********************************************************************
+    
     @GET
     @Path("/getproductoNombre/{nombre}")
     @Produces("application/json")
@@ -264,7 +264,7 @@ public class Webservice_Producto {
     }
     
     
-    //metodo para el Servlet**********************************************************************
+    
     @GET
     @Path("/getproductoId/{id}")
     @Produces("application/json")

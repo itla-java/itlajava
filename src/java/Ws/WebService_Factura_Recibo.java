@@ -108,7 +108,7 @@ public class WebService_Factura_Recibo {
         try
         {
             ResultSet rs = dbase.execSelect(sql); 
-             if(!rs.next()==true)
+             if(!rs.next())
              {
                      
                 Respuesta respo = new Respuesta();
@@ -117,8 +117,8 @@ public class WebService_Factura_Recibo {
                 respo.setMensaje("No hay registros actualmente en la base de datos");
                 return respo.ToJson(respo);
                  
-             }
-            while (rs.next()==true)
+             }else
+            while (rs.next())
              {
                 
                     
@@ -154,7 +154,7 @@ public class WebService_Factura_Recibo {
 
     }
     
-     /*fin  del metodo que busca facturarecibo por el id made by :José Aníbal Moronta mod by Juan Luis H*/
+     /*fin  del metodo que busca facturarecibo por el id made by :José Aníbal Moronta */
    
     
     @GET
@@ -178,7 +178,7 @@ public class WebService_Factura_Recibo {
         try
         {
             ResultSet rs = dbase.execSelect(sql); 
-             if(!rs.next()==true)
+             if(!rs.next())
              {
                      
                 Respuesta respo = new Respuesta();
@@ -187,8 +187,8 @@ public class WebService_Factura_Recibo {
                 respo.setMensaje("No hay registros actualmente en la base de datos");
                 return respo.ToJson(respo);
                  
-             }
-            while (rs.next()==true)
+             }else
+            while (rs.next())
              {
                 
                     

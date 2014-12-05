@@ -109,7 +109,7 @@ public class WebService_Detalle_venta_factura {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true){
+            if(!rs.next()){
                      
                      Respuesta respo = new Respuesta();
                      
@@ -117,8 +117,8 @@ public class WebService_Detalle_venta_factura {
                      respo.setMensaje("No hay registros actualmente en la base de datos");
                      return respo.ToJson(respo);
                  
-                 }
-            while (rs.next()==true)
+                 }else
+            while (rs.next())
              {  
                  
                  
@@ -180,7 +180,7 @@ public class WebService_Detalle_venta_factura {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true)
+            if(!rs.next())
             {
                      
                 Respuesta respo = new Respuesta();
@@ -189,8 +189,8 @@ public class WebService_Detalle_venta_factura {
                 respo.setMensaje("No hay registros actualmente en la base de datos");
                 return respo.ToJson(respo);
                  
-            }
-            while (rs.next()==true)
+            }else
+            while (rs.next())
             {  
                  
                  

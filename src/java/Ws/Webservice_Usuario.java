@@ -102,13 +102,13 @@ public class Webservice_Usuario {
         
         try
         {
-            if(!rs.next()==true)
+            if(!rs.next())
             {
                 respon.setId(0);
                 respon.setMensaje("no hay Usuarios registrados actualmente");
                 return respon.ToJson(respon);
-            }
-            while(rs.next()==true)
+            }else
+            while(rs.next())
             {
                 Usuario usu = new Usuario();
                 
@@ -134,7 +134,7 @@ public class Webservice_Usuario {
         }
         
          return respon.ToJson(respon);//returna el cliente que se iso en el while.
-            //fin del metodo cliente que busca por id Maded By Juan L Hiciano
+            //fin del metodo usuario que busca por id made por José Aníbal Moronta
         
         
         

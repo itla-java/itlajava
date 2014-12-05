@@ -113,7 +113,7 @@ public class WebService_Alquiler_factura {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true)
+            if(!rs.next())
             {
                      
                 Respuesta respo = new Respuesta();
@@ -122,8 +122,8 @@ public class WebService_Alquiler_factura {
                 respo.setMensaje("No hay registros actualmente en la base de datos");
                 return respo.ToJson(respo);
                  
-            }
-            while (rs.next()==true)
+            }else
+            while (rs.next())
             {  
     
                 alquilerFactura af = new alquilerFactura();
@@ -162,7 +162,7 @@ public class WebService_Alquiler_factura {
 
     }
     
-     //*fin  del metodo que busca detalle alquilerFactua por el id made by :José Aníbal Moronta* Modified by : Juan L Hiciano 
+     //*fin  del metodo que busca detalle alquilerFactua por el id made by :José Aníbal Moronta* 
    
     
     @GET  //metodo solo para el Servlet
@@ -237,7 +237,7 @@ public class WebService_Alquiler_factura {
 
     }
     
-    // Mod by Juan L  Hiciano **
+    
     
     /**
      * PUT method for updating or creating an instance of WebService_Alquiler_factura

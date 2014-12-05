@@ -67,7 +67,7 @@ public class WebService_Detalle_venta_factura {
         return respo.ToJson(respo);
 
     } 
-    /*fin del metodo que inserta en detalle_venta_facura made by:José Aníbal Moronta Mejía*/
+    /*fin del metodo que inserta en detalle_venta_facura made by:José Aníbal Moronta Mejía   , Mod  By Juan Luis Hiciano*/
     
 
     /**
@@ -94,9 +94,9 @@ public class WebService_Detalle_venta_factura {
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (check.checktocken2(token)) 
+       if (check.checktocken2(token)==false) 
        { 
-         respon.setId(-1);
+         respon.setId(-2);
          respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
          String json1=json.toJson(respon);
          return json1;              
@@ -109,9 +109,7 @@ public class WebService_Detalle_venta_factura {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            while (rs.next())
-             {  
-                 if(!rs.next()){
+            if(!rs.next()==true){
                      
                      Respuesta respo = new Respuesta();
                      
@@ -120,7 +118,10 @@ public class WebService_Detalle_venta_factura {
                      return respo.ToJson(respo);
                  
                  }
-                 else { 
+            while (rs.next()==true)
+             {  
+                 
+                 
                 detalleVentaFactura dvf = new detalleVentaFactura();
                     
                 dvf.setF_id(rs.getInt(1));
@@ -134,7 +135,7 @@ public class WebService_Detalle_venta_factura {
 
                 //asigno elrs a la lista
                 lista.add(dvf);
-                 }
+                 
             }
         } catch (Exception e) 
         {
@@ -156,6 +157,75 @@ public class WebService_Detalle_venta_factura {
     
      /*fin  del metodo que busca detalleventaFactua por el id made by :José Aníbal Moronta*/
    
+    
+    @GET
+    @Path("/getdetalleventafactura_id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getdetalleventafactura_id(@PathParam("id")int id) throws Exception{
+        
+        Respuesta respon = new Respuesta();
+        ArrayList<detalleVentaFactura> lista = new ArrayList<detalleVentaFactura>();
+        
+        Gson json = new Gson();
+      
+       //instancie el objeto de DB
+       DB dbase = new DB("itla2","itlajava","12345678@itla");
+          
+            
+                 
+       //realizo el sql de busqueda
+        String sql="SELECT f_id,f_id_t_venta_factura,f_tipo_factura_t_venta_factura,f_id_t_productos,f_precio,";
+        sql+="f_cantidad,f_costo,f_itbis FROM public.t_detalle_venta_factura  where f_id = "+id;
+  
+        try
+        {
+            ResultSet rs = dbase.execSelect(sql);   
+            if(!rs.next()==true)
+            {
+                     
+                Respuesta respo = new Respuesta();
+                     
+                respo.setId(0);
+                respo.setMensaje("No hay registros actualmente en la base de datos");
+                return respo.ToJson(respo);
+                 
+            }
+            while (rs.next()==true)
+            {  
+                 
+                 
+                detalleVentaFactura dvf = new detalleVentaFactura();
+                    
+                dvf.setF_id(rs.getInt(1));
+                dvf.setId_t_venta_factura(rs.getInt(2));
+                dvf.setF_tipo_Factura_t_venta_factura(rs.getString(3));
+                dvf.setF_id_t_Productos(rs.getInt(4));
+                dvf.setF_precio(rs.getInt(5));
+                dvf.setF_cantidad(rs.getInt(6));
+                dvf.setF_costo(rs.getInt(7));
+                dvf.setF_itbis(rs.getInt(8));
+
+                //asigno elrs a la lista
+                lista.add(dvf);
+                 
+            }
+        } catch (Exception e) 
+        {
+            //si falla un error de base de datos
+             respon.setId(-1);
+             respon.setMensaje("Error de la base de datos "+e.getMessage());
+             String json1=json.toJson(respon);
+             return json1;          
+        }
+         //convierto la lista a Gson
+        String json1=json.toJson(lista);
+        respon.setId(1);
+        respon.setMensaje(json1);
+        json1=json.toJson(respon);         
+        //retorno el json
+        return json1;     
+
+    }
 
     /**
      * PUT method for updating or creating an instance of WebService_Detalle_venta_factura

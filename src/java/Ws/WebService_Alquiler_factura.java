@@ -12,6 +12,7 @@ import dto.Producto;
 import dto.Respuesta;
 import dto.alquilerFactura;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -86,7 +87,7 @@ public class WebService_Alquiler_factura {
     @GET
     @Path("/getquilerfactura_id/{token}/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getalquilerfactura_id(@PathParam("token") String token,@PathParam("id")int id) throws Exception{
+    public String getAlquilerFactura_Id(@PathParam("token") String token,@PathParam("id")int id) throws Exception{
         
         Respuesta respon = new Respuesta();
         ArrayList<alquilerFactura> lista = new ArrayList<alquilerFactura>();
@@ -96,7 +97,7 @@ public class WebService_Alquiler_factura {
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (check.checktocken2(token)) 
+       if (check.checktocken2(token)==true) 
        { 
          respon.setId(-1);
          respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
@@ -112,18 +113,19 @@ public class WebService_Alquiler_factura {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            while (rs.next())
-             {  
-                 if(!rs.next()){
+            if(!rs.next()==true)
+            {
                      
-                     Respuesta respo = new Respuesta();
+                Respuesta respo = new Respuesta();
                      
-                     respo.setId(0);
-                     respo.setMensaje("No hay registros actualmente en la base de datos");
-                     return respo.ToJson(respo);
+                respo.setId(0);
+                respo.setMensaje("No hay registros actualmente en la base de datos");
+                return respo.ToJson(respo);
                  
-                 }
-                 else {
+            }
+            while (rs.next()==true)
+            {  
+    
                 alquilerFactura af = new alquilerFactura();
                     
                 af.setF_id(rs.getInt(1));
@@ -139,9 +141,10 @@ public class WebService_Alquiler_factura {
                 
                 //asigno elrs a la lista
                 lista.add(af);
-                 }
+                 
             }
-        } catch (Exception e) 
+        } 
+        catch (SQLException e) 
         {
             //si falla un error de base de datos
              respon.setId(-1);
@@ -159,8 +162,83 @@ public class WebService_Alquiler_factura {
 
     }
     
-     /*fin  del metodo que busca detalle alquilerFactua por el id made by :José Aníbal Moronta*/
+     //*fin  del metodo que busca detalle alquilerFactua por el id made by :José Aníbal Moronta* Modified by : Juan L Hiciano 
    
+    
+    @GET  //metodo solo para el Servlet
+    @Path("/getquilerfactura_id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAlquilerFactura_Id(@PathParam("id")int id) throws Exception{
+        
+        Respuesta respon = new Respuesta();
+        ArrayList<alquilerFactura> lista = new ArrayList<alquilerFactura>();
+        CheckToken check = new CheckToken();
+        Gson json = new Gson();
+      
+        //instancie el objeto de DB
+       DB dbase = new DB("itla2","itlajava","12345678@itla");
+          
+              
+                 
+       //realizo el sql de busqueda
+       String sql="SELECT f_id,f_tipo_factura,f_id_t_cliente,f_id_t_usuarios,f_fecha,f_hecha_por,f_monto,f_balance,f_pagada";
+       sql+="FROM public.t_alquiler_factura where f_id ="+ id ;
+        
+  
+        try
+        {
+            ResultSet rs = dbase.execSelect(sql);   
+            if(!rs.next()==true)
+            {
+                     
+                Respuesta respo = new Respuesta();
+                     
+                respo.setId(0);
+                respo.setMensaje("No hay registros actualmente en la base de datos");
+                return respo.ToJson(respo);
+                 
+            }
+            while (rs.next()==true)
+            {  
+                 
+                
+                alquilerFactura af = new alquilerFactura();
+                    
+                af.setF_id(rs.getInt(1));
+                af.setF_tipo_factura(rs.getString(2));
+                af.setF_id_cliente(rs.getInt(3));
+                af.setF_fecha(rs.getString(4));
+                af.setF_hecha_por(rs.getString(5));
+                af.setF_id_usuario(rs.getInt(6));
+                af.setF_monto(rs.getInt(7));
+                af.setF_balance(rs.getInt(8));
+                af.setF_pagada(rs.getBoolean(9));    
+                
+                
+                //asigno el rs a la lista
+                lista.add(af);
+            }
+        }
+        catch (Exception e) 
+        {
+            //si falla un error de base de datos
+             respon.setId(-1);
+             respon.setMensaje("Error de la base de datos "+e.getMessage());
+             String json1=json.toJson(respon);
+             return json1;          
+        }
+         //convierto la lista a Gson
+        String json1=json.toJson(lista);
+        respon.setId(1);
+        respon.setMensaje(json1);
+        json1=json.toJson(respon);         
+        //retorno el json
+        return json1;     
+
+    }
+    
+    // Mod by Juan L  Hiciano **
+    
     /**
      * PUT method for updating or creating an instance of WebService_Alquiler_factura
      * @param content representation for the resource

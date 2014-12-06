@@ -27,6 +27,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.core.MediaType;
 
 import clases.CheckToken;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 
@@ -219,20 +221,28 @@ public class Webservice_Producto {
     @Consumes("application/json")
     public String insertar_producto(
         @FormParam("token") String token ,
-        @FormParam("Gson") String gson) throws Exception{
+        @FormParam("Gson") String gson) {
         
          
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
         
-        if (!ctoken.checktocken2(token)){
-            respo.setId(2);
-            respo.setMensaje("El token no esta activo");
-            return  respo.ToJson(respo); 
+        try {
+            if (!ctoken.checktocken2(token)){
+                respo.setId(2);
+                respo.setMensaje("El token no esta activo"); 
+                return  respo.ToJson(respo);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Webservice_Producto.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         Producto product = new Producto();
-        product.insertar_t_productos(gson);
+        try {
+            product.insertar_t_productos(gson);
+        } catch (Exception ex) {
+            Logger.getLogger(Webservice_Producto.class.getName()).log(Level.SEVERE, null, ex);
+        }
         respo.setId(1);
         respo.setMensaje("Hecho");
         return  respo.ToJson(respo);

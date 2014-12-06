@@ -129,30 +129,33 @@ public class Webservice_Producto {
         
         respon.setId(1);
         respon.setMensaje(respon.ToJson(lista));//convierto la lista a Gson
+        dbase.CerrarConexion();
         return respon.ToJson(respon); //retorno el json        
         
           
     }
     
-    //****************
+    
     
     
     
     @GET
     @Path("/getproductoId/{token}/{id}")
     @Produces("application/json")
-    public String getproduct_nombre(@PathParam("id") int id,@PathParam("token") String token) throws Exception
+    public String getproduct_id(
+            @PathParam("token") String token,
+            @PathParam("id") int id) throws Exception
     {
         Respuesta respon = new Respuesta();
         CheckToken check = new CheckToken();
-        ArrayList<Producto> lista = new ArrayList<Producto>();
+       
         
       //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (!check.checktocken2(token)==true) 
+       if (!check.checktocken2(token)) 
        { 
-            respon.setId(-1);
+            respon.setId(2);
             respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
             return respon.ToJson(respon);
                         
@@ -164,13 +167,13 @@ public class Webservice_Producto {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true)
+            if(!rs.next())
             {
                 respon.setId(0);
                 respon.setMensaje("No hay registros actualmente en la base de datos");
                 return respon.ToJson(respon);
             }
-            while (rs.next()==true)
+            while (rs.next())
              {
                 Producto producto = new Producto();
   
@@ -184,8 +187,10 @@ public class Webservice_Producto {
                 producto.setF_cantidad_alquiler(rs.getString(8));
                 producto.setF_cantidad_venta(rs.getString(9));
                 producto.setF_dias_recuperacion(rs.getString(10));
-                //asigno elrs a la lista
-                lista.add(producto);
+                
+                respon.setId(1);
+                respon.setMensaje(respon.ToJson(producto));//agrego el Gson de producto a Respuesta
+                
             }
         } 
         catch (SQLException e) 
@@ -193,141 +198,18 @@ public class Webservice_Producto {
             //si falla un error de base de datos
              respon.setId(-1);
              respon.setMensaje("Error de la base de datos "+e.getMessage());
+             
+             dbase.CerrarConexion();
              return respon.ToJson(respon);
                      
         }
-         //convierto la lista a Gson
-        String json1=json.toJson(lista);
-        respon.setId(1);
-        respon.setMensaje(json1);
-        return respon.ToJson(respon);         
-        //retorno el json
-          
-    }
-
-
-
-    
-    @GET
-    @Path("/getproductoNombre/{nombre}")
-    @Produces("application/json")
-    public String getproduct_nombre(@PathParam("nombre") String nombre) throws Exception
-    {
-        Respuesta respon = new Respuesta();
-        ArrayList<Producto> lista = new ArrayList<Producto>();
+         
         
-      //instancie el objeto de DB
-       DB dbase = new DB("itla2","itlajava","12345678@itla");
-          
-                  
-                 
-       //realizo el sql de busqueda
-        String sql="select * from public.t_productos where f_nombre ilike '%"+nombre+"%';";   
-  
-        try
-        {
-            ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true)
-            {
-                respon.setId(0);
-                respon.setMensaje("No hay registros actualmente en la base de datos");
-                return respon.ToJson(respon);
-            }
-            while (rs.next()==true)
-            {
-                Producto producto = new Producto();
-  
-                producto.setF_id(rs.getInt(1)); //ID del producto
-                producto.setF_nombre(rs.getString(2));
-                producto.setF_descripcion(rs.getString(3)); 
-                producto.setF_costo(rs.getInt(4));
-                producto.setF_precio_venta(rs.getInt(5));
-                producto.setF_precio_alquiler(rs.getInt(6));
-                producto.setF_alquiler_venta(rs.getString(7));
-                producto.setF_cantidad_alquiler(rs.getString(8));
-                producto.setF_cantidad_venta(rs.getString(9));
-                producto.setF_dias_recuperacion(rs.getString(10));
-                //asigno elrs a la lista
-                lista.add(producto);
-            }
-        } 
-        catch (SQLException e) 
-        {
-            //si falla un error de base de datos
-             respon.setId(-1);
-             respon.setMensaje("Error de la base de datos "+e.getMessage());
-             return respon.ToJson(respon);
-                     
-        }
-         //convierto la lista a Gson
-        String json1=json.toJson(lista);
-        respon.setId(1);
-        respon.setMensaje(json1);
-        return respon.ToJson(respon);         
-        //retorno el json
-    }
-    
-    
-    
-    @GET
-    @Path("/getproductoId/{id}")
-    @Produces("application/json")
-    public String getproduct_nombre(@PathParam("id") int id) throws Exception
-    {
-        Respuesta respon = new Respuesta();
-        ArrayList<Producto> lista = new ArrayList<Producto>();
         
-      //instancie el objeto de DB
-       DB dbase = new DB("itla2","itlajava","12345678@itla");
-          
-                  
-                 
-       //realizo el sql de busqueda
-        String sql="select * from public.t_productos where f_id ilike "+id+" ;";   
-  
-        try
-        {
-            ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true)
-            {
-                respon.setId(0);
-                respon.setMensaje("No hay registros actualmente en la base de datos");
-                return respon.ToJson(respon);
-            }
-            while (rs.next()==true)
-            {
-                Producto producto = new Producto();
-  
-                producto.setF_id(rs.getInt(1)); //ID del producto
-                producto.setF_nombre(rs.getString(2));
-                producto.setF_descripcion(rs.getString(3)); 
-                producto.setF_costo(rs.getInt(4));
-                producto.setF_precio_venta(rs.getInt(5));
-                producto.setF_precio_alquiler(rs.getInt(6));
-                producto.setF_alquiler_venta(rs.getString(7));
-                producto.setF_cantidad_alquiler(rs.getString(8));
-                producto.setF_cantidad_venta(rs.getString(9));
-                producto.setF_dias_recuperacion(rs.getString(10));
-                //asigno elrs a la lista
-                lista.add(producto);
-            }
-        } 
-        catch (SQLException e) 
-        {
-            //si falla un error de base de datos
-             respon.setId(-1);
-             respon.setMensaje("Error de la base de datos "+e.getMessage());
-             return respon.ToJson(respon);
-                     
-        }
-         //convierto la lista a Gson
-        String json1=json.toJson(lista);
-        respon.setId(1);
-        respon.setMensaje(json1);
         return respon.ToJson(respon);         
         //retorno el json
+          
     }
-    
     
     
     @POST
@@ -341,7 +223,7 @@ public class Webservice_Producto {
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
         
-        if (ctoken.checktocken2(token)==false){
+        if (!ctoken.checktocken2(token)){
             respo.setId(2);
             respo.setMensaje("El token no esta activo");
             return  respo.ToJson(respo); 
@@ -373,11 +255,11 @@ public class Webservice_Producto {
       //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (!check.checktocken2(token)==true) 
+       if (!check.checktocken2(token)) 
        {
-        respon.setId(-1);
-        respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
-        return  respon.ToJson(respon);
+            respon.setId(2);
+            respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
+            return  respon.ToJson(respon);
                     
        }            
                  
@@ -387,15 +269,16 @@ public class Webservice_Producto {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true){
+            if(!rs.next())
+            {
                      
-                     Respuesta respo = new Respuesta();
+                Respuesta respo = new Respuesta();
                      
-                     respo.setId(0);
-                     respo.setMensaje("No hay registros actualmente en la base de datos");
-                     return respo.ToJson(respo);
+                respo.setId(0);
+                respo.setMensaje("No hay registros actualmente en la base de datos");
+                return respo.ToJson(respo);
                  
-                 }
+            }
             while (rs.next())
             {
                     
@@ -420,15 +303,12 @@ public class Webservice_Producto {
             //si falla un error de base de datos
              respon.setId(-1);
              respon.setMensaje("Error de la base de datos "+e.getMessage());
-             String json1=json.toJson(respon);
-             return json1;          
+             return respon.ToJson(respon);        
         }
         
-        
-         
-        String json1=json.toJson(lista);//convierto la lista a Gson
         respon.setId(1);
-        respon.setMensaje(json1);
+        respon.setMensaje(respon.ToJson(lista));//convierto la lista a Gson
+        dbase.CerrarConexion();
         return respon.ToJson(respon);      //retorno el json   
         
             

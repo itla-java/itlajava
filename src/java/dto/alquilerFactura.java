@@ -104,7 +104,7 @@ public class alquilerFactura {
     public void insertar_alquiler_factura(String informacion) throws Exception{
         DB dbase = new DB("itla2","itlajava","12345678@itla");
         String sql="INSERT INTO public.t_alquiler_factura(f_tipo_factura,f_id_t_cliente,f_id_t_usuarios,f_fecha,f_hecha_por,f_monto,f_balance,f_pagada)";
-        sql+="VALUES(?,?,?,?,?,?,?,?)";
+        sql+="VALUES(?,?,?,?,?,?,?)";
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         p.setString(1,f_tipo_factura);
@@ -116,6 +116,8 @@ public class alquilerFactura {
         p.setInt(6,f_balance);
         p.setBoolean(7,f_pagada);
         p.execute();
+        
+        dbase.CerrarConexion();
         
         }
     

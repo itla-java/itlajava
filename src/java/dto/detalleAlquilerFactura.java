@@ -140,6 +140,8 @@ public class detalleAlquilerFactura {
         p.setInt(9,f_costo);
         p.setInt(10,f_itbis);
         p.execute();
+        
+        dbase.CerrarConexion();
 
     }
     

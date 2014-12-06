@@ -93,7 +93,8 @@ public class recargos {
        recargos info = json.fromJson(informacion,recargos.class);
         
         PreparedStatement p  = DB.conexion.prepareStatement(sql);
-        p.setInt(1, f_id_t_alquiler_factura);
+        
+        p.setInt(1,f_id_t_alquiler_factura);
         p.setString(2,f_tipo_factura_t_alquiler_factura);
         p.setString(3,f_descripcion);
         p.setInt(4, f_monto);
@@ -101,7 +102,7 @@ public class recargos {
         p.setBoolean(6, f_pagado);
         p.execute();
         
-    
+        dbase.CerrarConexion();
     }
     
     

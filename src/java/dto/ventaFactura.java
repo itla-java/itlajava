@@ -115,16 +115,16 @@ public class ventaFactura {
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         Gson json = new Gson();
         ventaFactura info = json.fromJson(informacion, ventaFactura.class);
-        p.setInt(1, f_id);
-        p.setString(2, f_tipo_factura);
-        p.setInt(3, f_id_t_cliente);
-        p.setInt(4, f_id_t_usuario);
-        p.setInt(5, f_monto);
-        p.setInt(6, f_id_orden);
-        p.setString(7, f_fecha);
-        p.setString(8, f_hecha_por);
-        p.setInt(9, f_balance);
-        p.setBoolean(10, f_pagada);
+        
+        p.setString(1, f_tipo_factura);
+        p.setInt(2, f_id_t_cliente);
+        p.setInt(3, f_id_t_usuario);
+        p.setInt(4, f_monto);
+        p.setInt(5, f_id_orden);
+        p.setString(6, f_fecha);
+        p.setString(7, f_hecha_por);
+        p.setInt(8, f_balance);
+        p.setBoolean(9, f_pagada);
         p.execute();
     }
    

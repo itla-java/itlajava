@@ -113,7 +113,9 @@ public class WebService_Prueva {
             
             cliente1.setF_apellido(rs.getString(2));
             cliente1.setF_apellido(rs.getString(3));
+            dbase.CerrarConexion();
             return ""+cliente1.getF_nombre()+","+cliente1.getF_apellido()+";";
+            
         }
         catch(SQLException e)
         {

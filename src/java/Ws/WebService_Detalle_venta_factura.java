@@ -151,7 +151,7 @@ public class WebService_Detalle_venta_factura {
              return respon.ToJson(respon);
                        
         }
-      
+        dbase.CerrarConexion();
         return respon.ToJson(respon);   //retorno el Gson   
 
     }

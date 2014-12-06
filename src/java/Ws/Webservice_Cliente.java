@@ -164,13 +164,13 @@ public class Webservice_Cliente {
         }
         
     
-            
+            dbase.CerrarConexion();
             return respo.ToJson(respo);//retorna el cliente que se iso en el while.
             //fin del metodo cliente que busca por id Maded By José Aníbal moronta
     }
     
     
-    @POST //Metodo para el servlet by Juan Luis Hiciano*******************
+    @POST //Metodo para el servlet by Juan Luis Hiciano*************************
     @Produces("application/json")
     @Path("/getcliente")
     public String getCliente(
@@ -221,7 +221,7 @@ public class Webservice_Cliente {
         }
         
     
-            
+            dbase.CerrarConexion();
             return respo.ToJson(respo);//returna el cliente que se iso en el while.
             //fin del metodo cliente que busca por id Maded By Juan L Hiciano
     }
@@ -297,7 +297,7 @@ public class Webservice_Cliente {
         }
         respon.setId(1);
         respon.setMensaje(respon.ToJson(lista)); //convierto la lista a Gson             
-       
+        dbase.CerrarConexion();
         return respon.ToJson(respon);   //retorno el json   
     }
     

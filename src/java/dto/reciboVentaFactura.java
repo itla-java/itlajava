@@ -65,7 +65,7 @@ public class reciboVentaFactura {
     
         DB dbase = new DB("itla2","itlajava","12345678@itla");
         String sql="INSERT INTO public.t_recibo_venta_factura(f_id_t_cliente,f_concepto,f_fecha,f_monto)";
-        sql+="VALUES (?,?,?,?,?,?,?,?)";
+        sql+="VALUES (?,?,?,?)";
       
         Gson json = new Gson();
        reciboVentaFactura info = json.fromJson(informacion,reciboVentaFactura.class);
@@ -77,6 +77,7 @@ public class reciboVentaFactura {
         p.setString(3, f_fecha);
         p.setInt(4, f_monto);
         p.execute();
+        dbase.CerrarConexion();
         
     
     }

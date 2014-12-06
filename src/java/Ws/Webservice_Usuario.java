@@ -50,7 +50,7 @@ public class Webservice_Usuario {
      * @return an instance of java.lang.String
      */
     
-    @PUT
+    @PUT // Metodo para modificar la contra del  Usuario By : Juan Luis Hiciano
     @Path("/modificar_pass")
     @Consumes("application/json")
     //metodo para cambiar contra de un usuario
@@ -59,24 +59,20 @@ public class Webservice_Usuario {
             @FormParam("pass")String pass,
             @FormParam("id") int id) throws Exception
     {
-        String Gson;
-        Gson gso= new Gson(); 
+      
+        
         Respuesta resp = new Respuesta();
        
-        if (!checktocken(dbase,token)) 
-        { resp.setId(-1);
-          resp.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
-          Gson=gso.toJson(resp);
-          return Gson;              
+        if (!checktocken.checktocken2(token)) 
+        { 
+            resp.setId(2);
+            resp.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
+            return resp.ToJson(resp);                        
         }  
         
         Usuario user = new Usuario();
-        user.mod_pass(pass ,id);
+        return user.mod_pass(pass ,id);
         
-        resp.setId(1);
-        resp.setMensaje("Hecho");
-        Gson=gso.toJson(resp);
-        return Gson;
     }
     
     
@@ -84,13 +80,15 @@ public class Webservice_Usuario {
     @GET
     @Path("/getusuario/{token}/{id}")
     @Produces("application/json")
-    public String getUsuario(@PathParam("token") String token,@PathParam("id") int id) throws Exception
+    public String getUsuario(
+            @PathParam("token") String token,
+            @PathParam("id") int id) throws Exception
     {
         Respuesta respon = new Respuesta();
         CheckToken check = new CheckToken();
         String sql;
         DB dbase = new DB("itla2","itlajava","12345678@itla");//instancia del objeto  DB
-        if(!check.checktocken2(token)==true)
+        if(!check.checktocken2(token))
         {
             respon.setId(2);
             respon.setMensaje("El token ha sido desactivado");
@@ -107,7 +105,7 @@ public class Webservice_Usuario {
                 respon.setId(0);
                 respon.setMensaje("no hay Usuarios registrados actualmente");
                 return respon.ToJson(respon);
-            }else
+            }
             while(rs.next())
             {
                 Usuario usu = new Usuario();
@@ -133,7 +131,8 @@ public class Webservice_Usuario {
             return respon.ToJson(respon); 
         }
         
-         return respon.ToJson(respon);//returna el cliente que se iso en el while.
+         dbase.CerrarConexion();
+         return respon.ToJson(respon);//retorna el cliente que se iso en el while.
             //fin del metodo usuario que busca por id made por José Aníbal Moronta
         
         
@@ -163,7 +162,5 @@ public class Webservice_Usuario {
     
     
 
-    private boolean checktocken(DB dbase, String token) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 }

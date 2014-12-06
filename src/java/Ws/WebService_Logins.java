@@ -65,7 +65,9 @@ public class WebService_Logins {
     @GET
     @Produces("application/json")
     @Path("/getstatus/{user}/{pass}")
-    public String getStatus(@PathParam ("user") String user ,@PathParam ("pass") String pass) throws Exception
+    public String getStatus(
+            @PathParam ("user") String user ,
+            @PathParam ("pass") String pass) throws Exception
     {
      
         String token;
@@ -97,6 +99,8 @@ public class WebService_Logins {
                 
                 
             }
+            
+             dbase.CerrarConexion();
       
         }
         catch (SQLException e) 

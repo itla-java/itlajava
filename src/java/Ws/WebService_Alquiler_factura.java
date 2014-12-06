@@ -146,7 +146,7 @@ public class WebService_Alquiler_factura {
              respon.setMensaje("Error de la base de datos "+e.getMessage());
              return respon.ToJson(respon);    
         }
-         
+         dbase.CerrarConexion();
         return respon.ToJson(respon);
     
     }
@@ -215,7 +215,7 @@ public class WebService_Alquiler_factura {
                       
         }
          //convierto la lista a Gson
-              
+        dbase.CerrarConexion();      
         //retorno el json
         return respon.ToJson(respon);     
 

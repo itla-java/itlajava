@@ -111,30 +111,26 @@ public class Producto {
     public void insertar_t_productos(String informacion) throws Exception{
         
         DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
-        String sql="INSERT INTO public.t_productos(f_id,f_nombre,f_descripcion,f_costo,f_precio_venta,f_precio_alquiler,f_alquiler_venta,f_cantidad_alquiler,f_cantidad_venta,f_dias_recuperacion)";       
-        sql+="VALUES(?,?,?,?,?,?,?,?,?,?)";    
-        try
-        {
+        String sql="INSERT INTO public.t_productos(f_nombre,f_descripcion,f_costo,f_precio_venta,f_precio_alquiler,f_alquiler_venta,f_cantidad_alquiler,f_cantidad_venta,f_dias_recuperacion)";       
+        sql+="VALUES(?,?,?,?,?,?,?,?,?)";    
+        
             PreparedStatement p = DB.conexion.prepareStatement(sql);
             Gson json = new Gson();
             Producto info = json.fromJson(informacion, Producto.class);
-            p.setInt(1, f_id);
-            p.setString(2, f_nombre);
-            p.setString(3, f_descripcion);
-            p.setInt(4, f_costo);
-            p.setInt(5, f_precio_venta);
-            p.setInt(6, f_precio_alquiler);
-            p.setString(7, f_alquiler_venta);
-            p.setString(8, f_cantidad_alquiler);
-            p.setString(9, f_cantidad_venta);
-            p.setString(10, f_dias_recuperacion);
+            
+            p.setString(1, f_nombre);
+            p.setString(2, f_descripcion);
+            p.setInt(3, f_costo);
+            p.setInt(4, f_precio_venta);
+            p.setInt(5, f_precio_alquiler);
+            p.setString(6, f_alquiler_venta);
+            p.setString(7, f_cantidad_alquiler);
+            p.setString(8, f_cantidad_venta);
+            p.setString(9, f_dias_recuperacion);
             p.execute();
-        }
-        catch(SQLException e)
-                {
-                    e.printStackTrace();
-                
-                }
+            
+            dbase.CerrarConexion();
+      
     }
    
 }

@@ -148,81 +148,16 @@ public class WebService_Factura_Recibo {
                       
         }
         
-          
-        //retorno el json
-         return respon.ToJson(respon); 
+        dbase.CerrarConexion();
+       
+        return respon.ToJson(respon);  //retorno el json
 
     }
     
      /*fin  del metodo que busca facturarecibo por el id made by :José Aníbal Moronta */
    
     
-    @GET
-    @Path("/getfacturarecibo_id/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getfacturarecibo_id(@PathParam("id")int id) throws Exception{
-        
-        Respuesta respon = new Respuesta();
-        ArrayList<facturaRecibo> lista = new ArrayList<facturaRecibo>();
-        
-        Gson json = new Gson();
-        String sql;
-        //instancie el objeto de DB
-       DB dbase = new DB("itla2","itlajava","12345678@itla");
-          
-       
-                 
-       //realizo el sql de busqueda
-        sql="SELECT f_id_t_venta_factura,f_tipo_factura_t_venta_factura,f_monto,f_fecha,f_id_t_recibo_venta_factura ";
-        sql+="FROM public.t_factura_recibo where f_id_t_venta_factura ="+id ;
-        try
-        {
-            ResultSet rs = dbase.execSelect(sql); 
-             if(!rs.next())
-             {
-                     
-                Respuesta respo = new Respuesta();
-                     
-                respo.setId(0);
-                respo.setMensaje("No hay registros actualmente en la base de datos");
-                return respo.ToJson(respo);
-                 
-             }else
-            while (rs.next())
-             {
-                
-                    
-                facturaRecibo fr = new facturaRecibo();
-                    
-                fr.setF_id_t_venta_factura(rs.getInt(1));
-                fr.setF_tipo_factura_t_venta_factura(rs.getString(2));
-                fr.setF_monto(rs.getInt(3));
-                fr.setF_fecha(rs.getString(4));
-                fr.setF_id_t_Recibo_venta_factura(rs.getInt(5));
-                
-
-                //asigno elrs a la lista
-                lista.add(fr);
-                 
-            }
-        } 
-        catch (Exception e) 
-        {
-            //si falla un error de base de datos
-             respon.setId(-1);
-             respon.setMensaje("Error de la base de datos "+e.getMessage());
-             String json1=json.toJson(respon);
-             return json1;          
-        }
-         //convierto la lista a Gson
-        String json1=json.toJson(lista);
-        respon.setId(1);
-        respon.setMensaje(json1);
-        json1=json.toJson(respon);         
-        //retorno el json
-        return json1;     
-
-    }
+    
     /**
      * PUT method for updating or creating an instance of WebService_Factura_Recibo
      * @param content representation for the resource

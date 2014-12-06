@@ -80,11 +80,12 @@ public class Usuario {
         
         DB dbase = new DB("itla2","itlajava","12345678@itla");
         
-        String sql="UPDATE public.t_usuarios SET f_clave ="+ pass +"WHERE f_id ="+id;
+        String sql="UPDATE public.t_usuarios SET f_clave ='"+ pass +"' WHERE f_id ="+id;
         dbase.executeQuery(sql);
         Respuesta respo = new Respuesta();
         respo.setId(1);
-        respo.setMensaje("Hecho ");
+        respo.setMensaje("Hecho");
+        dbase.CerrarConexion();
         return respo.ToJson(respo);
 
     }

@@ -69,7 +69,8 @@ public class WebServices_Recargos {
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (check.checktocken2(token)==true) 
+       if (!check.checktocken2(token)) 
+           
        { 
             respon.setId(2);
             respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
@@ -118,7 +119,7 @@ public class WebServices_Recargos {
              return respon.ToJson(respon);
                   
         }
-        
+        dbase.CerrarConexion();
         return respon.ToJson(respon);//retorno el json
 
     }
@@ -189,7 +190,7 @@ public class WebServices_Recargos {
             return respon.ToJson(respon);
                   
         }
-         
+        dbase.CerrarConexion(); 
         return respon.ToJson(respon);       //retorno el json  
         
            

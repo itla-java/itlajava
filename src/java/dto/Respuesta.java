@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 public class Respuesta {
     
     private int id;
-    private String mensaje,token;
+    private String mensaje;
 
     public int getId() {
         return id;
@@ -32,13 +32,7 @@ public class Respuesta {
         this.mensaje = mensaje;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
+   
     
     /*Metodo que vuelve un objeot a Json
     Made by José Aníbal Moronta*/

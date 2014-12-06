@@ -14,6 +14,7 @@ import dto.Respuesta;
 import dto.reciboVentaFactura;
 import dto.ventaFactura;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -55,7 +56,9 @@ public class Webservice_Venta_factura {
     @GET
     @Path("/getfactura_id/{token}/{id}")
     @Produces("application/json")
-    public String getfactura_id(@PathParam("token") String token,@PathParam("id") int id) throws Exception{
+    public String getfactura_id(
+            @PathParam("token") String token,
+            @PathParam("id") int id) throws Exception{
         
 
         DB dbase = new DB("itla2","itlajava","12345678@itla");
@@ -64,13 +67,13 @@ public class Webservice_Venta_factura {
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
         
-        if (ctoken.checktocken2(token)==true){
+        if (!ctoken.checktocken2(token)){
             respo.setId(2);
             respo.setMensaje("El token no esta activo");
             return respo.ToJson(respo);
         }
         
-        //instancie el objeto de DB
+        
        
        
        //realizo el sql
@@ -98,111 +101,40 @@ public class Webservice_Venta_factura {
                 ventaf.setF_id(rs.getInt(1));
                 ventaf.setF_tipo_factura(rs.getString(2));
                 ventaf.setF_id_t_cliente(rs.getInt(3));
-                ventaf.setF_id_orden(rs.getInt(3));
-                ventaf.setF_fecha(rs.getString(4));
-                ventaf.setF_hecha_por(rs.getString(5));
-                ventaf.setF_id_t_usuario(rs.getInt(6));
+                ventaf.setF_id_t_usuario(rs.getInt(4));
+                ventaf.setF_monto(rs.getInt(5));
+                ventaf.setF_id_orden(rs.getInt(6));
+                ventaf.setF_fecha(rs.getString(7));
+                ventaf.setF_hecha_por(rs.getString(8));
+                ventaf.setF_balance(rs.getInt(9));
+                ventaf.setF_pagada(rs.getBoolean(10));
+                
        
            
                 respo.setId(1);
                 respo.setMensaje(respo.ToJson(ventaf));
             }
        
-       }
-        catch (Exception e)
+        }
+        catch (SQLException e)
         {
             //si falla un error de base de datos
             respo.setId(-1);
             respo.setMensaje("Error de la base de datos :"+e.getMessage());
+            
             return respo.ToJson(respo);
         }
         
         //convierto la lista a Gson
         
         
-        //cierro la conexion
-        dbase.CerrarConexion();
-        //retorno el json
-        return respo.ToJson(respo);
+        
+        dbase.CerrarConexion();//cierro la conexion
+        
+        return respo.ToJson(respo);//retorno el json
         
     }
     /*fin del metodo que busca la factura por el id made by:José Aníbal Moronta Mejía*/
-    
-    
-    @GET
-    @Path("/getfactura_id/{id}")
-    @Produces("application/json")
-    public String getfactura_id(@PathParam("id") int id) throws Exception{
-        
-
-        DB dbase = new DB("itla2","itlajava","12345678@itla");
-        
-        
-        Respuesta respo  = new Respuesta();
-       
-        
-        
-        
-        //instancie el objeto de DB
-       
-       
-       //realizo el sql
-       String sql="select * from public.t_venta_factura where f_id ="+id;
-       
-       try
-       {
-      
-            ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next())
-            {
-             
-                respo.setId(0);
-                respo.setMensaje("No hay registros actualmente en la base de datos");
-                return respo.ToJson(respo);
-                 
-            }
-            while (rs.next())
-            {
-           
-                
-                
-                ventaFactura ventaf = new ventaFactura();
-           
-                ventaf.setF_id(rs.getInt(1));
-                ventaf.setF_tipo_factura(rs.getString(2));
-                ventaf.setF_id_t_cliente(rs.getInt(3));
-                ventaf.setF_id_orden(rs.getInt(3));
-                ventaf.setF_fecha(rs.getString(4));
-                ventaf.setF_hecha_por(rs.getString(5));
-                ventaf.setF_id_t_usuario(rs.getInt(6));
-                
-                respo.setId(1);
-                respo.setMensaje(respo.ToJson(ventaf));
-
-            }
-       
-       }
-        catch (Exception e)
-        {
-            //si falla un error de base de datos
-            respo.setId(-1);
-            respo.setMensaje("Error de la base de datos :"+e.getMessage());
-            return respo.ToJson(respo);
-        }
-        
-        //convierto la lista a Gson
-        
-        
-        //cierro la conexion
-        dbase.CerrarConexion();
-        //retorno el json
-        return respo.ToJson(respo);
-        
-    }
-    /*metodo que busca la factur apor le id made by:José Aníbal moronta*/
-    
-    
-    
     
     /*metodo que inserta factura en reciboVnetaFactura*/
     @POST
@@ -215,8 +147,8 @@ public class Webservice_Venta_factura {
         
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
-        if (ctoken.checktocken2(token)==false){
-            respo.setId(3);
+        if (!ctoken.checktocken2(token)){
+            respo.setId(2);
             respo.setMensaje("El token no esta activo");
             return respo.ToJson(respo);
         }

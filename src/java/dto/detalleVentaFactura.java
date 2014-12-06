@@ -107,7 +107,7 @@ public class detalleVentaFactura {
         p.setInt(7, f_itbis);
         p.execute();
         
-        
+        dbase.CerrarConexion();
     
     }
    

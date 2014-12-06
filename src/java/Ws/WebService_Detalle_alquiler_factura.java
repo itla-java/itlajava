@@ -153,7 +153,7 @@ public class WebService_Detalle_alquiler_factura {
              return respon.ToJson(respon);
                        
         }
-      
+        dbase.CerrarConexion();
         return respon.ToJson(respon);    //retornando el Gson 
 
     }
@@ -224,7 +224,7 @@ public class WebService_Detalle_alquiler_factura {
              return respon.ToJson(respon);
                      
         }
-    
+        dbase.CerrarConexion();
         return respon.ToJson(respon);   //retorno el json  
 
     }

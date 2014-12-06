@@ -7,6 +7,7 @@ package dto;
 
 import db.DB;
 import java.sql.PreparedStatement;
+import com.google.gson.Gson;
 
 /**
  *
@@ -90,13 +91,14 @@ public class alquilerFactura {
         this.f_balance = f_balance;
     }
 
-    public boolean isF_pagada() {
+    public boolean getF_pagada() {
         return f_pagada;
     }
 
     public void setF_pagada(boolean f_pagada) {
         this.f_pagada = f_pagada;
     }
+    
     
   
     
@@ -105,16 +107,19 @@ public class alquilerFactura {
         DB dbase = new DB("itla2","itlajava","12345678@itla");
         String sql="INSERT INTO public.t_alquiler_factura(f_tipo_factura,f_id_t_cliente,f_id_t_usuarios,f_fecha,f_hecha_por,f_monto,f_balance,f_pagada)";
         sql+="VALUES(?,?,?,?,?,?,?)";
+        Gson json = new Gson();
+        
+        alquilerFactura info = json.fromJson(informacion,alquilerFactura.class);
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
-        p.setString(1,f_tipo_factura);
-        p.setInt(2, f_id_cliente);
-        p.setInt(3, f_id_usuario);
-        p.setString(4, f_fecha);
-        p.setString(5, f_hecha_por);
-        p.setInt(6,f_monto);
-        p.setInt(6,f_balance);
-        p.setBoolean(7,f_pagada);
+        p.setString(1,info.getF_tipo_factura());
+        p.setInt(2, info.getF_id_cliente());
+        p.setInt(3, info.getF_id_usuario());
+        p.setString(4, info.getF_fecha());
+        p.setString(5,info.getF_hecha_por());
+        p.setInt(6,info.getF_monto());
+        p.setInt(6,info.getF_balance());
+        p.setBoolean(7,info.getF_pagada());
         p.execute();
         
         dbase.CerrarConexion();

@@ -98,7 +98,7 @@ public class ventaFactura {
         this.f_balance = f_balance;
     }
 
-    public boolean isF_pagada() {
+    public boolean getF_pagada() {
         return f_pagada;
     }
 
@@ -116,15 +116,15 @@ public class ventaFactura {
         Gson json = new Gson();
         ventaFactura info = json.fromJson(informacion, ventaFactura.class);
         
-        p.setString(1, f_tipo_factura);
-        p.setInt(2, f_id_t_cliente);
-        p.setInt(3, f_id_t_usuario);
-        p.setInt(4, f_monto);
-        p.setInt(5, f_id_orden);
-        p.setString(6, f_fecha);
-        p.setString(7, f_hecha_por);
-        p.setInt(8, f_balance);
-        p.setBoolean(9, f_pagada);
+        p.setString(1, info.getF_tipo_factura());
+        p.setInt(2,info.getF_id_t_cliente());
+        p.setInt(3, info.getF_id_t_usuario());
+        p.setInt(4, info.getF_monto());
+        p.setInt(5,info.getF_id_orden());
+        p.setString(6, info.getF_fecha());
+        p.setString(7, info.getF_hecha_por());
+        p.setInt(8, info.getF_balance());
+        p.setBoolean(9,info.getF_pagada());
         p.execute();
     }
    

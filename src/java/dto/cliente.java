@@ -89,7 +89,7 @@ public class cliente {
 
 
     
-    public void insertar_cliente(String informacion) throws Exception{
+   public void insertar_cliente(String informacion) throws Exception{
     
     
         DB dbase = new DB("itla2","itlajava","12345678@itla");
@@ -101,13 +101,13 @@ public class cliente {
         Gson json = new Gson();
        cliente info = json.fromJson(informacion, cliente.class);
        
-        p.setString(1, f_nombre);
-        p.setString(2, f_apellido);
-        p.setString(3, f_direccion);
-        p.setString(4, f_cedula);
-        p.setString(5, f_telefono1);
-        p.setString(6, f_telefono2);
-        p.setString(7, f_email);
+        p.setString(1, info.getF_nombre());
+        p.setString(2,info.getF_apellido());
+        p.setString(3, info.getF_direccion());
+        p.setString(4, info.getF_cedula());
+        p.setString(5, info.getF_telefono1());
+        p.setString(6, info.getF_telefono2());
+        p.setString(7, info.getF_email());
         p.execute();
         
         dbase.CerrarConexion();

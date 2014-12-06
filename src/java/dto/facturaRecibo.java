@@ -73,10 +73,10 @@ public class facturaRecibo {
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         
-        p.setString(1, f_tipo_factura_t_venta_factura);
-        p.setInt(2, f_monto);
-        p.setString(3, f_fecha);
-        p.setInt(4, f_id_t_Recibo_venta_factura);
+        p.setString(1,info.getF_tipo_factura_t_venta_factura());
+        p.setInt(2, info.getF_monto());
+        p.setString(3, info.getF_fecha());
+        p.setInt(4, info.getF_id_t_Recibo_venta_factura());
         p.execute();
         
         dbase.CerrarConexion();

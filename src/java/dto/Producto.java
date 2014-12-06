@@ -118,19 +118,19 @@ public class Producto {
             Gson json = new Gson();
             Producto info = json.fromJson(informacion, Producto.class);
             
-            p.setString(1, f_nombre);
-            p.setString(2, f_descripcion);
-            p.setInt(3, f_costo);
-            p.setInt(4, f_precio_venta);
-            p.setInt(5, f_precio_alquiler);
-            p.setString(6, f_alquiler_venta);
-            p.setString(7, f_cantidad_alquiler);
-            p.setString(8, f_cantidad_venta);
-            p.setString(9, f_dias_recuperacion);
+            p.setString(1, info.getF_nombre());
+            p.setString(2, info.getF_descripcion());
+            p.setInt(3, info.getF_costo());
+            p.setInt(4, info.getF_precio_venta());
+            p.setInt(5, info.getF_precio_alquiler());
+            p.setString(6, info.getF_alquiler_venta());
+            
+            p.setString(7, info.getF_cantidad_alquiler());
+            p.setString(8,info.getF_cantidad_venta());
+            p.setString(9,info.getF_dias_recuperacion());
             p.execute();
             
             dbase.CerrarConexion();
-      
     }
    
 }

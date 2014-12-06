@@ -129,16 +129,16 @@ public class detalleAlquilerFactura {
         detalleAlquilerFactura info = json.fromJson(informacion, detalleAlquilerFactura.class);
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
-        p.setInt(1, f_id_t_alquiler_factura);
-        p.setString(2, f_tipo_Factura_t_alquiler_factura);
-        p.setInt(3, f_id_t_Producto);
-        p.setString(4,f_fecha_salida);
-        p.setString(5,f_fecha_entrada);
-        p.setString(6,f_fecha_entrada_real);
-        p.setInt(7,f_cantidad);
-        p.setInt(8,f_precio);
-        p.setInt(9,f_costo);
-        p.setInt(10,f_itbis);
+        p.setInt(1,info.getF_id_t_alquiler_factura());
+        p.setString(2,info.getF_tipo_Factura_t_alquiler_factura());
+        p.setInt(3, info.getF_id_t_Producto());
+        p.setString(4,info.getF_fecha_salida());
+        p.setString(5,info.getF_fecha_entrada());
+        p.setString(6,info.getF_fecha_entrada_real());
+        p.setInt(7,info.getF_cantidad());
+        p.setInt(8,info.getF_precio());
+        p.setInt(9,info.getF_costo());
+        p.setInt(10,info.getF_itbis());
         p.execute();
         
         dbase.CerrarConexion();

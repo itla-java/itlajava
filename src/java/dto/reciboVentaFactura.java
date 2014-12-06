@@ -63,7 +63,7 @@ public class reciboVentaFactura {
     
     public void insertar_recibo_venta_fact(String informacion) throws Exception{
     
-        DB dbase = new DB("itla2","itlajava","12345678@itla");
+         DB dbase = new DB("itla2","itlajava","12345678@itla");
         String sql="INSERT INTO public.t_recibo_venta_factura(f_id_t_cliente,f_concepto,f_fecha,f_monto)";
         sql+="VALUES (?,?,?,?)";
       
@@ -72,10 +72,10 @@ public class reciboVentaFactura {
         
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         
-        p.setInt(1, f_id_t_cliente);
-        p.setString(2, f_concepto);
-        p.setString(3, f_fecha);
-        p.setInt(4, f_monto);
+        p.setInt(1, info.getF_id_t_cliente());
+        p.setString(2,info.getF_concepto() );
+        p.setString(3,info.getF_fecha());
+        p.setInt(4, info.getF_monto());
         p.execute();
         dbase.CerrarConexion();
         

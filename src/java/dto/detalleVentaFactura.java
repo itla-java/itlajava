@@ -98,13 +98,13 @@ public class detalleVentaFactura {
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         Gson json = new Gson();
         detalleVentaFactura info = json.fromJson(informacion, detalleVentaFactura.class);
-        p.setInt(1, f_id_t_venta_factura);
-        p.setString(2, f_tipo_Factura_t_venta_factura);
-        p.setInt(3, f_id_t_Productos);
-        p.setInt(4, f_precio);
-        p.setInt(5, f_cantidad);
-        p.setInt(6, f_costo);
-        p.setInt(7, f_itbis);
+        p.setInt(1, info.getF_Id_t_venta_factura());
+        p.setString(2, info.getF_tipo_Factura_t_venta_factura());
+        p.setInt(3, info.getF_id_t_Productos());
+        p.setInt(4, info.getF_precio());
+        p.setInt(5, info.getF_cantidad());
+        p.setInt(6, info.getF_costo());
+        p.setInt(7, info.getF_itbis());
         p.execute();
         
         dbase.CerrarConexion();

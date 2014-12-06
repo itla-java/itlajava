@@ -70,7 +70,7 @@ public class recargos {
         this.f_hecho_por = f_hecho_por;
     }
 
-    public boolean isF_pagado() {
+    public boolean getF_pagado() {
         return f_pagado;
     }
 
@@ -94,12 +94,12 @@ public class recargos {
         
         PreparedStatement p  = DB.conexion.prepareStatement(sql);
         
-        p.setInt(1,f_id_t_alquiler_factura);
-        p.setString(2,f_tipo_factura_t_alquiler_factura);
-        p.setString(3,f_descripcion);
-        p.setInt(4, f_monto);
-        p.setString(5, f_hecho_por);
-        p.setBoolean(6, f_pagado);
+        p.setInt(1,info.getF_id_t_alquiler_factura());
+        p.setString(2,info.getF_tipo_factura_t_alquiler_factura());
+        p.setString(3,info.getF_descripcion());
+        p.setInt(4, info.getF_monto());
+        p.setString(5, info.getF_hecho_por());
+        p.setBoolean(6, info.getF_pagado());
         p.execute();
         
         dbase.CerrarConexion();

@@ -221,27 +221,31 @@ public class Webservice_Producto {
     @Consumes("application/json")
     public String insertar_producto(
         @FormParam("token") String token ,
-        @FormParam("Gson") String gson) {
+        @FormParam("Gson") String gson)  {
         
          
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
         
-        try {
+        /*try {
             if (!ctoken.checktocken2(token)){
                 respo.setId(2);
                 respo.setMensaje("El token no esta activo"); 
                 return  respo.ToJson(respo);
             }
-        } catch (Exception ex) {
-            Logger.getLogger(Webservice_Producto.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (SQLException ex) {
+            //Logger.getLogger(Webservice_Producto.class.getName()).log(Level.SEVERE, null, ex);
+            respo.setId(-1);
+            respo.setMensaje("Error en la verificacion  del Token Bdd"+ex);
+        }*/
         
         Producto product = new Producto();
         try {
             product.insertar_t_productos(gson);
         } catch (Exception ex) {
-            Logger.getLogger(Webservice_Producto.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Webservice_Producto.class.getName()).log(Level.SEVERE, null, ex);
+            respo.setId(-1);
+            respo.setMensaje("Error en la insercion con Prepare Statement"+ex);
         }
         respo.setId(1);
         respo.setMensaje("Hecho");

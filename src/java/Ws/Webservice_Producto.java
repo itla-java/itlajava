@@ -68,7 +68,9 @@ public class Webservice_Producto {
     @GET
     @Path("/getproductoNombre/{token}/{nombre}")
     @Produces("application/json")
-    public String getproduct_nombre(@PathParam("nombre") String nombre,@PathParam("token") String token) throws Exception
+    public String getproduct_nombre(
+            @PathParam("token") String token,
+            @PathParam("nombre") String nombre) throws Exception
     {
         Respuesta respon = new Respuesta();
         CheckToken check = new CheckToken();
@@ -77,9 +79,9 @@ public class Webservice_Producto {
       //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (!check.checktocken2(token)==true) 
+       if (!check.checktocken2(token)) 
        { 
-            respon.setId(-1);
+            respon.setId(2);
             respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
             return respon.ToJson(respon);
                         
@@ -111,8 +113,8 @@ public class Webservice_Producto {
                 producto.setF_cantidad_alquiler(rs.getString(8));
                 producto.setF_cantidad_venta(rs.getString(9));
                 producto.setF_dias_recuperacion(rs.getString(10));
-                //asigno elrs a la lista
-                lista.add(producto);
+               
+                lista.add(producto); //asigno elrs a la lista
             }
         } 
         catch (SQLException e) 
@@ -123,14 +125,16 @@ public class Webservice_Producto {
              return respon.ToJson(respon);
                      
         }
-         //convierto la lista a Gson
-        String json1=json.toJson(lista);
+         
+        
         respon.setId(1);
-        respon.setMensaje(json1);
-        return respon.ToJson(respon);         
-        //retorno el json
+        respon.setMensaje(respon.ToJson(lista));//convierto la lista a Gson
+        return respon.ToJson(respon); //retorno el json        
+        
           
     }
+    
+    //****************
     
     
     

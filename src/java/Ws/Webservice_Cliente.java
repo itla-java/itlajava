@@ -42,8 +42,7 @@ public class Webservice_Cliente {
     String db="itla";
     String user="adminm7xt8zn";
     String pass="JaQc2-sekn7A";*/
-    ArrayList<cliente> list= new ArrayList<cliente>();
-    Gson json = new Gson();
+    
     @Context
     private UriInfo context;
 
@@ -85,14 +84,14 @@ public class Webservice_Cliente {
       
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
-        if(ctoken.checktocken2(token)==false)
+        if(!ctoken.checktocken2(token))
         {
-            respo.setId(3);
-            respo.setMensaje("El token no esta activo");
+            respo.setId(2);
+            respo.setMensaje("El token fue desactivado,Comuniquese con el Administrador");
             return respo.ToJson(respo);
         }
         cliente cliente = new cliente();
-        cliente.insertar_cliente(informacion);
+        cliente.insertar_cliente(informacion);// llamando el metodo con Prepared Statement
         
         respo.setId(1);
         respo.setMensaje("Hecho");
@@ -106,7 +105,9 @@ public class Webservice_Cliente {
     @GET
     @Produces("application/json")
     @Path("/getcliente/{token}/{id_cliente}")
-    public String getCliente(@PathParam("token") String token,@PathParam("id_cliente") String id) throws Exception
+    public String getCliente(
+            @PathParam("token") String token,
+            @PathParam("id_cliente") String id) throws Exception
     {
         Respuesta respo  = new Respuesta();
         
@@ -114,7 +115,7 @@ public class Webservice_Cliente {
         DB dbase = new DB("itla2","itlajava","12345678@itla");
         CheckToken ctoken = new CheckToken();
         
-        if (!ctoken.checktocken2(token)==true)
+        if (!ctoken.checktocken2(token))
         {
             respo.setId(2);
             respo.setMensaje("El token no esta activo");
@@ -135,7 +136,7 @@ public class Webservice_Cliente {
                 respo.setId(0);
                 respo.setMensaje("No hay registros actualmente en la base de datos");
                 return respo.ToJson(respo);
-            }else
+            }
             while(rs.next())
             {
                 cliente cliente1= new cliente();
@@ -148,8 +149,9 @@ public class Webservice_Cliente {
                 cliente1.setF_telefono1(rs.getString(6));
                 cliente1.setF_telefono2(rs.getString(7));
                 cliente1.setF_email(rs.getString(8));
+                
                 respo.setId(1);
-                respo.setMensaje(json.toJson(cliente1));
+                respo.setMensaje(respo.ToJson(cliente1));
             }
        
         }
@@ -158,20 +160,21 @@ public class Webservice_Cliente {
             // error de base de datos
             respo.setId(-1);
             respo.setMensaje("error de la base de datos "+e.getMessage()+" ");
-            return json.toJson(respo); 
+            return respo.ToJson(respo); 
         }
         
     
             
-            return json.toJson(respo);//returna el cliente que se iso en el while.
+            return respo.ToJson(respo);//retorna el cliente que se iso en el while.
             //fin del metodo cliente que busca por id Maded By José Aníbal moronta
     }
     
     
-    @GET
+    @POST //Metodo para el servlet by Juan Luis Hiciano*******************
     @Produces("application/json")
-    @Path("/getcliente/{id}")
-    public String getCliente(@PathParam("id") String id) throws Exception //Metodo para el servlet 
+    @Path("/getcliente")
+    public String getCliente(
+            @FormParam("id") String id) throws Exception 
     {
         Respuesta respo  = new Respuesta();
         
@@ -184,7 +187,7 @@ public class Webservice_Cliente {
         
         try
         {
-            if(!rs.next()==true)
+            if(!rs.next())
             {
                      
                 respo.setId(0);
@@ -203,8 +206,9 @@ public class Webservice_Cliente {
                 cliente1.setF_telefono1(rs.getString(6));
                 cliente1.setF_telefono2(rs.getString(7));
                 cliente1.setF_email(rs.getString(8));
+                
                 respo.setId(1);
-                respo.setMensaje(json.toJson(cliente1));
+                respo.setMensaje(respo.ToJson(cliente1));
             }
        
         }
@@ -213,57 +217,53 @@ public class Webservice_Cliente {
             // error de base de datos
             respo.setId(-1);
             respo.setMensaje("error de la base de datos "+e.getMessage()+" ");
-            return json.toJson(respo); 
+            return respo.ToJson(respo); 
         }
         
     
             
-            return json.toJson(respo);//returna el cliente que se iso en el while.
+            return respo.ToJson(respo);//returna el cliente que se iso en el while.
             //fin del metodo cliente que busca por id Maded By Juan L Hiciano
     }
     
     
     
     
-    //metodo que busca el cliente epor nombre o apellido//
+    //metodo que busca el cliente por nombre//
     @GET
     @Path("/getcliente_nombre_apellido/{token}/{nombre}")
     @Produces("application/json")
-    public String getCliente_nombre_apellido(@PathParam("nombre") String id,@PathParam("token") String token) throws Exception
+    public String getCliente_nombre_apellido(
+            @PathParam("token") String token,
+            @PathParam("nombre") String nombre) throws Exception
     {
         Respuesta respon = new Respuesta();
+        CheckToken check = new CheckToken();
         ArrayList<cliente> lista = new ArrayList<cliente>();
         
-      //instancie el objeto de DB
-        DB dbase = new DB("itla2","itlajava","12345678@itla");
+      
+        DB dbase = new DB("itla2","itlajava","12345678@itla");//instancie el objeto de DB
           
-       //Verificamos si el token esta activo 
-       
-        CheckToken ver = new CheckToken();
-       
-       
-       if (!ver.checktocken(dbase, token))
+      
+       if (!check.checktocken2(token)) //Verificamos si el token esta activo 
         {
-         respon.setId(-1);
-         respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
-         String json1=json.toJson(respon);
-         return json1;              
+            respon.setId(2);
+            respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
+            return respon.ToJson(respon);
+                    
         }    
        
-       //realizo el sql de busqueda
-        String sql="select * from public.t_cliente where f_nombre ilike '%"+id+"%' or f_apellido ilike '%"+id+"%';";   
+       
+        String sql="select * from public.t_cliente where f_nombre ilike '%"+nombre+"%';";  //query 
   
         try
         {
             ResultSet rs = dbase.execSelect(sql);  
             if(!rs.next())
             {
-                     
-                Respuesta respo = new Respuesta();
-                     
-                respo.setId(0);
-                respo.setMensaje("No hay registros actualmente en la base de datos");
-                return respo.ToJson(respo);
+                respon.setId(0);
+                respon.setMensaje("No hay registros actualmente en la base de datos");
+                return respon.ToJson(respon);
                  
             }
             while (rs.next())
@@ -286,23 +286,21 @@ public class Webservice_Cliente {
                 lista.add(cliente);
                    
             }
-        } catch (Exception e) 
+        } 
+        catch (Exception e) 
         {
             //si falla un error de base de datos
-             respon.setId(-2);
+             respon.setId(-1);
              respon.setMensaje("Error de la base de datos "+e.getMessage());
-             String json1=json.toJson(respon);
-             return json1;          
+             return respon.ToJson(respon);
+                  
         }
-         //convierto la lista a Gson
-        String json1=json.toJson(lista);
         respon.setId(1);
-        respon.setMensaje(json1);
-        json1=json.toJson(respon);         
-        //retorno el json
-        return json1;     
+        respon.setMensaje(respon.ToJson(lista)); //convierto la lista a Gson             
+       
+        return respon.ToJson(respon);   //retorno el json   
     }
     
-    //fin del metodo que busca el cliente epor nombre o apellido madeby:José Aníbal Moronta//
+    //fin del metodo que busca el cliente por nombre o apellido madeby:José Aníbal Moronta//
     
 }

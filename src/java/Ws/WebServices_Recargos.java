@@ -12,6 +12,7 @@ import dto.Respuesta;
 import dto.facturaRecibo;
 import dto.recargos;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -58,22 +59,22 @@ public class WebServices_Recargos {
     @GET
     @Path("/getrecargo_id/{token}/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getrecargos_id(@PathParam("token") String token,@PathParam("id")int id) throws Exception{
+    public String getrecargos_id(
+            @PathParam("token") String token,
+            @PathParam("id")int id) throws Exception{
         
         Respuesta respon = new Respuesta();
-        ArrayList<recargos> lista = new ArrayList<recargos>();
         CheckToken check = new CheckToken();
-        Gson json = new Gson();
         String sql;
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
        if (check.checktocken2(token)==true) 
        { 
-         respon.setId(-1);
-         respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
-         String json1=json.toJson(respon);
-         return json1;              
+            respon.setId(2);
+            respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
+            return respon.ToJson(respon);
+                
        }            
                  
        //realizo el sql de busqueda
@@ -84,19 +85,15 @@ public class WebServices_Recargos {
             ResultSet rs = dbase.execSelect(sql);   
             if(!rs.next())
             {
-                     
-                Respuesta respo = new Respuesta();
-                     
-                respo.setId(0);
-                respo.setMensaje("No hay registros actualmente en la base de datos");
-                return respo.ToJson(respo);
+           
+                respon.setId(0);
+                respon.setMensaje("No hay registros actualmente en la base de datos");
+                return respon.ToJson(respon);
                  
-            }else
+            }
             while (rs.next())
-             {
-                 
-                  
-                 
+            {
+     
                 recargos r = new recargos();
                     
                 r.setF_id(rs.getInt(1));
@@ -108,25 +105,21 @@ public class WebServices_Recargos {
                 r.setF_pagado(rs.getBoolean(7));
 
                 //asigno elrs a la lista
-                lista.add(r);
+                respon.setId(1);
+                respon.setMensaje(respon.ToJson(r));
                   
             }
         }
-        catch (Exception e) 
+        catch (SQLException e) 
         {
             //si falla un error de base de datos
              respon.setId(-1);
              respon.setMensaje("Error de la base de datos "+e.getMessage());
-             String json1=json.toJson(respon);
-             return json1;          
+             return respon.ToJson(respon);
+                  
         }
-         //convierto la lista a Gson
-        String json1=json.toJson(lista);
-        respon.setId(1);
-        respon.setMensaje(json1);
-        json1=json.toJson(respon);         
-        //retorno el json
-        return json1;     
+        
+        return respon.ToJson(respon);//retorno el json
 
     }
     
@@ -134,15 +127,16 @@ public class WebServices_Recargos {
    
     
     
-    @GET
-    @Path("/getrecargo_id/{id}")
+    @POST  // metodo para el Setvlet*****************************************************
+    @Path("/getrecargo_id")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getrecargos_id(@PathParam("id")int id) throws Exception{
+    public String getrecargos_id(
+            @FormParam("id")int id) throws Exception{
         
         Respuesta respon = new Respuesta();
-        ArrayList<recargos> lista = new ArrayList<recargos>();
         
-        Gson json = new Gson();
+        
+        
         String sql;
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
@@ -158,13 +152,14 @@ public class WebServices_Recargos {
             if(!rs.next())
             {
                      
-                Respuesta respo = new Respuesta();
+                
                      
-                respo.setId(0);
-                respo.setMensaje("No hay registros actualmente en la base de datos");
-                return respo.ToJson(respo);
+                respon.setId(0);
+                respon.setMensaje("No hay registros actualmente en la base de datos");
+                return respon.ToJson(respon);
                  
-            }else
+            }
+            else
             while (rs.next())
              {
                  
@@ -181,25 +176,23 @@ public class WebServices_Recargos {
                 r.setF_pagado(rs.getBoolean(7));
 
                 //asigno elrs a la lista
-                lista.add(r);
+                respon.setId(1);
+                respon.setMensaje(respon.ToJson(r));
                   
             }
         }
-        catch (Exception e) 
+        catch (SQLException e) 
         {
             //si falla un error de base de datos
-             respon.setId(-1);
-             respon.setMensaje("Error de la base de datos "+e.getMessage());
-             String json1=json.toJson(respon);
-             return json1;          
+            respon.setId(-1);
+            respon.setMensaje("Error de la base de datos "+e.getMessage());
+            return respon.ToJson(respon);
+                  
         }
-         //convierto la lista a Gson
-        String json1=json.toJson(lista);
-        respon.setId(1);
-        respon.setMensaje(json1);
-        json1=json.toJson(respon);         
-        //retorno el json
-        return json1;     
+         
+        return respon.ToJson(respon);       //retorno el json  
+        
+           
 
     }
     
@@ -213,14 +206,14 @@ public class WebServices_Recargos {
             
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
-        if (ctoken.checktocken2(token)==false){
-            respo.setId(3);
-            respo.setMensaje("El token no esta activo");
+        if (!ctoken.checktocken2(token)){
+            respo.setId(2);
+            respo.setMensaje("El token fue desactivado,Comuniquese con el Administrador");
             return respo.ToJson(respo);
         }
     
         recargos recargos = new recargos();
-        recargos.insertar_recargos(informacion);
+        recargos.insertar_recargos(informacion); // llamado el metodo con Prepared Statement
         
         respo.setId(1);
         respo.setMensaje("Hecho");

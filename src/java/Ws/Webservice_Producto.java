@@ -93,7 +93,7 @@ public class Webservice_Producto {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next())
+            if(rs.getRow()==0)
             {
                 respon.setId(0);
                 respon.setMensaje("No hay registros actualmente en la base de datos");

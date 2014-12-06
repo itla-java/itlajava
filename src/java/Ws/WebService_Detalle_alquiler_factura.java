@@ -12,6 +12,7 @@ import dto.Respuesta;
 import dto.alquilerFactura;
 import dto.detalleAlquilerFactura;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -61,8 +62,9 @@ public class WebService_Detalle_alquiler_factura {
         
         
         Respuesta respo  = new Respuesta();
+        
         CheckToken ctoken = new CheckToken();
-        if (ctoken.checktocken2(token)==false){
+        if (!ctoken.checktocken2(token)){
             respo.setId(2);
             respo.setMensaje("El token no esta activo");
             return respo.ToJson(respo);
@@ -79,22 +81,24 @@ public class WebService_Detalle_alquiler_factura {
     @GET
     @Path("/getdetallealquilerfactura_id/{token}/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getdetallealquilerfactura_id(@PathParam("token") String token,@PathParam("id")int id) throws Exception{
+    public String getdetallealquilerfactura_id(
+            @PathParam("token") String token,
+            @PathParam("id")int id) throws Exception{
         
         Respuesta respon = new Respuesta();
-        ArrayList<detalleAlquilerFactura> lista = new ArrayList<detalleAlquilerFactura>();
+        
         CheckToken check = new CheckToken();
-        Gson json = new Gson();
+        
       
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (check.checktocken2(token)==false) 
+       if (!check.checktocken2(token)) 
        { 
-         respon.setId(-1);
-         respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
-         String json1=json.toJson(respon);
-         return json1;              
+         respon.setId(2);
+         respon.setMensaje("Lo Sentimos token Desactivado, Comuniquese Con el Administrador, Gracias");
+         return respon.ToJson(respon);
+                     
        }            
                  
        //realizo el sql de busqueda
@@ -114,9 +118,9 @@ public class WebService_Detalle_alquiler_factura {
                 respo.setMensaje("No hay registros actualmente en la base de datos");
                 return respo.ToJson(respo);
                  
-            }else
+            }
             while (rs.next())
-             {  
+            {  
                   
                  
                 detalleAlquilerFactura daf = new detalleAlquilerFactura();
@@ -134,42 +138,40 @@ public class WebService_Detalle_alquiler_factura {
                 daf.setF_itbis(rs.getInt(8));
  
                 //asigno elrs a la lista
-                lista.add(daf);
-                  
+                
+                respon.setId(1);
+                respon.setMensaje(respon.ToJson(daf));
+                
+                
             }
-        } catch (Exception e) 
+        } 
+        catch (SQLException e) 
         {
             //si falla un error de base de datos
              respon.setId(-1);
              respon.setMensaje("Error de la base de datos "+e.getMessage());
-             String json1=json.toJson(respon);
-             return json1;          
+             return respon.ToJson(respon);
+                       
         }
-         //convierto la lista a Gson
-        String json1=json.toJson(lista);
-        respon.setId(1);
-        respon.setMensaje(json1);
-        json1=json.toJson(respon);         
-        //retorno el json
-        return json1;     
+      
+        return respon.ToJson(respon);    //retornando el Gson 
 
     }
     
      /*  /*inicio del metodo que busca detallealquilerFactua por el id made by :José Aníbal Moronta*/
    
     
-    @GET  // metodo para el servlet
-    @Path("/getdetallealquilerfactura_id/{id}")
+    @POST  // metodo para el servlet
+    @Path("/getdetallealquilerfactura_id")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getdetallealquilerfactura_id(@PathParam("id")int id) throws Exception{
+    public String getdetallealquilerfactura_id(
+            @FormParam("id")int id) throws Exception{
         
         Respuesta respon = new Respuesta();
-        ArrayList<detalleAlquilerFactura> lista = new ArrayList<detalleAlquilerFactura>();
         CheckToken check = new CheckToken();
-        Gson json = new Gson();
       
-        //instancie el objeto de DB
-       DB dbase = new DB("itla2","itlajava","12345678@itla");
+        
+       DB dbase = new DB("itla2","itlajava","12345678@itla");//instancie el objeto de DB
           
                
                  
@@ -203,31 +205,27 @@ public class WebService_Detalle_alquiler_factura {
                 daf.setF_id_t_Producto(rs.getInt(4));
                 daf.setF_fecha_salida(rs.getString(5));
                 daf.setF_fecha_entrada(rs.getString(6));
-                daf.setF_fecha_entrada_real(rs.getString(6));
-                daf.setF_cantidad(rs.getInt(7));
-                daf.setF_precio(rs.getInt(7));
-                daf.setF_costo(rs.getInt(7));
-                daf.setF_itbis(rs.getInt(8));
+                daf.setF_fecha_entrada_real(rs.getString(7));
+                daf.setF_cantidad(rs.getInt(8));
+                daf.setF_precio(rs.getInt(9));
+                daf.setF_costo(rs.getInt(10));
+                daf.setF_itbis(rs.getInt(11));
  
-                //asigno elrs a la lista
-                lista.add(daf);
+                respon.setId(1);
+                respon.setMensaje(respon.ToJson(daf));
                   
             }
-        } catch (Exception e) 
+        } 
+        catch (SQLException e) 
         {
             //si falla un error de base de datos
              respon.setId(-1);
              respon.setMensaje("Error de la base de datos "+e.getMessage());
-             String json1=json.toJson(respon);
-             return json1;          
+             return respon.ToJson(respon);
+                     
         }
-         //convierto la lista a Gson
-        String json1=json.toJson(lista);
-        respon.setId(1);
-        respon.setMensaje(json1);
-        json1=json.toJson(respon);         
-        //retorno el json
-        return json1;     
+    
+        return respon.ToJson(respon);   //retorno el json  
 
     }
 

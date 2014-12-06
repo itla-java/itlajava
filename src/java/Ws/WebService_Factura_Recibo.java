@@ -63,9 +63,9 @@ public class WebService_Factura_Recibo {
         
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
-        if (ctoken.checktocken2(token)==false){
-            respo.setId(3);
-            respo.setMensaje("El token no esta activo");
+        if (!ctoken.checktocken2(token)){
+            respo.setId(2);
+            respo.setMensaje("El token no fue desactivado");
             return respo.ToJson(respo);
         }
     
@@ -84,22 +84,24 @@ public class WebService_Factura_Recibo {
     @GET
     @Path("/getfacturarecibo_id/{token}/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getfacturarecibo_id(@PathParam("token") String token,@PathParam("id")int id) throws Exception{
+    public String getfacturarecibo_id(
+            @PathParam("token") String token,
+            @PathParam("id")int id) throws Exception{
         
         Respuesta respon = new Respuesta();
-        ArrayList<facturaRecibo> lista = new ArrayList<facturaRecibo>();
+        
         CheckToken check = new CheckToken();
-        Gson json = new Gson();
+        
         String sql;
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (check.checktocken2(token)==false) 
+       if (!check.checktocken2(token)) 
        { 
-         respon.setId(2);
-         respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
-         String json1=json.toJson(respon);
-         return json1;              
+            respon.setId(2);
+            respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
+            return respon.ToJson(respon);
+                     
        }            
                  
        //realizo el sql de busqueda
@@ -117,9 +119,9 @@ public class WebService_Factura_Recibo {
                 respo.setMensaje("No hay registros actualmente en la base de datos");
                 return respo.ToJson(respo);
                  
-             }else
+             }
             while (rs.next())
-             {
+            {
                 
                     
                 facturaRecibo fr = new facturaRecibo();
@@ -132,25 +134,23 @@ public class WebService_Factura_Recibo {
                 
 
                 //asigno elrs a la lista
-                lista.add(fr);
+                respon.setId(1);
+                respon.setMensaje(respon.ToJson(fr));
                  
             }
         } 
         catch (Exception e) 
         {
             //si falla un error de base de datos
-             respon.setId(-1);
-             respon.setMensaje("Error de la base de datos "+e.getMessage());
-             String json1=json.toJson(respon);
-             return json1;          
+            respon.setId(-1);
+            respon.setMensaje("Error de la base de datos "+e.getMessage());
+            return respon.ToJson(respon);
+                      
         }
-         //convierto la lista a Gson
-        String json1=json.toJson(lista);
-        respon.setId(1);
-        respon.setMensaje(json1);
-        json1=json.toJson(respon);         
+        
+          
         //retorno el json
-        return json1;     
+         return respon.ToJson(respon); 
 
     }
     

@@ -59,7 +59,7 @@ public class WebService_Alquiler_factura {
         
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
-        if (ctoken.checktocken2(token)==true){
+        if (!ctoken.checktocken2(token)){
             respo.setId(2);
             respo.setMensaje("El token no esta activo");
             return respo.ToJson(respo);
@@ -80,7 +80,7 @@ public class WebService_Alquiler_factura {
     
     /*inicio del metodo que busca detallealquilerFactua por el id*/
     @GET
-    @Path("/getquilerfactura_id/{token}/{id}")
+    @Path("/getalquilerfactura_id/{token}/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getAlquilerFactura_Id(@PathParam("token") String token,@PathParam("id")int id) throws Exception{
         
@@ -91,7 +91,7 @@ public class WebService_Alquiler_factura {
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (check.checktocken2(token)==true) 
+       if (!check.checktocken2(token)) 
        { 
          respon.setId(2);
          respon.setMensaje("Lo Sentimos Token Desactivado, Comuniquese Con el Administrador, Gracias");
@@ -116,7 +116,7 @@ public class WebService_Alquiler_factura {
                 respo.setMensaje("No hay registros actualmente en la base de datos");
                 return respo.ToJson(respo);
                  
-            }else
+            }
             while (rs.next())
             {  
     
@@ -148,20 +148,17 @@ public class WebService_Alquiler_factura {
         }
          
         return respon.ToJson(respon);
-        
-              
-        
-           
-
+    
     }
     
      //*fin  del metodo que busca detalle alquilerFactua por el id made by :José Aníbal Moronta* 
    
     
-    @GET  //metodo solo para el Servlet
-    @Path("/getquilerfactura_id/{id}")
+    @POST  //metodo solo para el Servlet
+    @Path("/getquilerfactura_id")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getAlquilerFactura_Id(@PathParam("id")int id) throws Exception{
+    public String getAlquilerFactura_Id(
+            @FormParam("id")int id) throws Exception{
         
         Respuesta respon = new Respuesta();
    
@@ -177,7 +174,7 @@ public class WebService_Alquiler_factura {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next()==true)
+            if(!rs.next())
             {
                      
                 Respuesta respo = new Respuesta();
@@ -187,7 +184,7 @@ public class WebService_Alquiler_factura {
                 return respo.ToJson(respo);
                  
             }
-            while (rs.next()==true)
+            while (rs.next())
             {  
                  
                 

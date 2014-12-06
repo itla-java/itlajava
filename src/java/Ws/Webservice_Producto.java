@@ -93,12 +93,7 @@ public class Webservice_Producto {
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            if(rs.getRow()==0)
-            {
-                respon.setId(0);
-                respon.setMensaje("No hay registros actualmente en la base de datos");
-                return respon.ToJson(respon);
-            }
+            
             while (rs.next())
              {
                 Producto producto = new Producto();
@@ -115,6 +110,13 @@ public class Webservice_Producto {
                 producto.setF_dias_recuperacion(rs.getString(10));
                
                 lista.add(producto); //asigno elrs a la lista
+            }
+            
+            if(rs.getRow()==0)
+            {
+                respon.setId(0);
+                respon.setMensaje("No hay registros actualmente en la base de datos");
+                return respon.ToJson(respon);
             }
         } 
         catch (SQLException e) 

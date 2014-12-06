@@ -30,10 +30,10 @@ public class CheckToken {
        }catch(SQLException e) {}
        return false;
     }
-    public  boolean checktocken2(String token) throws Exception
+    public  boolean checktocken2(String token) 
     {
        
-       DB dbase = new DB("itla2","itlajava","12345678@itla");
+       DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
        String sql="select count(*) from public.t_logins where f_token="+dbase.comilla(token) + " and f_activo = true";
        try
        {

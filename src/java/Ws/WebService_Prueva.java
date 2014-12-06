@@ -32,7 +32,7 @@ import javax.ws.rs.core.Response;
 
 
 
-@Path("prueva")
+@Path("prueba")
 public class WebService_Prueva {
 
     @Context
@@ -47,7 +47,7 @@ public class WebService_Prueva {
     
     
     @POST
-    @Path("/prueba")
+    @Path("/pruebapost")
     @Produces("text/plain")
     public Response prueba(
             @FormParam("p1") String p1,

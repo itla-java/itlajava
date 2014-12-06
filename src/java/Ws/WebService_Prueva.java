@@ -50,12 +50,12 @@ public class WebService_Prueva {
     @Path("/pruebapost")
     @Produces("text/plain")
     public Response prueba(
-            @FormParam("p1") String p1,
-            @FormParam("p2") String p2){
+            @FormParam("nombre") String nombre,
+            @FormParam("apellido") String apellido){
        
         
         return Response.status(200) 
-                .entity("el resultado es "+p1+ " - " +p2)
+                .entity("el resultado es "+nombre+ " - " +apellido)
                 .build();
     }
     

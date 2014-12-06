@@ -51,7 +51,8 @@ public class WebService_Prueva {
     @Produces("text/plain")
     public Response prueba(
             @FormParam("nombre") String nombre,
-            @FormParam("apellido") String apellido){
+            @FormParam("apellido") String apellido)throws Exception
+    {
        
         
         return Response.status(200) 

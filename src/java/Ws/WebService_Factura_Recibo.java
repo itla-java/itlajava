@@ -63,7 +63,7 @@ public class WebService_Factura_Recibo {
         
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
-        if (!ctoken.checktocken2(token)){
+        if (ctoken.checktocken2(token)==0){
             respo.setId(2);
             respo.setMensaje("El token no fue desactivado");
             return respo.ToJson(respo);
@@ -96,7 +96,7 @@ public class WebService_Factura_Recibo {
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (!check.checktocken2(token)) 
+       if (check.checktocken2(token)==0) 
        { 
             respon.setId(2);
             respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");

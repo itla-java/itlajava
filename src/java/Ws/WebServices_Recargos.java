@@ -71,7 +71,7 @@ public class WebServices_Recargos {
         //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (!check.checktocken2(token)) 
+       if (check.checktocken2(token)==0) 
            
        { 
             respon.setId(2);
@@ -209,7 +209,7 @@ public class WebServices_Recargos {
             
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
-        if (!ctoken.checktocken2(token)){
+        if (ctoken.checktocken2(token)==0){
             respo.setId(2);
             respo.setMensaje("El token fue desactivado,Comuniquese con el Administrador");
             return respo.ToJson(respo);

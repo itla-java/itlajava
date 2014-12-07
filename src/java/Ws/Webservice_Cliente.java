@@ -84,7 +84,7 @@ public class Webservice_Cliente {
       
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
-        if(!ctoken.checktocken2(token))
+        if(ctoken.checktocken2(token)==0)
         {
             respo.setId(2);
             respo.setMensaje("El token fue desactivado,Comuniquese con el Administrador");
@@ -115,7 +115,7 @@ public class Webservice_Cliente {
         DB dbase = new DB("itla2","itlajava","12345678@itla");
         CheckToken ctoken = new CheckToken();
         
-        if (!ctoken.checktocken2(token))
+        if (ctoken.checktocken2(token)==0)
         {
             respo.setId(2);
             respo.setMensaje("El token no esta activo");
@@ -245,7 +245,7 @@ public class Webservice_Cliente {
         DB dbase = new DB("itla2","itlajava","12345678@itla");//instancie el objeto de DB
           
       
-       if (!check.checktocken2(token)) //Verificamos si el token esta activo 
+       if (check.checktocken2(token)==0) //Verificamos si el token esta activo 
         {
             respon.setId(2);
             respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");

@@ -12,6 +12,7 @@ package clases;
 import db.DB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import dto.Respuesta;
 
 public class CheckToken {
     
@@ -30,22 +31,22 @@ public class CheckToken {
        }catch(SQLException e) {}
        return false;
     }
-    public  boolean checktocken2(String token) 
+    public  int  checktocken2(String token) 
     {
        
        DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
        String sql="select count(f_activo) from t_logins where f_token='"+dbase.comilla(token) + "' and f_activo = true";
        try
        {
-       ResultSet rs= dbase.execSelect(sql); 
-       while (rs.next())
-       { int num=rs.getInt(1);
-            if(num==1)
-                return true;
-            
+            ResultSet rs= dbase.execSelect(sql); 
+            rs.next();// mover posicion de rs
+            int num=rs.getInt(1);
+          
+            return num;
        }
-       }catch(SQLException e) {}
-       return false;
+       catch(SQLException e) {}
+       
+       return 666;
     }
     
 }

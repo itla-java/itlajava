@@ -63,7 +63,7 @@ public class Webservice_Usuario {
         
         Respuesta resp = new Respuesta();
        
-        if (!checktocken.checktocken2(token)) 
+        if (checktocken.checktocken2(token)==0) 
         { 
             resp.setId(2);
             resp.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
@@ -88,7 +88,7 @@ public class Webservice_Usuario {
         CheckToken check = new CheckToken();
         String sql;
         DB dbase = new DB("itla2","itlajava","12345678@itla");//instancia del objeto  DB
-        if(!check.checktocken2(token))
+        if(check.checktocken2(token)==0)
         {
             respon.setId(2);
             respon.setMensaje("El token ha sido desactivado");

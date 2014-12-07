@@ -67,7 +67,7 @@ public class Webservice_Venta_factura {
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
         
-        if (!ctoken.checktocken2(token)){
+        if (ctoken.checktocken2(token)==0){
             respo.setId(2);
             respo.setMensaje("El token no esta activo");
             return respo.ToJson(respo);
@@ -147,7 +147,7 @@ public class Webservice_Venta_factura {
         
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
-        if (!ctoken.checktocken2(token)){
+        if (ctoken.checktocken2(token)==0){
             respo.setId(2);
             respo.setMensaje("El token no esta activo");
             return respo.ToJson(respo);

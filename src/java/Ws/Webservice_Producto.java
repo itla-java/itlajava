@@ -226,7 +226,7 @@ public class Webservice_Producto {
     @Produces("application/json")
     public String insertar_producto(
         @FormParam("token") String token ,
-        @FormParam("Gson") String gson)  {
+        @FormParam("Gson") String gson) throws Exception  {
         
          
         Respuesta respo  = new Respuesta();

@@ -205,7 +205,7 @@ public class WebServices_Recargos {
     @Produces("application/json")
     public String insertar_recargo(
             @FormParam("token")String token,
-            @FormParam("informacion") String informacion) throws Exception{
+            @FormParam("Gson") String gson) throws Exception{
             
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
@@ -216,7 +216,7 @@ public class WebServices_Recargos {
         }
     
         recargos recargos = new recargos();
-        recargos.insertar_recargos(informacion); // llamado el metodo con Prepared Statement
+        recargos.insertar_recargos(gson); // llamado el metodo con Prepared Statement
         
         respo.setId(1);
         respo.setMensaje("Hecho");

@@ -31,7 +31,7 @@ public class CheckToken {
        }catch(SQLException e) {}
        return false;
     }
-    public  int  checktocken2(String token) 
+    public  int  checktocken2(String token) throws Exception 
     {
        
        DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");

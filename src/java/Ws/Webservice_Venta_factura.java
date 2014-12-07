@@ -142,7 +142,7 @@ public class Webservice_Venta_factura {
     @Produces("application/json")
     public String insertar_venta_factura(
             @FormParam("token")String token,
-            @FormParam("informacion")String informacion) throws Exception
+            @FormParam("Gson")String informacion) throws Exception
     {
         
         Respuesta respo  = new Respuesta();

@@ -55,7 +55,7 @@ public class WebService_Alquiler_factura {
     @Produces("application/json")
     public String  insertar_alquiler_factura(
             @FormParam("token") String token, 
-            @FormParam("informacion") String informacion) throws Exception{
+            @FormParam("Gson") String gson) throws Exception{
         
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
@@ -67,7 +67,7 @@ public class WebService_Alquiler_factura {
         }
         
         alquilerFactura afactura = new alquilerFactura();
-        afactura.insertar_alquiler_factura(informacion);
+        afactura.insertar_alquiler_factura(gson);
         respo.setId(1);
         respo.setMensaje("Hecho");
         return respo.ToJson(respo);

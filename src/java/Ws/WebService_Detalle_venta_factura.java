@@ -50,7 +50,7 @@ public class WebService_Detalle_venta_factura {
     @Produces("application/json")
     public String insertar_detalle_venta_factura(
             @FormParam("token") String token,
-            @FormParam("informacion") String informacion) throws Exception{
+            @FormParam("Gson") String gson) throws Exception{
         
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
@@ -62,7 +62,7 @@ public class WebService_Detalle_venta_factura {
         
         detalleVentaFactura detallevfactura = new detalleVentaFactura();
         
-        detallevfactura.insertar_detalle_venta_factura(informacion);//llamado del prepared Statemend
+        detallevfactura.insertar_detalle_venta_factura(gson);//llamado del prepared Statemend
         respo.setId(1);
         respo.setMensaje("Hecho");
         return respo.ToJson(respo);

@@ -22,15 +22,15 @@ public class DB {
     public static Connection conexion = null;
 
   // "jdbc:postgresql://localhost/northwind"
-    public DB(String db,String user,String pass) {
+    public DB(String db,String user,String pass) throws Exception {
         String url = "jdbc:postgresql://546ff814ecb8d4afcc000036-itlajavados.rhcloud.com:37751/"+db;
         
         try { 
             Class.forName("org.postgresql.Driver");
             conexion=DriverManager.getConnection(url,user,pass);
         } catch (Exception exc){
-           // throw new Exception(exc);
-             System.err.println("** Error de Base de datos **\n"+exc.getMessage());
+            throw new Exception(exc);
+            // System.err.println("** Error de Base de datos **\n"+exc.getMessage());
         }
         
     }

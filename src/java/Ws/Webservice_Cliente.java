@@ -80,7 +80,7 @@ public class Webservice_Cliente {
     @Produces("application/json")
     public String insertar_cliente(
             @FormParam("token")String token,
-            @FormParam("informacion") String informacion) throws Exception {
+            @FormParam("Gson") String gson) throws Exception {
       
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
@@ -91,7 +91,7 @@ public class Webservice_Cliente {
             return respo.ToJson(respo);
         }
         cliente cliente = new cliente();
-        cliente.insertar_cliente(informacion);// llamando el metodo con Prepared Statement
+        cliente.insertar_cliente(gson);// llamando el metodo con Prepared Statement
         
         respo.setId(1);
         respo.setMensaje("Hecho");

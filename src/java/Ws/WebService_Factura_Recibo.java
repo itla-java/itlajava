@@ -57,9 +57,10 @@ public class WebService_Factura_Recibo {
     @POST
     @Path("/insertar_factura_recibo")
     @Produces("application/json")
+    
     public String insertar_factura_recibo(
             @FormParam("token")String token,
-            @FormParam("informacion")String informacion) throws Exception{
+            @FormParam("Gson")String gson) throws Exception{
         
         Respuesta respo  = new Respuesta();
         CheckToken ctoken = new CheckToken();
@@ -70,7 +71,7 @@ public class WebService_Factura_Recibo {
         }
     
         facturaRecibo frecibo = new facturaRecibo();
-        frecibo.insertar_factura_recibo(informacion);
+        frecibo.insertar_factura_recibo(gson);
         
         respo.setId(1);
         respo.setMensaje("Hecho");

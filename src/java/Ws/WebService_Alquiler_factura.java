@@ -52,7 +52,7 @@ public class WebService_Alquiler_factura {
     /*Metodo que inserta en alquiler_factura*/
     @POST
     @Path("/insertar_alquiler_factura")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/json")
     public String  insertar_alquiler_factura(
             @FormParam("token") String token, 
             @FormParam("informacion") String informacion) throws Exception{

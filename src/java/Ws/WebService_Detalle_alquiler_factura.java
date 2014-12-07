@@ -55,7 +55,7 @@ public class WebService_Detalle_alquiler_factura {
     }
     @POST
     @Path("/insertar_detalle_alquiler_factura")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/json")
     public String insertar_detalle_alquiler_factura(
             @FormParam("token")String token,
             @FormParam("informacion")String json) throws Exception{

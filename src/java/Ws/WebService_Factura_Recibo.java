@@ -56,7 +56,7 @@ public class WebService_Factura_Recibo {
     /*metodo que inserta en factura_recibo*/
     @POST
     @Path("/insertar_factura_recibo")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/json")
     public String insertar_factura_recibo(
             @FormParam("token")String token,
             @FormParam("informacion")String informacion) throws Exception{

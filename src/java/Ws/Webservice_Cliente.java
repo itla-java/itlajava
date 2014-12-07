@@ -77,7 +77,7 @@ public class Webservice_Cliente {
     /*Metodo que inserta un cliente*/
     @POST
     @Path("/insertar_cliente")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/json")
     public String insertar_cliente(
             @FormParam("token")String token,
             @FormParam("informacion") String informacion) throws Exception {

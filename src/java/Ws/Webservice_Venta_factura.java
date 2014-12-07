@@ -139,7 +139,7 @@ public class Webservice_Venta_factura {
     /*metodo que inserta factura en reciboVnetaFactura*/
     @POST
     @Path("/insertar_venta_factura")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/json")
     public String insertar_venta_factura(
             @FormParam("token")String token,
             @FormParam("informacion")String informacion) throws Exception

@@ -202,7 +202,7 @@ public class WebServices_Recargos {
     
     @POST
     @Path("/insertar_recargo")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/json")
     public String insertar_recargo(
             @FormParam("token")String token,
             @FormParam("informacion") String informacion) throws Exception{

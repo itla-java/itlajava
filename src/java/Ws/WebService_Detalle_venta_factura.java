@@ -47,7 +47,7 @@ public class WebService_Detalle_venta_factura {
     /*metodo que inserta en detalle_venta_facura*/
     @POST
     @Path("/insertar_detalle_centa_factura")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/json")
     public String insertar_detalle_venta_factura(
             @FormParam("token") String token,
             @FormParam("informacion") String informacion) throws Exception{

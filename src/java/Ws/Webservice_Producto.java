@@ -114,12 +114,15 @@ public class Webservice_Producto {
                 lista.add(producto); //asigno elrs a la lista
             }
             
-            if(rs.getRow()==0)
+                  
+            
+            if(lista.isEmpty())
             {
                 respon.setId(0);
                 respon.setMensaje("No hay registros actualmente en la base de datos");
                 return respon.ToJson(respon);
             }
+            
         } 
         catch (SQLException e) 
         {
@@ -129,12 +132,14 @@ public class Webservice_Producto {
              return respon.ToJson(respon);
                      
         }
-         
         
         respon.setId(1);
         respon.setMensaje(respon.ToJson(lista));//convierto la lista a Gson
         dbase.CerrarConexion();
-        return respon.ToJson(respon); //retorno el json        
+        return respon.ToJson(respon); //retorno el json  
+         
+        
+       
         
           
     }
@@ -236,8 +241,8 @@ public class Webservice_Producto {
         
         
         Producto product = new Producto();
-        
-            product.insertar_t_productos(gson);
+
+        product.insertar_t_productos(gson);
         
         respo.setId(1);
         respo.setMensaje("Hecho");

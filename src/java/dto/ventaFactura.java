@@ -111,7 +111,7 @@ public class ventaFactura {
     public void insertar_detalle_venta_factura(String informacion) throws Exception {
         DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
         String sql="INSERT INTO public.t_venta_factura(f_tipo_factura,f_id_t_cliente,f_id_t_usuarios,f_monto,f_id_orden,f_fecha,f_hecha_por,f_balance,f_pagada)";
-        sql+="VALUES(?,?,?,?,?,?,?,?,?)";    
+        sql+="VALUES(?,?,?,?,?,now(),?,?,?)";    
         PreparedStatement p = DB.conexion.prepareStatement(sql);
         Gson json = new Gson();
         ventaFactura info = json.fromJson(informacion, ventaFactura.class);
@@ -121,7 +121,7 @@ public class ventaFactura {
         p.setInt(3, info.getF_id_t_usuario());
         p.setInt(4, info.getF_monto());
         p.setInt(5,info.getF_id_orden());
-        p.setString(6, info.getF_fecha());
+        //p.setString(6, info.getF_fecha());
         p.setString(7, info.getF_hecha_por());
         p.setInt(8, info.getF_balance());
         p.setBoolean(9,info.getF_pagada());

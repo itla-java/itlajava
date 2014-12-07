@@ -46,7 +46,7 @@ public class CheckToken {
        }
        catch(SQLException e) {}
        
-       return 666;
+       return -2;
     }
     
 }

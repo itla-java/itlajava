@@ -35,7 +35,7 @@ public class CheckToken {
     {
        
        DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
-       String sql="select count(f_activo) from t_logins where f_token='"+dbase.comilla(token) + "' and f_activo = true";
+       String sql="select count(f_activo) from t_logins where f_token="+dbase.comilla(token) + " and f_activo = true";
        try
        {
             ResultSet rs= dbase.execSelect(sql); 
@@ -44,9 +44,11 @@ public class CheckToken {
           
             return num;
        }
-       catch(SQLException e) {}
+       catch(SQLException e) {
+           return -1;
+       }
        
-       return -2;
+       
     }
     
 }

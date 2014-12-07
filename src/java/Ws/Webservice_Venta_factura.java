@@ -153,8 +153,8 @@ public class Webservice_Venta_factura {
             return respo.ToJson(respo);
         }
         
-        reciboVentaFactura recibo = new reciboVentaFactura();
-        recibo.insertar_recibo_venta_fact(informacion);
+        ventaFactura recibo = new ventaFactura();
+        recibo.insertar_venta_factura(informacion);
         
         respo.setId(1);
         respo.setMensaje("Hecho");

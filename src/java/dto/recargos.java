@@ -8,6 +8,7 @@ package dto;
 import com.google.gson.Gson;
 import db.DB;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  *
@@ -89,6 +90,7 @@ public class recargos {
         sql="INSERT INTO public.t_recargos(f_id_t_alquiler_factura,f_tipo_factura_t_alquiler_factura,f_descripcion,f_monto,f_hecho_por,f_pagado)";
         sql+="VALUES (?,?,?,?,?,?)";
         
+        try{
         Gson json = new Gson();
        recargos info = json.fromJson(informacion,recargos.class);
         
@@ -103,6 +105,11 @@ public class recargos {
         p.execute();
         
         dbase.CerrarConexion();
+        
+        }catch(SQLException e){
+            e.getMessage();
+        }
+        
     }
     
     

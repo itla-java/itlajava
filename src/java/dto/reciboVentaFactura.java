@@ -64,8 +64,8 @@ public class reciboVentaFactura {
     public void insertar_recibo_venta_fact(String informacion) throws Exception{
     
          DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
-        String sql="INSERT INTO public.t_recibo_venta_factura(f_id_t_cliente,f_concepto,f_fecha,f_monto)";
-        sql+="VALUES (?,?,?,?)";
+        String sql="INSERT INTO public.t_recibo_venta_factura(f_id_t_cliente,f_concepto,f_monto)";
+        sql+="VALUES (?,?,?)";
       
         Gson json = new Gson();
        reciboVentaFactura info = json.fromJson(informacion,reciboVentaFactura.class);
@@ -74,8 +74,8 @@ public class reciboVentaFactura {
         
         p.setInt(1, info.getF_id_t_cliente());
         p.setString(2,info.getF_concepto() );
-        p.setString(3,info.getF_fecha());
-        p.setInt(4, info.getF_monto());
+        
+        p.setInt(3, info.getF_monto());
         p.execute();
         dbase.CerrarConexion();
         

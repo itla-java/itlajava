@@ -105,7 +105,7 @@ public class alquilerFactura {
      
     public void insertar_alquiler_factura(String informacion) throws Exception{
         DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
-        String sql="INSERT INTO public.t_alquiler_factura(f_tipo_factura,f_id_t_cliente,f_id_t_usuarios,f_fecha,f_hecha_por,f_monto,f_balance,f_pagada)";
+        String sql="INSERT INTO public.t_alquiler_factura(f_tipo_factura,f_id_t_cliente,f_id_t_usuarios,f_hecha_por,f_monto,f_balance,f_pagada)";
         sql+="VALUES(?,?,?,?,?,?,?)";
         Gson json = new Gson();
         
@@ -115,9 +115,9 @@ public class alquilerFactura {
         p.setString(1,info.getF_tipo_factura());
         p.setInt(2, info.getF_id_cliente());
         p.setInt(3, info.getF_id_usuario());
-        p.setString(4, info.getF_fecha());
-        p.setString(5,info.getF_hecha_por());
-        p.setInt(6,info.getF_monto());
+        
+        p.setString(4,info.getF_hecha_por());
+        p.setInt(5,info.getF_monto());
         p.setInt(6,info.getF_balance());
         p.setBoolean(7,info.getF_pagada());
         p.execute();

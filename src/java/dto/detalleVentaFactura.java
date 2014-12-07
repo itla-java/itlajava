@@ -92,7 +92,7 @@ public class detalleVentaFactura {
    
     public void insertar_detalle_venta_factura(String informacion) throws Exception{
         
-        DB dbase = new DB("itla2","itlajava","12345678@itla");   
+        DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");   
         String sql="INSERT INTO public.t_detalle_venta_factura(f_id_t_venta_factura,f_tipo_factura_t_venta_factura,f_id_t_productos,f_precio,f_cantidad,f_costo,f_itbis)";
         sql+="VALUES(?,?,?,?,?,?,?)";
         PreparedStatement p = DB.conexion.prepareStatement(sql);

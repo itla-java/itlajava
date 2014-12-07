@@ -63,7 +63,7 @@ public class facturaRecibo {
     
     public void insertar_factura_recibo(String informacion) throws Exception{
         
-        DB dbase = new DB("itla2","itlajava","12345678@itla");
+        DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
         
         String sql = "INSERT INTO public.t_factura_recibo(f_tipo_factura_t_venta_factura,f_monto,f_fecha,f_id_t_recibo_venta_factura)";
         sql+="VALUES (?,?,?,?)";

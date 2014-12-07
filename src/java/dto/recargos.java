@@ -82,7 +82,7 @@ public class recargos {
     public void insertar_recargos(String informacion) throws Exception{
     
     
-        DB dbase = new DB("itla2", "itlajava", "12345678@itla");
+        DB dbase = new DB("itla2", "admini3lwux2","aLXsCK8L2Pmy");
         
         String sql;
         

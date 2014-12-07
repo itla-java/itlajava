@@ -92,7 +92,7 @@ public class cliente {
    public void insertar_cliente(String informacion) throws Exception{
     
     
-        DB dbase = new DB("itla2","itlajava","12345678@itla");
+        DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
         
         String sql = "INSERT INTO public.t_cliente(f_nombre,f_apellido,f_direccion,f_cedula,f_telefono1,f_telefono2,f_email)";
         sql+="VALUES (?,?,?,?,?,?,?)";

@@ -104,7 +104,7 @@ public class alquilerFactura {
     
      
     public void insertar_alquiler_factura(String informacion) throws Exception{
-        DB dbase = new DB("itla2","itlajava","12345678@itla");
+        DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
         String sql="INSERT INTO public.t_alquiler_factura(f_tipo_factura,f_id_t_cliente,f_id_t_usuarios,f_fecha,f_hecha_por,f_monto,f_balance,f_pagada)";
         sql+="VALUES(?,?,?,?,?,?,?)";
         Gson json = new Gson();

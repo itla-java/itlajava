@@ -78,7 +78,7 @@ public class Usuario {
     
     public String mod_pass(String pass, int id) throws Exception{
         
-        DB dbase = new DB("itla2","itlajava","12345678@itla");
+        DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
         
         String sql="UPDATE public.t_usuarios SET f_clave ='"+ pass +"' WHERE f_id ="+id;
         dbase.executeQuery(sql);

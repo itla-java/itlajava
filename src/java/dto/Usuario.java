@@ -98,7 +98,7 @@ public class Usuario {
      public String insertar_t_usuarios(String informacion) throws Exception {
         
         DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
-        String sql="INSERT INTO public.t_usarios(f_nombre,f_apellido,f_usuario,f_clave,f_proceso,f_activo)";       
+        String sql="INSERT INTO public.t_usuarios(f_nombre,f_apellido,f_usuario,f_clave,f_proceso,f_activo)";       
         sql+="VALUES(?,?,?,?,?,?)";    
         try{
             PreparedStatement p = DB.conexion.prepareStatement(sql);

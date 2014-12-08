@@ -132,7 +132,7 @@ public class WebService_Recibo_venta_factura {
     /*fin del metodo que busca la factura por el id made by:José Aníbal Moronta Mejía*/
     
      @POST
-    @Path("/insertar_recibo_vneta_factura")
+    @Path("/insertar_recibo_venta_factura")
     @Produces("application/json")
     public String insertar_recibo_venta_factura(
             @FormParam("token")String token,

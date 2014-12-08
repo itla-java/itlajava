@@ -5,7 +5,10 @@
  */
 package dto;
 
+import com.google.gson.Gson;
 import db.DB;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  *
@@ -64,6 +67,8 @@ public class Usuario {
         return f_proceso;
     }
 
+   
+
     public void setF_proceso(boolean f_proceso) {
         this.f_proceso = f_proceso;
     }
@@ -72,6 +77,7 @@ public class Usuario {
         return f_activo;
     }
 
+    
     public void setF_activo(boolean f_activo) {
         this.f_activo = f_activo;
     }
@@ -88,6 +94,32 @@ public class Usuario {
         dbase.CerrarConexion();
         return respo.ToJson(respo);
 
+    }
+     public String insertar_t_usuarios(String informacion) throws Exception {
+        
+        DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
+        String sql="INSERT INTO public.t_usarios(f_nombre,f_apellido,f_usuario,f_clave,f_proceso,f_activo)";       
+        sql+="VALUES(?,?,?,?,?,?)";    
+        try{
+            PreparedStatement p = DB.conexion.prepareStatement(sql);
+            Gson json = new Gson();
+            Usuario info = json.fromJson(informacion, Usuario.class);
+            
+            p.setString(1, info.getF_nombre());
+            p.setString(2, info.getF_apellido());
+            p.setString(3, info.getF_usuario());
+            p.setString(4, info.getF_clave());
+            p.setBoolean(5, info.isF_proceso());
+            p.setBoolean(6, info.isF_activo());
+            
+           
+            p.execute();
+            
+            dbase.CerrarConexion();
+            return "1";
+        }catch(SQLException e){
+            return "-1"+ " "+e.getMessage();
+        }
     }
     
 }

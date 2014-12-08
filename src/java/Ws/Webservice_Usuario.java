@@ -75,7 +75,38 @@ public class Webservice_Usuario {
         
     }
     
-    
+    @POST
+    @Path("/insertar_usuario")
+    @Produces("application/json")
+    public String insertar_producto(
+        @FormParam("token") String token ,
+        @FormParam("Gson") String gson) throws Exception  {
+        
+         
+        Respuesta respo  = new Respuesta();
+        CheckToken ctoken = new CheckToken();
+        
+        
+            if (ctoken.checktocken2(token)==0){
+                respo.setId(2);
+                respo.setMensaje("El token no esta activo"); 
+                return  respo.ToJson(respo);
+            }
+        
+        
+        Usuario product = new Usuario();
+        //respuestaBD es para saber si el pro es de bd y saber el error de la misma
+        String respuestasBD=product.insertar_t_usuarios(gson);
+        if(respuestasBD.equals("1")){
+        
+        respo.setId(1);
+        respo.setMensaje("Hecho");
+        return  respo.ToJson(respo);
+        }
+        respo.setId(-1);
+        respo.setMensaje(respuestasBD);
+        return  respo.ToJson(respo);
+    }
     
     @GET
     @Path("/getusuario/{token}/{id}")

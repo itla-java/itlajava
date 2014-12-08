@@ -65,8 +65,8 @@ public class facturaRecibo {
         
         DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
         
-        String sql = "INSERT INTO public.t_factura_recibo(f_tipo_factura_t_venta_factura,f_monto,f_fecha,f_id_t_recibo_venta_factura)";
-        sql+="VALUES (?,?,?,?)";
+        String sql = "INSERT INTO public.t_factura_recibo(f_tipo_factura_t_venta_factura,f_monto,f_id_t_recibo_venta_factura)";
+        sql+="VALUES (?,?,?)";
         
         Gson json = new Gson();
         facturaRecibo info = json.fromJson(informacion, facturaRecibo.class);
@@ -75,8 +75,8 @@ public class facturaRecibo {
         
         p.setString(1,info.getF_tipo_factura_t_venta_factura());
         p.setInt(2, info.getF_monto());
-        p.setString(3, info.getF_fecha());
-        p.setInt(4, info.getF_id_t_Recibo_venta_factura());
+        
+        p.setInt(3, info.getF_id_t_Recibo_venta_factura());
         p.execute();
         
         dbase.CerrarConexion();

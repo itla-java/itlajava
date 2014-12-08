@@ -259,7 +259,7 @@ public class Webservice_Producto {
     @Produces("application/json")
     public String getproduct_id_nombre_pag(
             @FormParam("nombre") String nombre,
-            @FormParam("token") String token) throws Exception
+            String token) throws Exception
     {
         Respuesta respon = new Respuesta();
         CheckToken check = new CheckToken();
@@ -268,14 +268,7 @@ public class Webservice_Producto {
       //instancie el objeto de DB
        DB dbase = new DB("itla2","itlajava","12345678@itla");
           
-       if (check.checktocken2(token)==0) 
-       {
-            respon.setId(2);
-            respon.setMensaje("Lo Sentimos Usuario Desactivado, Comuniquese Con el Administrador, Gracias");
-            return  respon.ToJson(respon);
-                    
-       }            
-                 
+              
        //realizo el sql de busqueda
         String sql="SELECT f_id,f_nombre,f_descripcion,f_precio_venta,f_precio_alquiler,f_cantidad_alquiler,f_cantidad_venta from public.t_productos where f_nombre ilike '%"+nombre+"%';";   
   

@@ -9,6 +9,7 @@ import clases.CheckToken;
 import db.DB;
 import dto.Respuesta;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -98,6 +99,13 @@ public class WebService_Logins {
             }
       
         }
+        catch (SQLException e) 
+        {
+                    respo.setId(-3);
+                    respo.setMensaje(sql + " " +e.getMessage());
+                    return respo.ToJson(respo);        
+        }
+        
         catch (Exception e) 
         {
                     respo.setId(-2);

@@ -35,7 +35,8 @@ public class DB {
         
     }
     
-    public ResultSet execSelect(String sql){   
+    public ResultSet execSelect(String sql) throws SQLException
+    {   
          try 
          {
             Statement comando = conexion.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -43,19 +44,21 @@ public class DB {
             return rs;
         } catch (SQLException ex) {
            // Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("** Error de Base de datos en el select **\n"+ex.getMessage());
-            return null;
+            throw new SQLException(ex);
+            //System.err.println("** Error de Base de datos en el select **\n"+ex.getMessage());
+            //return null;
         }
     }
         
-    public void executeQuery(String query)
+    public void executeQuery(String query) throws SQLException
        {
         try {
             Statement stmt = conexion.createStatement();
             stmt.executeUpdate(query);
         } catch (SQLException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("** Error de Base de datos **\n"+ex.getMessage());
+             throw new SQLException(ex);
+           // Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+           // System.err.println("** Error de Base de datos **\n"+ex.getMessage());
         }
     }
 

@@ -91,13 +91,11 @@ public class Webservice_Venta_factura {
                 return respo.ToJson(respo);
                  
             }
-            while (rs.next())
-            {
-           
                 
-                
+            
+                rs.next();   // moviendo pa fila del Rs                            
                 ventaFactura ventaf = new ventaFactura();
-           
+                
                 ventaf.setF_id(rs.getInt(1));
                 ventaf.setF_tipo_factura(rs.getString(2));
                 ventaf.setF_id_t_cliente(rs.getInt(3));
@@ -113,7 +111,7 @@ public class Webservice_Venta_factura {
            
                 respo.setId(1);
                 respo.setMensaje(respo.ToJson(ventaf));
-            }
+            
        
         }
         catch (SQLException e)

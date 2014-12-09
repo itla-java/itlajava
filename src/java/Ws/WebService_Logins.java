@@ -72,7 +72,7 @@ public class WebService_Logins {
         DB dbase = new DB("itla2","itlajava","12345678@itla");
         String sql="Select fun_login('"+user+"','"+pass+"')";
         ResultSet rs = dbase.execSelect(sql);  
-        
+        rs.next();
             if ("-1".equals(rs.getInt(1))){  
                 respo.setId(rs.getInt(1));
                 respo.setMensaje("Usuario no existe");

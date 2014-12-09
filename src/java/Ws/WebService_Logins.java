@@ -69,10 +69,11 @@ public class WebService_Logins {
      
         String token;
         Respuesta respo = new Respuesta();
+        String sql="";
         try
         {
             DB dbase = new DB("itla2","itlajava","12345678@itla");
-            String sql="Select fun_login('"+user+"','"+pass+"')";
+            sql="Select fun_login('"+user+"','"+pass+"')";
             ResultSet rs = dbase.execSelect(sql);  
         
             while(rs.next())
@@ -100,7 +101,7 @@ public class WebService_Logins {
         catch (Exception e) 
         {
                     respo.setId(-2);
-                    respo.setMensaje(e.getMessage());
+                    respo.setMensaje(sql + " " +e.getMessage());
                     return respo.ToJson(respo);        
         }
         

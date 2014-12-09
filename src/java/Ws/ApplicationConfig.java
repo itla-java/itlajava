@@ -28,17 +28,13 @@ public class ApplicationConfig extends Application {
      * all resources defined in the project.
      * If required, comment out calling this method in getClasses().
      */
-    private void addRestResourceClasses(Set<Class<?>> resources) {
+    private void addRestResourceClasses(java.util.Set<java.lang.Class<?>> resources) {
         resources.add(Ws.WebService_Alquiler_factura.class);
         resources.add(Ws.WebService_Detalle_alquiler_factura.class);
         resources.add(Ws.WebService_Detalle_venta_factura.class);
         resources.add(Ws.WebService_Factura_Recibo.class);
-        resources.add(Ws.WebService_Logins.class);
-        resources.add(Ws.WebService_Prueva.class);
         resources.add(Ws.WebServices_Recargos.class);
-        resources.add(Ws.Webservice_Cliente.class);
         resources.add(Ws.Webservice_Producto.class);
-        resources.add(Ws.Webservice_Venta_factura.class);
         resources.add(clases.WssResource.class);
     }
     

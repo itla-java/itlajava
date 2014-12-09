@@ -108,7 +108,7 @@ public class Producto {
 
     /*-----------------------****************---Prepared Statement---******************--------------------*/ 
     
-    public void insertar_t_productos(String informacion) throws Exception {
+    public String insertar_t_productos(String informacion) throws Exception {
         
         DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
         String sql="INSERT INTO public.t_productos(f_nombre,f_descripcion,f_costo,f_precio_venta,f_precio_alquiler,f_alquiler_venta,f_cantidad_alquiler,f_cantidad_venta,f_dias_recuperacion)";       
@@ -131,8 +131,9 @@ public class Producto {
             p.execute();
             
             dbase.CerrarConexion();
+            return "1";
         }catch(SQLException e){
-            e.getMessage();
+           return"-1"+" "+ e.getMessage();
         }
     }
    

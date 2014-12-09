@@ -8,6 +8,7 @@ package dto;
 import com.google.gson.Gson;
 import db.DB;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  *
@@ -61,13 +62,13 @@ public class facturaRecibo {
     }
 
     
-    public void insertar_factura_recibo(String informacion) throws Exception{
+    public String insertar_factura_recibo(String informacion) throws Exception{
         
         DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
         
         String sql = "INSERT INTO public.t_factura_recibo(f_tipo_factura_t_venta_factura,f_monto,f_id_t_recibo_venta_factura)";
         sql+="VALUES (?,?,?)";
-        
+        try{
         Gson json = new Gson();
         facturaRecibo info = json.fromJson(informacion, facturaRecibo.class);
         
@@ -80,6 +81,10 @@ public class facturaRecibo {
         p.execute();
         
         dbase.CerrarConexion();
+        return "1";
+        }catch(SQLException e){
+            return "-1 "+e.getMessage();
+        }
     
     }
     

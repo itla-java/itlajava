@@ -64,7 +64,7 @@ public class reciboAlquilerFactura {
 
     
     
-    public void insertar_recibo_alquiler_factura(String informacion) throws Exception{
+    public String insertar_recibo_alquiler_factura(String informacion) throws Exception{
     
     
          DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
@@ -83,9 +83,9 @@ public class reciboAlquilerFactura {
         
         p.execute();
         dbase.CerrarConexion();
-        
+         return "1";
         }catch(SQLException e){
-            e.getMessage();
+           return "-1 "+  e.getMessage();
         }
     }
     

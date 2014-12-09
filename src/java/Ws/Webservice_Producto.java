@@ -242,10 +242,15 @@ public class Webservice_Producto {
         
         Producto product = new Producto();
 
-        product.insertar_t_productos(gson);
+       String respuestasBD= product.insertar_t_productos(gson);
+          if(respuestasBD.equals("1")){
         
         respo.setId(1);
         respo.setMensaje("Hecho");
+        return  respo.ToJson(respo);
+        }
+        respo.setId(-1);
+        respo.setMensaje(respuestasBD);
         return  respo.ToJson(respo);
         
     }

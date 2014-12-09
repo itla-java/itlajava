@@ -154,11 +154,17 @@ public class Webservice_Venta_factura {
         }
         
         ventaFactura recibo = new ventaFactura();
-        recibo.insertar_venta_factura(informacion);
+        String respuestasBD=recibo.insertar_venta_factura(informacion);
+          if(respuestasBD.equals("1")){
         
         respo.setId(1);
         respo.setMensaje("Hecho");
-        return respo.ToJson(respo);
+        return  respo.ToJson(respo);
+        }
+        respo.setId(-1);
+        respo.setMensaje(respuestasBD);
+        return  respo.ToJson(respo);
+        
     }
     /*fin del metodo que inserta factura en reciboVnetaFactura mede by:José Aníbal Moronta Mejía*/
     

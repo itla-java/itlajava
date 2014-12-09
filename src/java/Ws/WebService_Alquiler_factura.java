@@ -67,12 +67,16 @@ public class WebService_Alquiler_factura {
         }
         
         alquilerFactura afactura = new alquilerFactura();
-        afactura.insertar_alquiler_factura(gson);
+        String respuestasBD=afactura.insertar_alquiler_factura(gson);
+          if(respuestasBD.equals("1")){
+        
         respo.setId(1);
         respo.setMensaje("Hecho");
-        return respo.ToJson(respo);
-                
-    
+        return  respo.ToJson(respo);
+        }
+        respo.setId(-1);
+        respo.setMensaje(respuestasBD);
+        return  respo.ToJson(respo);
     }
     /*fin Metodo que inserta en alquiler_factura made by:José Aníbal Moronta Mejía*/
     

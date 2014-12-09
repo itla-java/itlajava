@@ -91,11 +91,17 @@ public class Webservice_Cliente {
             return respo.ToJson(respo);
         }
         cliente cliente = new cliente();
-        cliente.insertar_cliente(gson);// llamando el metodo con Prepared Statement
+       String respuestasBD= cliente.insertar_cliente(gson);// llamando el metodo con Prepared Statement
+          if(respuestasBD.equals("1")){
         
         respo.setId(1);
         respo.setMensaje("Hecho");
-        return respo.ToJson(respo);
+        return  respo.ToJson(respo);
+        }
+        respo.setId(-1);
+        respo.setMensaje(respuestasBD);
+        return  respo.ToJson(respo);
+        
         
         
     }

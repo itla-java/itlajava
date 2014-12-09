@@ -71,11 +71,17 @@ public class WebService_Factura_Recibo {
         }
     
         facturaRecibo frecibo = new facturaRecibo();
-        frecibo.insertar_factura_recibo(gson);
+        String respuestasBD=frecibo.insertar_factura_recibo(gson);
+          if(respuestasBD.equals("1")){
         
         respo.setId(1);
         respo.setMensaje("Hecho");
-        return respo.ToJson(respo);
+        return  respo.ToJson(respo);
+        }
+        respo.setId(-1);
+        respo.setMensaje(respuestasBD);
+        return  respo.ToJson(respo);
+        
         
     }
     /*fin del metodo que inserta en factura_recibo mde by:José Aníbal Moronta mejía*/

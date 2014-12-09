@@ -71,10 +71,17 @@ public class WebService_Detalle_alquiler_factura {
         }
         
         detalleAlquilerFactura dafactura = new detalleAlquilerFactura();
-        dafactura.insertar_detalle_alquiler_factura(gson);
+        String respuestasBD=dafactura.insertar_detalle_alquiler_factura(gson);
+          if(respuestasBD.equals("1")){
+        
         respo.setId(1);
-        respo.setMensaje("hecho");
-        return respo.ToJson(respo);
+        respo.setMensaje("Hecho");
+        return  respo.ToJson(respo);
+        }
+        respo.setId(-1);
+        respo.setMensaje(respuestasBD);
+        return  respo.ToJson(respo);
+        
     }
     
     /*inicio del metodo que busca detalle alquilerFactua por el id*/

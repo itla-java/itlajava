@@ -62,11 +62,17 @@ public class WebService_Detalle_venta_factura {
         
         detalleVentaFactura detallevfactura = new detalleVentaFactura();
         
-        detallevfactura.insertar_detalle_venta_factura(gson);//llamado del prepared Statemend
+        String respuestasBD=detallevfactura.insertar_detalle_venta_factura(gson);//llamado del prepared Statemend
+          if(respuestasBD.equals("1")){
+        
         respo.setId(1);
         respo.setMensaje("Hecho");
-        return respo.ToJson(respo);
-
+        return  respo.ToJson(respo);
+        }
+        respo.setId(-1);
+        respo.setMensaje(respuestasBD);
+        return  respo.ToJson(respo);
+       
     } 
     /*fin del metodo que inserta en detalle_venta_facura made by:José Aníbal Moronta Mejía   , Mod  By Juan Luis Hiciano*/
     

@@ -80,7 +80,7 @@ public class recargos {
     }
 
    
-    public void insertar_recargos(String informacion) throws Exception{
+    public String insertar_recargos(String informacion) throws Exception{
     
     
         DB dbase = new DB("itla2", "admini3lwux2","aLXsCK8L2Pmy");
@@ -105,9 +105,10 @@ public class recargos {
         p.execute();
         
         dbase.CerrarConexion();
+        return "1";
         
         }catch(SQLException e){
-            e.getMessage();
+          return"-1 "+  e.getMessage();
         }
         
     }

@@ -8,6 +8,7 @@ package dto;
 import com.google.gson.Gson;
 import db.DB;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  *
@@ -117,14 +118,14 @@ public class detalleAlquilerFactura {
    
     
     
-    public void insertar_detalle_alquiler_factura(String informacion) throws Exception{
+    public String insertar_detalle_alquiler_factura(String informacion) throws Exception{
     
     
         DB dbase = new DB("ilta2","admini3lwux2","aLXsCK8L2Pmy");
         String sql;
         sql="INSERT INTO public.t_detalle_alquiler_factura(f_id_t_alquiler_factura,f_tipo_factura_t_alquiler_factura,f_id_t_productos,f_fecha_salida,f_fecha_entrada,f_fecha_real_entrada,f_cantidad,f_precio,f_costo,f_itbis)";
         sql+="VALUES (?,?,?,?,?,?,?,?,?,?)";
-        
+        try{
         Gson json = new Gson();
         detalleAlquilerFactura info = json.fromJson(informacion, detalleAlquilerFactura.class);
         
@@ -142,6 +143,10 @@ public class detalleAlquilerFactura {
         p.execute();
         
         dbase.CerrarConexion();
+        return "1";
+        }catch(SQLException e){
+            return "-1 "+e.getMessage();
+        }
 
     }
     

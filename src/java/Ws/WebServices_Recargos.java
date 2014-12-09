@@ -216,12 +216,17 @@ public class WebServices_Recargos {
         }
     
         recargos recargos = new recargos();
-        recargos.insertar_recargos(gson); // llamado el metodo con Prepared Statement
+        String respuestasBD=recargos.insertar_recargos(gson); // llamado el metodo con Prepared Statement
+          if(respuestasBD.equals("1")){
         
         respo.setId(1);
         respo.setMensaje("Hecho");
-        return respo.ToJson(respo);
-    
+        return  respo.ToJson(respo);
+        }
+        respo.setId(-1);
+        respo.setMensaje(respuestasBD);
+        return  respo.ToJson(respo);
+        
     }
     
     

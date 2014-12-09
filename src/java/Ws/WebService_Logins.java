@@ -64,7 +64,8 @@ public class WebService_Logins {
     @GET
     @Produces("application/json")
     @Path("/getstatus/{user}/{pass}")
-    public String getStatus(@PathParam ("user") String user ,@PathParam ("pass") String pass) throws Exception{
+    public String getStatus(@PathParam ("user") String user ,@PathParam ("pass") String pass) throws Exception
+    {
      
         String token;
         Respuesta respo = new Respuesta();
@@ -76,9 +77,10 @@ public class WebService_Logins {
         
             while(rs.next())
             {
-                if ("-1".equals(rs.getString(1))){  
+                if (rs.getString(1).equals("-1"))
+                {  
 
-                    respo.setId(rs.getInt(1));
+                    respo.setId(-1);
                     respo.setMensaje("Usuario no existe");
                     return respo.ToJson(respo);
                 }
@@ -87,18 +89,19 @@ public class WebService_Logins {
                 {
                     token=rs.getString(1);
                     respo.setId(1);
-                    respo.setToken(token);
-                    respo.setMensaje("Usuario existe");
+                    respo.setMensaje(token);
                     return respo.ToJson(respo);
                 }
                 
                 
             }
-        token=rs.getString(1);
+      
         }
         catch (Exception e) 
         {
-            return e.getMessage();    
+                    respo.setId(-2);
+                    respo.setMensaje(e.getMessage());
+                    return respo.ToJson(respo);        
         }
         
         

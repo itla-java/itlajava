@@ -93,24 +93,26 @@ public class Webservice_Venta_factura {
             }
                 
             
-                rs.next();   // moviendo pa fila del Rs                            
-                ventaFactura ventaf = new ventaFactura();
+               if(rs.next())// moviendo pa fila del Rs    
+               {                                          
+                    ventaFactura ventaf = new ventaFactura();
                 
-                ventaf.setF_id(rs.getInt(1));
-                ventaf.setF_tipo_factura(rs.getString(2));
-                ventaf.setF_id_t_cliente(rs.getInt(3));
-                ventaf.setF_id_t_usuario(rs.getInt(4));
-                ventaf.setF_monto(rs.getInt(5));
-                ventaf.setF_id_orden(rs.getInt(6));
-                ventaf.setF_fecha(rs.getString(7));
-                ventaf.setF_hecha_por(rs.getString(8));
-                ventaf.setF_balance(rs.getInt(9));
-                ventaf.setF_pagada(rs.getBoolean(10));
-                
+                    ventaf.setF_id(rs.getInt(1));
+                    ventaf.setF_tipo_factura(rs.getString(2));
+                    ventaf.setF_id_t_cliente(rs.getInt(3));
+                    ventaf.setF_id_t_usuario(rs.getInt(4));
+                    ventaf.setF_monto(rs.getInt(5));
+                    ventaf.setF_id_orden(rs.getInt(6));
+                    ventaf.setF_fecha(rs.getString(7));
+                    ventaf.setF_hecha_por(rs.getString(8));
+                    ventaf.setF_balance(rs.getInt(9));
+                    ventaf.setF_pagada(rs.getBoolean(10));
+               
        
            
-                respo.setId(1);
-                respo.setMensaje(respo.ToJson(ventaf));
+                    respo.setId(1);
+                    respo.setMensaje(respo.ToJson(ventaf));
+               }
             
        
         }

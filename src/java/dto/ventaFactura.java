@@ -109,6 +109,7 @@ public class ventaFactura {
     }
 
     /*----------------------------------------------------------------*/
+    
     public String insertar_venta_factura(String informacion) throws Exception {
         DB dbase = new DB("itla2","admini3lwux2","aLXsCK8L2Pmy");
         String sql="INSERT INTO public.t_venta_factura(f_tipo_factura,f_id_t_cliente,f_id_t_usuarios,f_monto,f_id_orden,f_hecha_por,f_balance,f_pagada)";

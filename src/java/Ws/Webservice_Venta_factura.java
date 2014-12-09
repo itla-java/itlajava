@@ -114,7 +114,7 @@ public class Webservice_Venta_factura {
                     respo.setMensaje(respo.ToJson(ventaf));
                }
             
-       
+            dbase.CerrarConexion();//cierro la conexion   
         }
         catch (SQLException e)
         {
@@ -129,7 +129,7 @@ public class Webservice_Venta_factura {
         
         
         
-        dbase.CerrarConexion();//cierro la conexion
+        
         
         return respo.ToJson(respo);//retorno el json
         

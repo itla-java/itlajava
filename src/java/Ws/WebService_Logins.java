@@ -68,28 +68,33 @@ public class WebService_Logins {
      
         String token;
         Respuesta respo = new Respuesta();
-        try{
-        DB dbase = new DB("itla2","itlajava","12345678@itla");
-        String sql="Select fun_login('"+user+"','"+pass+"')";
-        ResultSet rs = dbase.execSelect(sql);  
-        rs.next();
-            if ("-1".equals(rs.getInt(1))){  
-                respo.setId(rs.getInt(1));
-                respo.setMensaje("Usuario no existe");
-                return respo.ToJson(respo);
-            }
-            
-            
-            token=rs.getString(1);
-        } catch (Exception e) 
+        try
         {
-         return e.getMessage();    
+            DB dbase = new DB("itla2","itlajava","12345678@itla");
+            String sql="Select fun_login('"+user+"','"+pass+"')";
+            ResultSet rs = dbase.execSelect(sql);  
+        
+            while(rs.next())
+            {
+                if ("-1".equals(rs.getString(1))){  
+
+                    respo.setId(rs.getInt(1));
+                    respo.setMensaje("Usuario no existe");
+                    return respo.ToJson(respo);
+                }
+            }
+        token=rs.getString(1);
         }
+        catch (Exception e) 
+        {
+            return e.getMessage();    
+        }
+        
+        
                
                 respo.setId(1);
                 respo.setToken(token);
                 respo.setMensaje("Usuario existe");
                 return respo.ToJson(respo);
-
-}
+    }
 }

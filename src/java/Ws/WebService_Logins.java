@@ -82,6 +82,17 @@ public class WebService_Logins {
                     respo.setMensaje("Usuario no existe");
                     return respo.ToJson(respo);
                 }
+                
+                else
+                {
+                    token=rs.getString(1);
+                    respo.setId(1);
+                    respo.setToken(token);
+                    respo.setMensaje("Usuario existe");
+                    return respo.ToJson(respo);
+                }
+                
+                
             }
         token=rs.getString(1);
         }
@@ -92,9 +103,6 @@ public class WebService_Logins {
         
         
                
-                respo.setId(1);
-                respo.setToken(token);
-                respo.setMensaje("Usuario existe");
-                return respo.ToJson(respo);
+         return "";
     }
 }

@@ -83,14 +83,7 @@ public class Webservice_Venta_factura {
        {
       
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next())
-            {
-             
-                respo.setId(0);
-                respo.setMensaje("No hay registros actualmente en la base de datos");
-                return respo.ToJson(respo);
-                 
-            }
+         
                 
             
                if(rs.next())// moviendo pa fila del Rs    

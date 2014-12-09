@@ -77,6 +77,9 @@ public class WebService_Alquiler_factura {
         respo.setId(-1);
         respo.setMensaje(respuestasBD);
         return  respo.ToJson(respo);
+        
+                
+    
     }
     /*fin Metodo que inserta en alquiler_factura made by:José Aníbal Moronta Mejía*/
     
@@ -105,23 +108,14 @@ public class WebService_Alquiler_factura {
                  
        //realizo el sql de busqueda
        String sql="SELECT f_id,f_tipo_factura,f_id_t_cliente,f_id_t_usuarios,f_fecha,f_hecha_por,f_monto,f_balance,f_pagada";
-       sql+="FROM public.t_alquiler_factura where f_id ="+ id ;
+       sql+=" FROM public.t_alquiler_factura where f_id ="+ id ;
         
   
         try
         {
             ResultSet rs = dbase.execSelect(sql);   
-            if(!rs.next())
-            {
-                     
-                Respuesta respo = new Respuesta();
-                     
-                respo.setId(0);
-                respo.setMensaje("No hay registros actualmente en la base de datos");
-                return respo.ToJson(respo);
-                 
-            }
-            while (rs.next())
+           
+            if (rs.next())
             {  
     
                 alquilerFactura af = new alquilerFactura();
@@ -129,9 +123,9 @@ public class WebService_Alquiler_factura {
                 af.setF_id(rs.getInt(1));
                 af.setF_tipo_factura(rs.getString(2));
                 af.setF_id_cliente(rs.getInt(3));
-                af.setF_fecha(rs.getString(4));
-                af.setF_hecha_por(rs.getString(5));
-                af.setF_id_usuario(rs.getInt(6));
+                af.setF_fecha(rs.getString(5));
+                af.setF_hecha_por(rs.getString(6));
+                af.setF_id_usuario(rs.getInt(4));
                 af.setF_monto(rs.getInt(7));
                 af.setF_balance(rs.getInt(8));
                 af.setF_pagada(rs.getBoolean(9));
